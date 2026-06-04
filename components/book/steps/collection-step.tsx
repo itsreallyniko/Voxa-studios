@@ -17,14 +17,14 @@ export function CollectionStep() {
 
   return (
     <div>
-      <header className="mb-12 max-w-3xl">
-        <span className="text-label-caps text-heritage-gold mb-4 block">STEP 01 — COLLECTION</span>
-        <h2 className="text-headline-xl text-white">Choose the Aesthetic</h2>
-        <p className="text-body-lg text-ivory/60 mt-6">
-          Collections represent overall visual styles. Pick the one that matches your brand — every set inside it shares
-          the same atmosphere.
-        </p>
-      </header>
+      {/* h2 is sr-only so step transitions still announce a heading for screen
+          readers, while visually the surrounding section header already
+          frames this step. */}
+      <h2 className="sr-only">Choose the aesthetic</h2>
+      <p className="text-body-lg text-ivory/60 max-w-3xl mb-12">
+        Collections represent overall visual styles. Pick the one that matches your brand — every set inside it shares
+        the same atmosphere.
+      </p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
         {collections.map((c) => {
