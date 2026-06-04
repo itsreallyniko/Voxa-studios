@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from 'vitest'
+import { describe, it, expect } from 'vitest'
 import { renderHook, act } from '@testing-library/react'
 import { BookingProvider, useBooking } from '@/lib/booking-context'
 
@@ -7,11 +7,6 @@ function wrapper({ children }: { children: React.ReactNode }) {
 }
 
 describe('BookingProvider', () => {
-  beforeEach(() => {
-    sessionStorage.clear()
-    window.location.hash = ''
-  })
-
   it('starts on collection step with empty booking', () => {
     const { result } = renderHook(() => useBooking(), { wrapper })
     expect(result.current.currentStep).toBe('collection')
@@ -55,32 +50,18 @@ describe('BookingProvider', () => {
     expect(result.current.currentStep).toBe('set')
   })
 
-  it('persists booking to sessionStorage', () => {
-    const { result } = renderHook(() => useBooking(), { wrapper })
+  it('fresh provider always starts at collection step (no persistence)', () => {
+    const { result, unmount } = renderHook(() => useBooking(), { wrapper })
     act(() => {
       result.current.setBooking((b) => ({ ...b, collectionId: 'horizon' }))
+      result.current.goTo('addons')
     })
-    const stored = JSON.parse(sessionStorage.getItem('voxa-booking') || '{}')
-    expect(stored.booking.collectionId).toBe('horizon')
-  })
-
-  it('rehydrates booking from sessionStorage on mount', () => {
-    sessionStorage.setItem(
-      'voxa-booking',
-      JSON.stringify({
-        booking: {
-          collectionId: 'executive',
-          setId: 'executive-podcast',
-          addonIds: [],
-          details: { recordingType: '', guests: '', socials: '', notes: '' },
-          durationMinutes: 90,
-          schedule: { date: null, time: null },
-        },
-        currentStep: 'addons',
-      })
-    )
-    const { result } = renderHook(() => useBooking(), { wrapper })
-    expect(result.current.booking.collectionId).toBe('executive')
     expect(result.current.currentStep).toBe('addons')
+    unmount()
+
+    // Remount: state should be reset to defaults, like a page refresh.
+    const { result: result2 } = renderHook(() => useBooking(), { wrapper })
+    expect(result2.current.currentStep).toBe('collection')
+    expect(result2.current.booking.collectionId).toBe(null)
   })
 })

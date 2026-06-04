@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { createContext, useCallback, useContext, useMemo, useState } from 'react'
 import {
   Booking,
   initialBooking,
@@ -8,8 +8,6 @@ import {
   nextStep,
   prevStep,
   StepKey,
-  firstIncompleteStep,
-  STEPS,
 } from './steps'
 import { addons } from './content/addons'
 import { getTotal, PricingResult } from './pricing'
@@ -27,49 +25,9 @@ type Ctx = {
 
 const BookingContext = createContext<Ctx | null>(null)
 
-const STORAGE_KEY = 'voxa-booking'
-
-function isStepKey(s: string): s is StepKey {
-  return STEPS.some((step) => step.key === s)
-}
-
-function hydrate(): { booking: Booking; currentStep: StepKey } {
-  if (typeof window === 'undefined') {
-    return { booking: initialBooking, currentStep: 'collection' }
-  }
-  const raw = sessionStorage.getItem(STORAGE_KEY)
-  if (raw) {
-    try {
-      const parsed = JSON.parse(raw)
-      const booking: Booking = { ...initialBooking, ...parsed.booking }
-      let currentStep: StepKey = isStepKey(parsed.currentStep) ? parsed.currentStep : 'collection'
-      const ordered = STEPS.map((s) => s.key)
-      const idx = ordered.indexOf(currentStep)
-      for (let i = 0; i < idx; i++) {
-        if (!isStepComplete(ordered[i], booking)) {
-          currentStep = firstIncompleteStep(booking)
-          break
-        }
-      }
-      return { booking, currentStep }
-    } catch {
-      // fall through
-    }
-  }
-  const hash = window.location.hash.replace('#', '')
-  const currentStep: StepKey = isStepKey(hash) ? hash : 'collection'
-  return { booking: initialBooking, currentStep }
-}
-
 export function BookingProvider({ children }: { children: React.ReactNode }) {
-  const initial = useMemo(hydrate, [])
-  const [booking, setBookingState] = useState<Booking>(initial.booking)
-  const [currentStep, setCurrentStep] = useState<StepKey>(initial.currentStep)
-
-  useEffect(() => {
-    if (typeof window === 'undefined') return
-    sessionStorage.setItem(STORAGE_KEY, JSON.stringify({ booking, currentStep }))
-  }, [booking, currentStep])
+  const [booking, setBookingState] = useState<Booking>(initialBooking)
+  const [currentStep, setCurrentStep] = useState<StepKey>('collection')
 
   const setBooking = useCallback((updater: (b: Booking) => Booking) => {
     setBookingState((prev) => updater(prev))
