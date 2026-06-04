@@ -1,0 +1,453 @@
+<!DOCTYPE html><html class="dark" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Voxa Studios | Luxury Creative Showroom</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+                  "muted-text": "#888888",
+                  "surface-variant": "#343535",
+                  "surface-container-lowest": "#0d0e0f",
+                  "surface": "#121414",
+                  "inverse-on-surface": "#303031",
+                  "error-container": "#93000a",
+                  "on-tertiary-container": "#937741",
+                  "slate-gray": "#333333",
+                  "secondary-container": "#494741",
+                  "tertiary-fixed": "#ffdea4",
+                  "error": "#ffb4ab",
+                  "ivory": "#F5F0E8",
+                  "surface-container-low": "#1b1c1c",
+                  "inverse-primary": "#5f5e5e",
+                  "on-secondary-fixed-variant": "#494741",
+                  "on-primary-fixed": "#1c1b1b",
+                  "on-error": "#690005",
+                  "secondary": "#cac6be",
+                  "surface-tint": "#c9c6c5",
+                  "on-background": "#e3e2e2",
+                  "secondary-fixed-dim": "#cac6be",
+                  "tertiary-fixed-dim": "#e4c285",
+                  "inverse-surface": "#e3e2e2",
+                  "surface-container-high": "#292a2a",
+                  "secondary-fixed": "#e7e2da",
+                  "outline": "#8e9192",
+                  "heritage-gold": "#C9A96E",
+                  "tertiary-container": "#140c00",
+                  "on-surface-variant": "#c4c7c7",
+                  "surface-dim": "#121414",
+                  "on-error-container": "#ffdad6",
+                  "on-secondary-fixed": "#1d1c17",
+                  "background": "#0D0D0D",
+                  "on-secondary-container": "#b9b5ad",
+                  "on-surface": "#e3e2e2",
+                  "on-secondary": "#32302b",
+                  "obsidian": "#0D0D0D",
+                  "surface-container-highest": "#343535",
+                  "surface-container": "#1f2020",
+                  "on-primary": "#313030",
+                  "primary": "#c9c6c5",
+                  "surface-bright": "#383939",
+                  "on-tertiary-fixed-variant": "#5a4312",
+                  "primary-fixed": "#e5e2e1",
+                  "on-primary-fixed-variant": "#474646",
+                  "on-tertiary-fixed": "#261900",
+                  "primary-fixed-dim": "#c9c6c5",
+                  "on-tertiary": "#412d00",
+                  "outline-variant": "#444748",
+                  "tertiary": "#e4c285",
+                  "primary-container": "#0d0d0d",
+                  "on-primary-container": "#7c7a7a"
+          },
+          "borderRadius": {
+                  "DEFAULT": "0.125rem",
+                  "lg": "0.25rem",
+                  "xl": "0.5rem",
+                  "full": "0.75rem"
+          },
+          "spacing": {
+                  "container-max": "1440px",
+                  "margin-edge": "64px",
+                  "unit": "8px",
+                  "gutter": "40px",
+                  "section-gap": "120px"
+          },
+          "fontFamily": {
+                  "headline-md": ["DM Sans"],
+                  "metadata": ["DM Sans"],
+                  "label-caps": ["DM Sans"],
+                  "body-lg": ["DM Sans"],
+                  "headline-xl": ["DM Sans"],
+                  "display-lg": ["DM Sans"],
+                  "body-md": ["DM Sans"],
+                  "display-lg-mobile": ["DM Sans"]
+          },
+          "fontSize": {
+                  "headline-md": ["32px", {"lineHeight": "1.3", "letterSpacing": "0.02em", "fontWeight": "400"}],
+                  "metadata": ["10px", {"lineHeight": "1.2", "letterSpacing": "0.1em", "fontWeight": "400"}],
+                  "label-caps": ["12px", {"lineHeight": "1.0", "letterSpacing": "0.4em", "fontWeight": "500"}],
+                  "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
+                  "headline-xl": ["48px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "400"}],
+                  "display-lg": ["72px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "400"}],
+                  "body-md": ["16px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
+                  "display-lg-mobile": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "400"}]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    body {
+      background-color: #0D0D0D;
+      color: #F5F0E8;
+      overflow-x: hidden;
+    }
+    .liquid-glass {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+      backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05);
+    }
+    .frosted-glass {
+      background: rgba(245, 240, 232, 0.03);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 24;
+    }
+    .glow-gold:hover {
+      box-shadow: 0 0 30px rgba(201, 169, 110, 0.2);
+    }
+    ::selection {
+      background: #C9A96E;
+      color: #0D0D0D;
+    }
+    .text-balance { text-wrap: balance; }
+  </style>
+<style class="">
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  @keyframes scroll-progress {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(300%); }
+  }
+  .animate-scroll-progress {
+    animation: scroll-progress 3s infinite ease-in-out;
+  }
+</style></head>
+<body class="font-body-md text-body-md">
+<!-- Navigation -->
+
+<!-- Hero Section -->
+<section class="relative min-h-screen flex items-center justify-center pt-20">
+<div class="absolute inset-0 z-0">
+<img alt="Authority Set" class="w-full h-full object-cover opacity-60" src="https://lh3.googleusercontent.com/aida/ADBb0uguU3aRNlIrIJ_xaLArr_tn0lICCAVvMdGJOqOFBvjLZoxCy5TE2mbBQlSc0jW7wkfWsrEvIuvyBGNzR83SYcflOe_0yZWu3cwd0MGh46fzNBco3iVIC7WEULB32bWF7Lr2H-8goZ4MpxTM64kJ0CdQNu5Bduojo9XdT6qnE7RNhKVT6-Td93dLUrIifsoQGhJNWjo174qsii9uRQkgzoD2ytr_wo4dfTcL_u2oYwod9ym8MKH8yHpOmN-6" style="transform: translateY(0px);">
+<div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/40 to-transparent"></div>
+<div class="absolute inset-0 bg-gradient-to-r from-obsidian via-transparent to-obsidian/20"></div>
+</div>
+<div class="relative z-10 w-full max-w-container-max mx-auto px-margin-edge text-center flex flex-col items-center">
+<div class="max-w-4xl mx-auto">
+<span class="font-label-caps text-label-caps text-heritage-gold mb-6 block tracking-[0.6em]">VOXA STUDIOS</span>
+<h1 class="font-display-lg text-display-lg-mobile md:text-display-lg leading-none text-white text-balance mb-12">Look Like The Expert You Already Are</h1>
+<p class="font-body-lg text-body-lg text-ivory/60 max-w-2xl text-balance mx-auto"></p><p data-start="1053" data-end="1239" class="mb-24">Record podcasts, VSLs, and content in a professionally designed studio environments. Every session includes an engineer and a streamlined process built to make content creation effortless.</p><p class=""></p>
+<div class="flex flex-col sm:flex-row gap-6 justify-center">
+<button class="bg-ivory text-obsidian px-10 py-5 font-label-caps text-label-caps hover:bg-white transition-all shadow-2xl">
+          Explore Studio Sets
+        </button>
+<button class="frosted-glass px-10 py-5 font-label-caps text-label-caps text-white border border-white/10 hover:bg-white/5 transition-all">
+          Book a Studio Tour
+        </button>
+</div>
+</div>
+</div>
+<!-- Scroll Indicator -->
+<div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 opacity-30">
+<span class="font-label-caps text-[10px] tracking-widest">SCROLL</span>
+<div class="w-px h-12 bg-gradient-to-b from-white to-transparent"></div>
+</div>
+</section>
+<!-- Studio Collections -->
+<section class="py-section-gap bg-obsidian" id="sets">
+<div class="max-w-container-max mx-auto px-margin-edge">
+<div class="mb-24 flex flex-col md:flex-row md:items-end justify-between gap-8">
+<div>
+<span class="font-label-caps text-label-caps text-heritage-gold mb-4 block">COLLECTIONS</span>
+<h2 class="font-headline-xl text-headline-xl text-white">Choose the Environment <br>That Fits Your Brand</h2>
+</div>
+<button class="font-label-caps text-label-caps text-heritage-gold flex items-center gap-2 group">
+        VIEW ALL SETS <span class="material-symbols-outlined group-hover:translate-x-2 transition-transform">arrow_forward</span>
+</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+<!-- Executive Card -->
+<div class="group relative overflow-hidden bg-surface-container-low">
+<div class="aspect-[16/10] overflow-hidden">
+<img alt="Executive Collection" class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000" src="https://lh3.googleusercontent.com/aida/ADBb0ujLcrq63oSH9hG1W7Q80njg9KkTskwoS9XdZeNWyv_fl-TzzKJ9oNFquAxxNau5UOwo-dptHSCqX7mV6hLX5KSzYf1SrReRal2CxzPwHXUwVV2_NoFGG9Vf69fX5bRmtASsMRO66wCycTpT_nJlHm6CMf2mHUT8ajt6rvbRdtR8fali7VgKCD8OysURWNv12nsvNbTZ3PE1R8ipFOSBkCqxASsAVuMnCfGxy5s5TViftfox3hazK6CaUMoX">
+</div>
+<div class="p-12 liquid-glass border-t-0">
+<h3 class="font-headline-md text-headline-md text-white mb-6">Executive Collection</h3>
+<div class="flex flex-wrap gap-3 mb-10">
+<span class="px-4 py-1.5 rounded-full border border-white/10 font-metadata text-metadata text-ivory/60">Podcast</span>
+<span class="px-4 py-1.5 rounded-full border border-white/10 font-metadata text-metadata text-ivory/60">Desk</span>
+<span class="px-4 py-1.5 rounded-full border border-white/10 font-metadata text-metadata text-ivory/60">Creator</span>
+</div>
+<button class="w-full py-5 border border-white/10 font-label-caps text-label-caps text-white hover:bg-white hover:text-obsidian transition-all">Explore Sets</button>
+</div>
+</div>
+<!-- Horizon Card -->
+<div class="group relative overflow-hidden bg-surface-container-low">
+<div class="aspect-[16/10] overflow-hidden">
+<img alt="Horizon Collection" class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000" src="https://lh3.googleusercontent.com/aida/ADBb0ujOG5lOECLnhvFgTXRviMraX_PmwQ-wbztKdNrbLdhexTRjSvDVJ0GSNReX3GGiQkyKZTsDy6XofPCpnqTdrCrddPnSy1L-nlwXlHg2ioy91AWyRB_3pOYnT-JL8QRTV3UbRB4nyv4MweKnKrqqHMDpFDtxiU4vs_eWckBWuvpt9rW49nZOy2FDYKDzjGMMwXa5kf8TXb5l2dCJSSsEo1gPJXjcrk1yd-eaKX9bZRKVB4bxvV5JylTyHigb">
+</div>
+<div class="p-12 liquid-glass border-t-0">
+<h3 class="font-headline-md text-headline-md text-white mb-6">Horizon Collection</h3>
+<div class="flex flex-wrap gap-3 mb-10">
+<span class="px-4 py-1.5 rounded-full border border-white/10 font-metadata text-metadata text-ivory/60">Podcast</span>
+<span class="px-4 py-1.5 rounded-full border border-white/10 font-metadata text-metadata text-ivory/60">Desk</span>
+<span class="px-4 py-1.5 rounded-full border border-white/10 font-metadata text-metadata text-ivory/60">Creator</span>
+</div>
+<button class="w-full py-5 border border-white/10 font-label-caps text-label-caps text-white hover:bg-white hover:text-obsidian transition-all">Explore Sets</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Example Content Section -->
+<section class="py-section-gap bg-surface-container-lowest">
+<div class="max-w-container-max mx-auto px-margin-edge"><!-- Section Header -->
+<div class="text-center mb-24">
+  
+  <h2 class="font-headline-xl text-headline-xl text-white">See What Gets Created Here</h2>
+</div>
+
+<!-- Horizontal Slider Container -->
+<div class="relative group">
+  <div class="flex overflow-x-auto gap-8 pb-12 snap-x snap-mandatory no-scrollbar scroll-smooth" style="-ms-overflow-style: none; scrollbar-width: none;">
+    <!-- Slide 1 -->
+    <div class="flex-none w-[85vw] md:w-[600px] snap-center">
+      <div class="aspect-video relative overflow-hidden rounded-xl group/card border border-white/5">
+        <img alt="Podcast Clip" class="w-full h-full object-cover opacity-70 group-hover/card:scale-105 transition-all duration-1000" src="https://lh3.googleusercontent.com/aida/ADBb0ujkabd-Yg9HDPoXBdp7TCrj8S4AhRxU8pPjoC8xTNSwxfd7Fhpe_Ou_YT8G5HBPPTjwu7IIuuBBXHMj2ozpsqu42ivCQegGcn0p9CC7-JpnxzYE3ru4FFAGYuCy6JT8i4XE1wxMCRLi2hCrQydr7TpIAGOXh7xcrxh83TKruaZTjBMtzd8PYg9GXS12MbXcjmub6R9eF65to1FipzfGzj1E4wIDA3lZ9FI_IykSBzeiiLUrhIoWGNY8mnmk">
+        <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-transparent to-transparent opacity-80"></div>
+        <div class="absolute inset-0 flex flex-col justify-end p-8">
+          <span class="font-label-caps text-[10px] text-heritage-gold mb-2">PODCAST CLIPS</span>
+          <h4 class="font-headline-md text-2xl text-white">High-Stakes Business Dialogue</h4>
+        </div>
+      </div>
+    </div>
+    <!-- Slide 2 -->
+    <div class="flex-none w-[85vw] md:w-[600px] snap-center">
+      <div class="aspect-video relative overflow-hidden rounded-xl group/card border border-white/5">
+        <img alt="Founder Content" class="w-full h-full object-cover opacity-70 group-hover/card:scale-105 transition-all duration-1000" src="https://lh3.googleusercontent.com/aida/ADBb0uguU3aRNlIrIJ_xaLArr_tn0lICCAVvMdGJOqOFBvjLZoxCy5TE2mbBQlSc0jW7wkfWsrEvIuvyBGNzR83SYcflOe_0yZWu3cwd0MGh46fzNBco3iVIC7WEULB32bWF7Lr2H-8goZ4MpxTM64kJ0CdQNu5Bduojo9XdT6qnE7RNhKVT6-Td93dLUrIifsoQGhJNWjo174qsii9uRQkgzoD2ytr_wo4dfTcL_u2oYwod9ym8MKH8yHpOmN-6">
+        <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-transparent to-transparent opacity-80"></div>
+        <div class="absolute inset-0 flex flex-col justify-end p-8">
+          <span class="font-label-caps text-[10px] text-heritage-gold mb-2">FOUNDER CONTENT</span>
+          <h4 class="font-headline-md text-2xl text-white">Authority Shorts</h4>
+        </div>
+      </div>
+    </div>
+    <!-- Slide 3 -->
+    <div class="flex-none w-[85vw] md:w-[600px] snap-center">
+      <div class="aspect-video relative overflow-hidden rounded-xl group/card border border-white/5">
+        <img alt="VSL" class="w-full h-full object-cover opacity-70 group-hover/card:scale-105 transition-all duration-1000" src="https://lh3.googleusercontent.com/aida/ADBb0ujh_-_KPb1gaBBupVqxJHlALCSqJQW_AJ__fgrBP1mcuvk9RDeXMfk9dxVjjJPwzaJaEMB0Xt40PZEHrasLoEddE8M_QUNwgidJghMh7c6HMgZRxlQ3HueIxCfyVgoLPlUHTRVQmOrxQjVbw8PRPYAFK4d9kQ42FUFsMgTUjsvkfv8DhSyGDZGdFo4jAyUmrnb08caYjQQQ44ogzJfmUe5TfwBgBT3xcdiFWrZwm8mNJJw6lhTHQ7mV5vf5">
+        <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-transparent to-transparent opacity-80"></div>
+        <div class="absolute inset-0 flex flex-col justify-end p-8">
+          <span class="font-label-caps text-[10px] text-heritage-gold mb-2">MODERN VSL</span>
+          <h4 class="font-headline-md text-2xl text-white">Product Launches</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation Controls -->
+  <div class="hidden md:flex justify-between items-center mt-12">
+    <div class="flex gap-4">
+      <button class="liquid-glass w-14 h-14 rounded-full flex items-center justify-center text-white hover:bg-white/10 transition-colors border border-white/10">
+        <span class="material-symbols-outlined">arrow_back</span>
+      </button>
+      <button class="liquid-glass w-14 h-14 rounded-full flex items-center justify-center text-white hover:bg-white/10 transition-colors border border-white/10">
+        <span class="material-symbols-outlined">arrow_forward</span>
+      </button>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="font-label-caps text-[10px] text-white/30 tracking-widest uppercase">Drag to explore</span>
+      <div class="w-24 h-px bg-white/10 relative overflow-hidden">
+        <div class="absolute inset-0 bg-heritage-gold w-1/3 animate-scroll-progress"></div>
+      </div>
+    </div>
+  </div>
+</div></div>
+</section>
+<!-- Why Voxa -->
+<section class="py-section-gap bg-obsidian">
+<div class="max-w-container-max mx-auto px-margin-edge">
+<div class="max-w-3xl mb-24">
+<span class="font-label-caps text-label-caps text-heritage-gold mb-4 block">THE EXPERIENCE</span>
+<h2 class="font-headline-xl text-headline-xl text-white">Everything Is Already Ready</h2>
+<p class="font-body-lg text-ivory/60 mt-6">Forget the technical overhead. Our studios are engineered for immediate performance.</p>
+</div>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-px bg-white/5 border border-white/5">
+<div class="p-10 bg-obsidian group hover:bg-white/[0.02] transition-colors">
+<span class="material-symbols-outlined text-heritage-gold text-3xl mb-6">videocam</span>
+<h4 class="font-label-caps text-xs text-white mb-3">MULTI-CAMERA RECORDING</h4>
+<p class="text-sm text-ivory/40">Professional coverage without the setup..</p>
+</div>
+<div class="p-10 bg-obsidian group hover:bg-white/[0.02] transition-colors">
+<span class="material-symbols-outlined text-heritage-gold text-3xl mb-6">light_mode</span>
+<h4 class="font-label-caps text-xs text-white mb-3">PROFESSIONAL LIGHTING</h4>
+<p class="text-sm text-ivory/40">Optimized lighting designed to help you look your best on camera.</p>
+</div>
+<div class="p-10 bg-obsidian group hover:bg-white/[0.02] transition-colors">
+<span class="material-symbols-outlined text-heritage-gold text-3xl mb-6">mic</span>
+<h4 class="font-label-caps text-xs text-white mb-3">STUDIO AUDIO</h4>
+<p class="text-sm text-ivory/40">Broadcast quality sound treatment.</p>
+</div>
+<div class="p-10 bg-obsidian group hover:bg-white/[0.02] transition-colors">
+<span class="material-symbols-outlined text-heritage-gold text-3xl mb-6">notes</span>
+<h4 class="font-label-caps text-xs text-white mb-3">TELEPROMPTER</h4>
+<p class="text-sm text-ivory/40">Available on all sets for seamless delivery.</p>
+</div>
+<div class="p-10 bg-obsidian group hover:bg-white/[0.02] transition-colors">
+<span class="material-symbols-outlined text-heritage-gold text-3xl mb-6">auto_awesome</span>
+<h4 class="font-label-caps text-xs text-white mb-3">TURNKEY EXPERIENCE</h4>
+<p class="text-sm text-ivory/40">Show up, record, and leave with professionally captured content.</p>
+</div>
+<div class="p-10 bg-obsidian group hover:bg-white/[0.02] transition-colors">
+<span class="material-symbols-outlined text-heritage-gold text-3xl mb-6">bolt</span>
+<h4 class="font-label-caps text-xs text-white mb-3">MULTIPLE SET OPTIONS</h4>
+<p class="text-sm text-ivory/40">Choose the look that fits your brand.</p>
+</div>
+<div class="p-10 bg-obsidian group hover:bg-white/[0.02] transition-colors">
+<span class="material-symbols-outlined text-heritage-gold text-3xl mb-6">support_agent</span>
+<h4 class="font-label-caps text-xs text-white mb-3">PRODUCER SUPPORT</h4>
+<p class="text-sm text-ivory/40">On-site help with tech and direction.</p>
+</div>
+<div class="p-10 bg-obsidian group hover:bg-white/[0.02] transition-colors flex items-center justify-center">
+<button class="font-label-caps text-[10px] text-heritage-gold border-b border-heritage-gold pb-1 hover:text-white hover:border-white transition-all">VIEW ALL FEATURES</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Three Steps -->
+
+<!-- Social Proof -->
+<section class="py-section-gap bg-obsidian">
+<div class="max-w-container-max mx-auto px-margin-edge">
+<div class="text-center mb-24">
+<span class="font-label-caps text-label-caps text-heritage-gold mb-4 block">TRUSTED BY LEADERS</span>
+<h2 class="font-headline-xl text-headline-xl text-white">Built For Professionals Creating <br>Content Consistently</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="liquid-glass p-10 group hover:border-white/20 transition-all">
+<div class="flex items-center gap-4 mb-8">
+<div class="w-12 h-12 rounded-full bg-slate-gray"></div>
+<div>
+<h5 class="font-label-caps text-xs text-white">DR. JULIAN VOSS</h5>
+<p class="text-[10px] text-heritage-gold">WELLNESS FOUNDER</p>
+</div>
+</div>
+<p class="text-ivory/60 italic leading-relaxed">"The transition from my home office to Voxa changed how my audience perceives my brand. It's the highest production ROI I've ever found."</p>
+</div>
+<div class="liquid-glass p-10 group hover:border-white/20 transition-all border-white/20">
+<div class="flex items-center gap-4 mb-8">
+<div class="w-12 h-12 rounded-full bg-slate-gray"></div>
+<div>
+<h5 class="font-label-caps text-xs text-white">SARAH CHENG</h5>
+<p class="text-[10px] text-heritage-gold">STRATEGY CONSULTANT</p>
+</div>
+</div>
+<p class="text-ivory/60 italic leading-relaxed">"I batch an entire month of YouTube videos and LinkedIn shorts in one 4-hour block. The team here makes it effortless."</p>
+</div>
+<div class="liquid-glass p-10 group hover:border-white/20 transition-all">
+<div class="flex items-center gap-4 mb-8">
+<div class="w-12 h-12 rounded-full bg-slate-gray"></div>
+<div>
+<h5 class="font-label-caps text-xs text-white">MARCUS REED</h5>
+<p class="text-[10px] text-heritage-gold">PODCAST HOST</p>
+</div>
+</div>
+<p class="text-ivory/60 italic leading-relaxed">"Unmatched aesthetic. The Executive Set is exactly what I needed for my business interviews. Truly a luxury experience."</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Studio Tour CTA -->
+<section class="py-section-gap bg-surface-container-low relative overflow-hidden">
+<div class="absolute inset-0 opacity-10">
+<img alt="Studio Detail" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/ADBb0ujOG5lOECLnhvFgTXRviMraX_PmwQ-wbztKdNrbLdhexTRjSvDVJ0GSNReX3GGiQkyKZTsDy6XofPCpnqTdrCrddPnSy1L-nlwXlHg2ioy91AWyRB_3pOYnT-JL8QRTV3UbRB4nyv4MweKnKrqqHMDpFDtxiU4vs_eWckBWuvpt9rW49nZOy2FDYKDzjGMMwXa5kf8TXb5l2dCJSSsEo1gPJXjcrk1yd-eaKX9bZRKVB4bxvV5JylTyHigb">
+</div>
+<div class="max-w-container-max mx-auto px-margin-edge relative z-10 flex flex-col md:flex-row items-center justify-between gap-12">
+<div class="max-w-xl">
+<h2 class="font-headline-xl text-headline-xl text-white mb-6">Want To See The Studio First?</h2>
+<p class="font-body-lg text-ivory/60">Schedule a quick studio tour and see every set in person before booking. No pressure, just a walk-through of the possibilities.</p>
+</div>
+<button class="bg-white text-obsidian px-12 py-6 font-label-caps text-label-caps hover:bg-ivory transition-all shadow-2xl shrink-0">
+      Book A Studio Tour
+    </button>
+</div>
+</section>
+<!-- Final CTA Section -->
+<section class="py-[160px] bg-obsidian text-center border-t border-white/5">
+<div class="max-w-container-max mx-auto px-margin-edge">
+<span class="font-label-caps text-label-caps text-heritage-gold mb-8 block tracking-[0.4em]">READY TO SCALE YOUR CONTENT?</span>
+<h2 class="font-display-lg text-display-lg-mobile md:text-headline-xl text-white mb-12">Find The Set That <br>Matches Your Brand</h2>
+<div class="flex flex-col sm:flex-row items-center justify-center gap-6">
+<button class="bg-ivory text-obsidian px-12 py-6 font-label-caps text-label-caps hover:bg-white transition-all shadow-2xl w-full sm:w-auto">
+        Explore Studio Sets
+      </button>
+<button class="frosted-glass px-12 py-6 font-label-caps text-label-caps text-white border border-white/10 hover:bg-white/5 transition-all w-full sm:w-auto">
+        Book A Studio Tour
+      </button>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="py-20 bg-obsidian border-t border-white/5">
+<div class="max-w-container-max mx-auto px-margin-edge flex flex-col md:flex-row justify-between items-center gap-12">
+<div class="flex flex-col gap-4 items-center md:items-start">
+<span class="font-headline-md text-2xl text-white">VOXA</span>
+<p class="text-ivory/30 text-xs tracking-widest">LUXURY CONTENT ENVIRONMENTS</p>
+</div>
+<div class="flex gap-12">
+<a class="font-label-caps text-[10px] text-ivory/40 hover:text-white transition-colors" href="#">INSTAGRAM</a>
+<a class="font-label-caps text-[10px] text-ivory/40 hover:text-white transition-colors" href="#">TWITTER</a>
+<a class="font-label-caps text-[10px] text-ivory/40 hover:text-white transition-colors" href="#">LINKEDIN</a>
+</div>
+<div class="text-[10px] text-ivory/20 font-label-caps">
+      © 2024 VOXA STUDIOS. ALL RIGHTS RESERVED.
+    </div>
+</div>
+</footer>
+<script>
+  // Simple Navbar Scroll Effect
+  window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    if (window.scrollY > 50) {
+      nav.classList.add('bg-obsidian/80', 'h-16');
+      nav.classList.remove('bg-transparent', 'h-20');
+    } else {
+      nav.classList.remove('bg-obsidian/80', 'h-16');
+      nav.classList.add('bg-transparent', 'h-20');
+    }
+  });
+
+  // Parallax Hero Effect
+  window.addEventListener('scroll', () => {
+    const heroImg = document.querySelector('section img');
+    if(heroImg) {
+      const scrolled = window.pageYOffset;
+      heroImg.style.transform = `translateY(${scrolled * 0.15}px)`;
+    }
+  });
+</script>
+
+
+
+
+
+
+</body></html>
