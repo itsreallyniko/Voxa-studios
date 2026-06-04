@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 
 export function FinalCTA() {
@@ -12,9 +11,9 @@ export function FinalCTA() {
           Find The Set That <br /> Matches Your Brand
         </h2>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-          <Link href="/book">
+          <a href="#book">
             <Button variant="primary" size="lg">Explore Studio Sets</Button>
-          </Link>
+          </a>
           <Button variant="secondary" size="lg">Book A Studio Tour</Button>
         </div>
       </div>

@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import { Tag } from '@/components/ui/tag'
 import { collections } from '@/lib/content/collections'
 
@@ -19,18 +18,18 @@ export function CollectionsPreview() {
               That Fits Your Brand
             </h2>
           </div>
-          <Link href="/book" className="text-label-caps text-heritage-gold flex items-center gap-2 group">
+          <a href="#book" className="text-label-caps text-heritage-gold flex items-center gap-2 group">
             VIEW ALL SETS{' '}
             <span className="material-symbols-outlined group-hover:translate-x-2 transition-transform">
               arrow_forward
             </span>
-          </Link>
+          </a>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           {collections.map((c) => (
-            <Link
+            <a
               key={c.id}
-              href="/book"
+              href="#book"
               className="group relative overflow-hidden bg-surface-container-low block"
             >
               <div className="aspect-[16/10] overflow-hidden">
@@ -52,7 +51,7 @@ export function CollectionsPreview() {
                   Explore Sets
                 </div>
               </div>
-            </Link>
+            </a>
           ))}
         </div>
       </div>

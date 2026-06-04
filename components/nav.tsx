@@ -29,9 +29,9 @@ export function Nav() {
           <Link href="/#why" className="text-label-caps text-ivory/60 hover:text-white transition-colors">
             EXPERIENCE
           </Link>
-          <Link href="/book" className="text-label-caps text-heritage-gold hover:text-white transition-colors">
+          <a href="#book" className="text-label-caps text-heritage-gold hover:text-white transition-colors">
             BOOK A SESSION
-          </Link>
+          </a>
         </div>
       </div>
     </nav>

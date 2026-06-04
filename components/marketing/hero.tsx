@@ -1,6 +1,5 @@
 'use client'
 
-import Link from 'next/link'
 import { useEffect, useRef } from 'react'
 import { Button } from '@/components/ui/button'
 
@@ -43,11 +42,11 @@ export function Hero() {
             an engineer and a streamlined process built to make content creation effortless.
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <Link href="/book">
+            <a href="#book">
               <Button variant="primary" size="lg">
                 Explore Studio Sets
               </Button>
-            </Link>
+            </a>
             <Button variant="secondary" size="lg">
               Book a Studio Tour
             </Button>

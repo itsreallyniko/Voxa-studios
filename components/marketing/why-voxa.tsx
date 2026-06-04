@@ -29,7 +29,7 @@ export function WhyVoxa() {
           ))}
           <div className="p-10 bg-obsidian group hover:bg-white/[0.02] transition-colors flex items-center justify-center">
             <a
-              href="/book"
+              href="#book"
               className="text-[10px] text-heritage-gold border-b border-heritage-gold pb-1 hover:text-white hover:border-white transition-all tracking-[0.4em]"
             >
               VIEW ALL FEATURES

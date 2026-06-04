@@ -4,6 +4,7 @@ import { ExampleContentSlider } from '@/components/marketing/example-content-sli
 import { WhyVoxa } from '@/components/marketing/why-voxa'
 import { SocialProof } from '@/components/marketing/social-proof'
 import { StudioTourCTA } from '@/components/marketing/studio-tour-cta'
+import { BookSection } from '@/components/marketing/book-section'
 import { FinalCTA } from '@/components/marketing/final-cta'
 import { Footer } from '@/components/marketing/footer'
 
@@ -16,6 +17,7 @@ export default function Home() {
       <WhyVoxa />
       <SocialProof />
       <StudioTourCTA />
+      <BookSection />
       <FinalCTA />
       <Footer />
     </>

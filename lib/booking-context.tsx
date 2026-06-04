@@ -71,13 +71,6 @@ export function BookingProvider({ children }: { children: React.ReactNode }) {
     sessionStorage.setItem(STORAGE_KEY, JSON.stringify({ booking, currentStep }))
   }, [booking, currentStep])
 
-  useEffect(() => {
-    if (typeof window === 'undefined') return
-    if (window.location.hash.replace('#', '') !== currentStep) {
-      history.replaceState(null, '', `#${currentStep}`)
-    }
-  }, [currentStep])
-
   const setBooking = useCallback((updater: (b: Booking) => Booking) => {
     setBookingState((prev) => updater(prev))
   }, [])
