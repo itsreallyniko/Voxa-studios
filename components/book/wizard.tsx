@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
-import { BookingProvider, useBooking } from '@/lib/booking-context'
+import { useBooking } from '@/lib/booking-context'
 import { StepRail } from '@/components/book/step-rail'
 import { BookingSummaryPanel, BookingSummaryBar } from '@/components/book/booking-summary'
 import { StepFrame } from '@/components/book/step-frame'
@@ -52,11 +52,12 @@ function KeyboardShortcuts({ active }: { active: boolean }) {
 }
 
 /**
- * Wizard renders the full 7-step booking flow.
+ * Wizard renders the full 7-step booking flow. The caller is responsible for
+ * wrapping it in a <BookingProvider>.
  *
- * When `inline` is true, the wizard is embedded as a section of the landing
- * page: keyboard shortcuts and the mobile summary bar only activate while the
- * wizard is in the viewport, so they don't fight the rest of the page.
+ * When `inline` is true, keyboard shortcuts and the mobile summary bar only
+ * activate while the wizard is in the viewport, so they don't fight the rest
+ * of the page.
  */
 export function Wizard({
   inline = false,
@@ -66,7 +67,7 @@ export function Wizard({
   activeInViewport?: boolean
 }) {
   return (
-    <BookingProvider>
+    <>
       <KeyboardShortcuts active={!inline || activeInViewport} />
       <div className={inline ? '' : 'pt-20'}>
         <StepRail />
@@ -81,6 +82,6 @@ export function Wizard({
         </div>
         {(!inline || activeInViewport) && <BookingSummaryBar />}
       </div>
-    </BookingProvider>
+    </>
   )
 }
