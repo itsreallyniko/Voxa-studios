@@ -8,27 +8,6 @@ export type Creation = {
 
 export const creations: Creation[] = [
   {
-    src: '/creations/Mirandacohenfit.jpg',
-    alt: 'Miranda Cohen on the Executive Creator Set',
-    aspect: '16:9',
-    set: 'EXECUTIVE CREATOR SET',
-    byline: '@mirandacohenfit',
-  },
-  {
-    src: '/creations/Jasonkalambay.jpg',
-    alt: 'Jason Kalambay on the Executive Creator Set',
-    aspect: '16:9',
-    set: 'EXECUTIVE CREATOR SET',
-    byline: '@jasonkalambay',
-  },
-  {
-    src: '/creations/julietteastor.jpg',
-    alt: 'Juliette Astor on the Executive Creator Set',
-    aspect: '9:16',
-    set: 'EXECUTIVE CREATOR SET',
-    byline: '@julietteastor',
-  },
-  {
     src: '/creations/matt_thecloser.jpg',
     alt: 'Matt at the Authority Desk',
     aspect: '16:9',
@@ -48,5 +27,26 @@ export const creations: Creation[] = [
     aspect: '16:9',
     set: 'EXECUTIVE PODCAST SET',
     byline: 'Interesting Times · NYT',
+  },
+  {
+    src: '/creations/julietteastor.jpg',
+    alt: 'Juliette Astor on the Executive Creator Set',
+    aspect: '9:16',
+    set: 'EXECUTIVE CREATOR SET',
+    byline: '@julietteastor',
+  },
+  {
+    src: '/creations/mirandacohenfit.png',
+    alt: 'Miranda Cohen on the Executive Creator Set',
+    aspect: '9:16',
+    set: 'EXECUTIVE CREATOR SET',
+    byline: '@mirandacohenfit',
+  },
+  {
+    src: '/creations/Jasonkalambay.jpg',
+    alt: 'Jason Kalambay on the Executive Creator Set',
+    aspect: '16:9',
+    set: 'EXECUTIVE CREATOR SET',
+    byline: '@jasonkalambay',
   },
 ]

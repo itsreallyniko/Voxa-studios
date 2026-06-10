@@ -1,13 +1,11 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 
-const HERO_IMAGE =
-  'https://lh3.googleusercontent.com/aida/ADBb0uguU3aRNlIrIJ_xaLArr_tn0lICCAVvMdGJOqOFBvjLZoxCy5TE2mbBQlSc0jW7wkfWsrEvIuvyBGNzR83SYcflOe_0yZWu3cwd0MGh46fzNBco3iVIC7WEULB32bWF7Lr2H-8goZ4MpxTM64kJ0CdQNu5Bduojo9XdT6qnE7RNhKVT6-Td93dLUrIifsoQGhJNWjo174qsii9uRQkgzoD2ytr_wo4dfTcL_u2oYwod9ym8MKH8yHpOmN-6'
-
 export function Hero() {
-  const imgRef = useRef<HTMLImageElement>(null)
+  const imgRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const onScroll = () => {
@@ -19,29 +17,44 @@ export function Hero() {
   }, [])
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center pt-20">
-      <div className="absolute inset-0 z-0">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          ref={imgRef}
-          alt="Voxa studio environment"
-          className="w-full h-full object-cover opacity-60"
-          src={HERO_IMAGE}
-        />
+    <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        <div ref={imgRef} className="absolute inset-0 will-change-transform">
+          <Image
+            alt="Voxa studio environment"
+            src="/hero.jpg"
+            fill
+            priority
+            quality={95}
+            sizes="100vw"
+            className="object-cover opacity-65 scale-[0.85]"
+          />
+        </div>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_70%_at_50%_45%,_rgba(13,13,13,0.78)_0%,_rgba(13,13,13,0.35)_55%,_rgba(13,13,13,0.15)_100%)]" />
         <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/40 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-r from-obsidian via-transparent to-obsidian/20" />
+        <div className="absolute inset-0 bg-gradient-to-r from-obsidian/30 via-transparent to-obsidian/30" />
       </div>
-      <div className="relative z-10 w-full max-w-container-max mx-auto px-6 md:px-margin-edge text-center flex flex-col items-center">
-        <div className="max-w-4xl mx-auto">
-          <span className="text-label-caps text-heritage-gold mb-6 block tracking-[0.6em]">VOXA STUDIOS</span>
-          <h1 className="text-display-lg-mobile md:text-display-lg leading-none text-white text-balance mb-12">
-            Look Like The Expert You Already Are
+
+      <div className="relative z-10 w-full max-w-container-max mx-auto px-6 md:px-margin-edge flex flex-col items-center">
+        <div className="max-w-3xl mx-auto text-center">
+          <div className="fade-up flex items-center justify-center gap-4 mb-10" style={{ animationDelay: '60ms' }}>
+            <span className="hidden sm:block h-px w-10 bg-heritage-gold/50" />
+            <span className="text-[11px] text-heritage-gold tracking-[0.6em] uppercase">
+              Voxa Studios
+            </span>
+            <span className="hidden sm:block h-px w-10 bg-heritage-gold/50" />
+          </div>
+
+          <h1 className="fade-up text-display-lg-mobile md:text-display-lg leading-[1.05] tracking-tight text-white text-balance mb-8 [text-shadow:0_2px_24px_rgba(13,13,13,0.55)]" style={{ animationDelay: '140ms' }}>
+            Professional content
+            <br className="hidden md:block" /> effortlessly
           </h1>
-          <p className="text-body-lg text-ivory/60 max-w-2xl text-balance mx-auto mb-24">
-            Record podcasts, VSLs, and content in professionally designed studio environments. Every session includes
-            an engineer and a streamlined process built to make content creation effortless.
+
+          <p className="fade-up text-body-lg text-ivory/85 leading-relaxed max-w-xl mx-auto mb-14 text-balance" style={{ animationDelay: '220ms' }}>
+            Turnkey podcast, VSL, and content production, engineer included.
           </p>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
+
+          <div className="fade-up flex flex-col sm:flex-row gap-4 justify-center" style={{ animationDelay: '300ms' }}>
             <a href="#book">
               <Button variant="primary" size="lg">
                 Explore Studio Sets
@@ -53,9 +66,10 @@ export function Hero() {
           </div>
         </div>
       </div>
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 opacity-30">
-        <span className="text-[10px] tracking-widest">SCROLL</span>
-        <div className="w-px h-12 bg-gradient-to-b from-white to-transparent" />
+
+      <div className="fade-up absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 opacity-50" style={{ animationDelay: '500ms' }}>
+        <span className="text-[10px] text-ivory/70 tracking-[0.4em] uppercase">Scroll</span>
+        <div className="w-px h-10 bg-gradient-to-b from-ivory/50 to-transparent" />
       </div>
     </section>
   )

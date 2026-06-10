@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import { Reveal } from '@/components/ui/reveal'
 import { creations, type Creation } from './creations-data'
 
 function CreationCard({ c, priority }: { c: Creation; priority?: boolean }) {
@@ -14,8 +15,9 @@ function CreationCard({ c, priority }: { c: Creation; priority?: boolean }) {
           width={isPortrait ? 1080 : 1920}
           height={isPortrait ? 1920 : 1080}
           priority={priority}
-          sizes="(max-width: 768px) 320px, 600px"
-          className="block h-[320px] md:h-[420px] w-auto object-cover"
+          quality={90}
+          sizes={isPortrait ? '220px' : '(max-width: 768px) 500px, 700px'}
+          className="block h-[280px] md:h-[360px] w-auto object-cover"
         />
       </div>
       <figcaption className="border-t border-white/5 mt-3 pt-3 px-1 pb-1">
@@ -52,9 +54,10 @@ export function CreationsMarquee() {
   return (
     <section className="py-section-gap bg-surface-container-lowest">
       <div className="max-w-container-max mx-auto px-6 md:px-margin-edge">
-        <div className="text-center mb-24">
+        <Reveal className="text-center mb-24">
+          <span className="text-label-caps text-heritage-gold mb-4 block">TRUSTED BY LEADERS</span>
           <h2 className="text-headline-xl text-white">See What Gets Created Here</h2>
-        </div>
+        </Reveal>
       </div>
       <div className="creations-mask relative overflow-hidden">
         <div className="creations-track flex gap-6 w-max animate-drift">

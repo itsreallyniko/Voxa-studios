@@ -1,9 +1,8 @@
 import { Hero } from '@/components/marketing/hero'
 import { BookSection } from '@/components/marketing/book-section'
-import { ExampleContentSlider } from '@/components/marketing/example-content-slider'
+import { CreationsMarquee } from '@/components/marketing/creations-marquee'
 import { WhyVoxa } from '@/components/marketing/why-voxa'
-import { SocialProof } from '@/components/marketing/social-proof'
-import { StudioTourCTA } from '@/components/marketing/studio-tour-cta'
+import { ComeVisitUs } from '@/components/marketing/come-visit-us'
 import { FinalCTA } from '@/components/marketing/final-cta'
 import { Footer } from '@/components/marketing/footer'
 
@@ -11,11 +10,10 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <CreationsMarquee />
       <BookSection />
-      <ExampleContentSlider />
       <WhyVoxa />
-      <SocialProof />
-      <StudioTourCTA />
+      <ComeVisitUs />
       <FinalCTA />
       <Footer />
     </>

@@ -10,7 +10,7 @@ describe('creations data', () => {
 
   it('every entry has src under /creations/, alt, aspect, set, byline', () => {
     for (const c of creations) {
-      expect(c.src).toMatch(/^\/creations\/.+\.jpg$/)
+      expect(c.src).toMatch(/^\/creations\/.+\.(jpg|png)$/)
       expect(c.alt.length).toBeGreaterThan(0)
       expect(['16:9', '9:16']).toContain(c.aspect)
       expect(c.set.length).toBeGreaterThan(0)
@@ -18,10 +18,16 @@ describe('creations data', () => {
     }
   })
 
-  it('exposes the one 9:16 portrait (julietteastor)', () => {
-    const portraits = creations.filter((c) => c.aspect === '9:16')
-    expect(portraits).toHaveLength(1)
-    expect(portraits[0].src).toContain('julietteastor')
+  it('renders julietteastor and mirandacohenfit as 9:16 portraits', () => {
+    const portraitSrcs = creations
+      .filter((c) => c.aspect === '9:16')
+      .map((c) => c.src)
+    expect(portraitSrcs).toEqual(
+      expect.arrayContaining([
+        '/creations/julietteastor.jpg',
+        '/creations/mirandacohenfit.png',
+      ]),
+    )
   })
 
   it('groups three creators under EXECUTIVE CREATOR SET', () => {
