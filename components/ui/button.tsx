@@ -9,12 +9,12 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const baseClass =
-  'inline-flex items-center justify-center text-label-caps font-medium transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed'
+  'inline-flex items-center justify-center text-label-caps font-medium transition-[transform,background-color,border-color,color,box-shadow] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.97] disabled:opacity-40 disabled:cursor-not-allowed will-change-transform'
 
 const sizeClass: Record<Size, string> = {
   sm: 'px-6 py-3',
   md: 'px-8 py-4',
-  lg: 'px-12 py-6',
+  lg: 'px-8 py-4 sm:px-12 sm:py-6',
 }
 
 const variantClass: Record<Variant, string> = {

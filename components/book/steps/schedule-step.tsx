@@ -44,7 +44,7 @@ export function ScheduleStep() {
       <div className="grid grid-cols-1 md:grid-cols-[1fr_280px] gap-12">
         <div>
           <span className="text-label-caps text-ivory/60 mb-4 block">SELECT DATE</span>
-          <div className="grid grid-cols-7 gap-2">
+          <div className="grid grid-cols-4 sm:grid-cols-7 gap-2">
             {days.map((d) => {
               const active = booking.schedule.date === d.iso
               return (
@@ -52,7 +52,7 @@ export function ScheduleStep() {
                   key={d.iso}
                   type="button"
                   onClick={() => pickDate(d.iso)}
-                  className={`p-3 border text-center transition-colors ${
+                  className={`p-2 sm:p-3 border text-center transition-colors ${
                     active
                       ? 'border-heritage-gold bg-heritage-gold/10 text-heritage-gold'
                       : 'border-slate-gray text-ivory/70 hover:border-white/30 hover:text-white'
