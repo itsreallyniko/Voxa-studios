@@ -4,6 +4,45 @@
 
 :root {
   color-scheme: dark;
+  --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out-strong: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes navSlideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.fade-up {
+  opacity: 0;
+  animation: fadeUp 600ms var(--ease-out-strong) both;
+}
+
+.nav-mount {
+  animation: navSlideDown 500ms var(--ease-out-strong) both;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(10px);
+  transition-property: opacity, transform;
+  transition-duration: 500ms;
+  transition-timing-function: var(--ease-out-strong);
+}
+.reveal[data-shown] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-up, .nav-mount { animation: none !important; opacity: 1 !important; transform: none !important; }
+  .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
 }
 
 html {
@@ -51,6 +90,42 @@ body {
 }
 .animate-scroll-progress {
   animation: scroll-progress 3s infinite ease-in-out;
+}
+
+@keyframes drift {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+
+.animate-drift {
+  animation: drift 60s linear infinite;
+  will-change: transform;
+}
+
+.creations-track:hover { animation-play-state: paused; }
+.creations-track:hover .creations-card { opacity: 0.4; }
+.creations-track .creations-card:hover { opacity: 1; transform: translateY(-4px); }
+
+.creations-mask {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    black 96px,
+    black calc(100% - 96px),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    black 96px,
+    black calc(100% - 96px),
+    transparent 100%
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-drift { animation: none !important; }
+  .creations-mask { overflow-x: auto; }
 }
 
 .material-symbols-outlined {
