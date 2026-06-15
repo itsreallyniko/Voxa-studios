@@ -49,7 +49,7 @@ export function SetStep() {
                   active ? 'border-heritage-gold' : 'border-slate-gray hover:border-white/30'
                 }`}
               >
-                <div className="aspect-video overflow-hidden">
+                <div className="aspect-[3/2] overflow-hidden">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     alt={s.name}
@@ -69,13 +69,13 @@ export function SetStep() {
 
         {/* Preview */}
         <div>
-          <div className="relative aspect-[16/9] overflow-hidden">
+          <div className="relative aspect-[3/2] overflow-hidden bg-surface-container-lowest">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               key={heroSrc}
               alt={selectedSet.name}
               src={heroSrc}
-              className="w-full h-full object-cover animate-[fadeIn_320ms_ease-out]"
+              className="w-full h-full object-contain animate-[fadeIn_320ms_ease-out]"
             />
             <style>{`@keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }`}</style>
           </div>
@@ -106,13 +106,33 @@ export function SetStep() {
 
           <div className="mt-8 min-h-[140px]">
             {tab === 'gallery' && (
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-                {selectedSet.gallery.map((src, i) => (
-                  <div key={i} className="aspect-square overflow-hidden">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img alt="" src={src} className="w-full h-full object-cover" />
-                  </div>
-                ))}
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                {selectedSet.gallery.map((src, i) => {
+                  const active = src === heroSrc
+                  return (
+                    <button
+                      key={i}
+                      type="button"
+                      onClick={() => setHeroSrc(src)}
+                      aria-label={`Preview image ${i + 1}`}
+                      aria-pressed={active}
+                      className={`group relative aspect-[3/2] overflow-hidden border bg-surface-container-lowest transition-all ${
+                        active
+                          ? 'border-heritage-gold'
+                          : 'border-transparent hover:border-white/30 focus-visible:border-white/30'
+                      }`}
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        alt=""
+                        src={src}
+                        className={`w-full h-full object-contain transition-all duration-500 ${
+                          active ? '' : 'grayscale group-hover:grayscale-0 group-hover:scale-[1.03]'
+                        }`}
+                      />
+                    </button>
+                  )
+                })}
               </div>
             )}
             {tab === 'equipment' && (

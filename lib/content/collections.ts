@@ -18,14 +18,23 @@ export type Collection = {
   visualTraits: string[]
   heroImage: string
   sets: StudioSet[]
+  comingSoon?: boolean
 }
 
-// TODO: Replace these Google Stitch image URLs with real studio photos.
-const EXEC_HERO = 'https://lh3.googleusercontent.com/aida/ADBb0uguU3aRNlIrIJ_xaLArr_tn0lICCAVvMdGJOqOFBvjLZoxCy5TE2mbBQlSc0jW7wkfWsrEvIuvyBGNzR83SYcflOe_0yZWu3cwd0MGh46fzNBco3iVIC7WEULB32bWF7Lr2H-8goZ4MpxTM64kJ0CdQNu5Bduojo9XdT6qnE7RNhKVT6-Td93dLUrIifsoQGhJNWjo174qsii9uRQkgzoD2ytr_wo4dfTcL_u2oYwod9ym8MKH8yHpOmN-6'
-const EXEC_PODCAST = 'https://lh3.googleusercontent.com/aida/ADBb0ujLcrq63oSH9hG1W7Q80njg9KkTskwoS9XdZeNWyv_fl-TzzKJ9oNFquAxxNau5UOwo-dptHSCqX7mV6hLX5KSzYf1SrReRal2CxzPwHXUwVV2_NoFGG9Vf69fX5bRmtASsMRO66wCycTpT_nJlHm6CMf2mHUT8ajt6rvbRdtR8fali7VgKCD8OysURWNv12nsvNbTZ3PE1R8ipFOSBkCqxASsAVuMnCfGxy5s5TViftfox3hazK6CaUMoX'
+const EXEC_DIR = '/executive'
+const POD_PREVIEW = `${EXEC_DIR}/Gallery Images Podcast/Preview_Podcast.JPG`
+const POD_PREVIEW_ALT = `${EXEC_DIR}/Gallery Images Podcast/Preview_Pod.JPG`
+const POD_BTS = `${EXEC_DIR}/Gallery Images Podcast/BTS_Podcast_side2.JPG`
+const DESK_PREVIEW = `${EXEC_DIR}/Gallery Images Desk/Preview_Desk.JPG`
+const DESK_SIDE = `${EXEC_DIR}/Gallery Images Desk/Desk_Side.JPG`
+const DESK_BTS = `${EXEC_DIR}/Gallery Images Desk/BTS_Desk.JPG`
+const CREATOR_PREVIEW = `${EXEC_DIR}/Gallery Images Creator/Preview_Creator3.JPG`
+const CREATOR_SIDE = `${EXEC_DIR}/Gallery Images Creator/Preview_Side_creator.JPG`
+const CREATOR_BTS = `${EXEC_DIR}/Gallery Images Creator/BTS_Creator.JPG`
+
+// TODO: Replace with real Horizon photography once the set is built.
 const HORIZON_HERO = 'https://lh3.googleusercontent.com/aida/ADBb0ujOG5lOECLnhvFgTXRviMraX_PmwQ-wbztKdNrbLdhexTRjSvDVJ0GSNReX3GGiQkyKZTsDy6XofPCpnqTdrCrddPnSy1L-nlwXlHg2ioy91AWyRB_3pOYnT-JL8QRTV3UbRB4nyv4MweKnKrqqHMDpFDtxiU4vs_eWckBWuvpt9rW49nZOy2FDYKDzjGMMwXa5kf8TXb5l2dCJSSsEo1gPJXjcrk1yd-eaKX9bZRKVB4bxvV5JylTyHigb'
 const HORIZON_CLIP = 'https://lh3.googleusercontent.com/aida/ADBb0ujkabd-Yg9HDPoXBdp7TCrj8S4AhRxU8pPjoC8xTNSwxfd7Fhpe_Ou_YT8G5HBPPTjwu7IIuuBBXHMj2ozpsqu42ivCQegGcn0p9CC7-JpnxzYE3ru4FFAGYuCy6JT8i4XE1wxMCRLi2hCrQydr7TpIAGOXh7xcrxh83TKruaZTjBMtzd8PYg9GXS12MbXcjmub6R9eF65to1FipzfGzj1E4wIDA3lZ9FI_IykSBzeiiLUrhIoWGNY8mnmk'
-const VSL_CLIP = 'https://lh3.googleusercontent.com/aida/ADBb0ujh_-_KPb1gaBBupVqxJHlALCSqJQW_AJ__fgrBP1mcuvk9RDeXMfk9dxVjjJPwzaJaEMB0Xt40PZEHrasLoEddE8M_QUNwgidJghMh7c6HMgZRxlQ3HueIxCfyVgoLPlUHTRVQmOrxQjVbw8PRPYAFK4d9kQ42FUFsMgTUjsvkfv8DhSyGDZGdFo4jAyUmrnb08caYjQQQ44ogzJfmUe5TfwBgBT3xcdiFWrZwm8mNJJw6lhTHQ7mV5vf5'
 
 export const collections: Collection[] = [
   {
@@ -40,7 +49,7 @@ export const collections: Collection[] = [
       'Black bookshelves',
       'Executive office aesthetic',
     ],
-    heroImage: EXEC_HERO,
+    heroImage: POD_PREVIEW,
     sets: [
       {
         id: 'executive-podcast',
@@ -50,11 +59,11 @@ export const collections: Collection[] = [
         bestFor: ['Long-form interviews', 'Founder conversations', 'Business podcasts'],
         equipment: ['Four-camera coverage (4K)', 'Shure SM7B mics', 'Cinema lighting kit', 'Acoustic-treated room'],
         capacity: { seats: 2, label: 'Host + 1 guest' },
-        heroImage: EXEC_PODCAST,
-        gallery: [EXEC_PODCAST, EXEC_HERO, EXEC_PODCAST, EXEC_HERO],
+        heroImage: POD_PREVIEW,
+        gallery: [POD_PREVIEW, POD_PREVIEW_ALT, POD_BTS],
         exampleContent: [
-          { thumb: HORIZON_CLIP, label: 'High-stakes business dialogue' },
-          { thumb: EXEC_HERO, label: 'Founder interviews' },
+          { thumb: POD_PREVIEW, label: 'High-stakes business dialogue' },
+          { thumb: POD_PREVIEW_ALT, label: 'Founder interviews' },
         ],
       },
       {
@@ -65,11 +74,11 @@ export const collections: Collection[] = [
         bestFor: ['VSLs', 'Expert commentary', 'Direct-to-camera talks'],
         equipment: ['Three-camera coverage', 'Lavalier + boom audio', 'Teleprompter-ready', 'Editorial lighting'],
         capacity: { seats: 1, label: 'Solo presenter' },
-        heroImage: EXEC_HERO,
-        gallery: [EXEC_HERO, EXEC_PODCAST, EXEC_HERO, EXEC_PODCAST],
+        heroImage: DESK_PREVIEW,
+        gallery: [DESK_PREVIEW, DESK_SIDE, DESK_BTS],
         exampleContent: [
-          { thumb: VSL_CLIP, label: 'Modern VSL' },
-          { thumb: EXEC_HERO, label: 'Authority shorts' },
+          { thumb: DESK_PREVIEW, label: 'Modern VSL' },
+          { thumb: DESK_SIDE, label: 'Authority shorts' },
         ],
       },
       {
@@ -80,11 +89,11 @@ export const collections: Collection[] = [
         bestFor: ['Short-form clips', 'LinkedIn videos', 'Vertical + horizontal output'],
         equipment: ['Vertical + horizontal cameras', 'Studio lighting', 'On-set monitor', 'Acoustic treatment'],
         capacity: { seats: 1, label: 'Solo creator' },
-        heroImage: EXEC_PODCAST,
-        gallery: [EXEC_PODCAST, EXEC_HERO, EXEC_PODCAST, EXEC_HERO],
+        heroImage: CREATOR_PREVIEW,
+        gallery: [CREATOR_PREVIEW, CREATOR_SIDE, CREATOR_BTS],
         exampleContent: [
-          { thumb: EXEC_HERO, label: 'Authority shorts' },
-          { thumb: HORIZON_CLIP, label: 'LinkedIn clips' },
+          { thumb: CREATOR_PREVIEW, label: 'Authority shorts' },
+          { thumb: CREATOR_SIDE, label: 'LinkedIn clips' },
         ],
       },
     ],
@@ -96,6 +105,7 @@ export const collections: Collection[] = [
     audience: ['Wellness brands', 'Creators', 'Educators', 'Lifestyle businesses', 'Coaches'],
     visualTraits: ['Bright atmosphere', 'Natural textures', 'Clean modern design', 'Lifestyle aesthetic'],
     heroImage: HORIZON_HERO,
+    comingSoon: true,
     sets: [
       {
         id: 'horizon-podcast',

@@ -29,28 +29,48 @@ export function CollectionStep() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
         {collections.map((c) => {
           const isSelected = booking.collectionId === c.id
+          const locked = c.comingSoon
           return (
             <button
               key={c.id}
               type="button"
-              onClick={() => choose(c.id)}
+              disabled={locked}
+              aria-disabled={locked}
+              onClick={() => !locked && choose(c.id)}
               className={`group relative overflow-hidden bg-surface-container-low text-left transition-all border ${
-                isSelected ? 'border-heritage-gold' : 'border-transparent hover:border-white/20'
+                locked
+                  ? 'border-white/5 cursor-not-allowed'
+                  : isSelected
+                    ? 'border-heritage-gold'
+                    : 'border-transparent hover:border-white/20'
               }`}
             >
-              <div className="aspect-[16/10] overflow-hidden">
+              <div className="aspect-[16/10] overflow-hidden relative">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   alt={c.name}
                   src={c.heroImage}
                   className={`w-full h-full object-cover transition-all duration-1000 ${
-                    isSelected ? 'grayscale-0 scale-105' : 'grayscale group-hover:grayscale-0 group-hover:scale-105'
+                    locked
+                      ? 'blur-md scale-110 grayscale opacity-50'
+                      : isSelected
+                        ? 'grayscale-0 scale-105'
+                        : 'grayscale group-hover:grayscale-0 group-hover:scale-105'
                   }`}
                 />
+                {locked && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-obsidian/30">
+                    <div className="liquid-glass border border-heritage-gold/40 px-6 py-3">
+                      <span className="text-label-caps text-heritage-gold tracking-[0.18em]">Coming Soon</span>
+                    </div>
+                  </div>
+                )}
               </div>
-              <div className="p-8 lg:p-12 liquid-glass border-t-0">
+              <div className={`p-8 lg:p-12 liquid-glass border-t-0 ${locked ? 'opacity-60' : ''}`}>
                 <h3 className="text-headline-md text-white mb-4">{c.name}</h3>
-                <p className="text-body-md text-ivory/60 mb-8">{c.tagline}</p>
+                <p className="text-body-md text-ivory/60 mb-8">
+                  {locked ? 'A new aesthetic is coming. Check back soon.' : c.tagline}
+                </p>
                 <span className="text-label-caps text-ivory/40 mb-3 block">DESIGNED FOR</span>
                 <p className="text-body-md text-ivory/70">{c.audience.join(' · ')}</p>
               </div>
