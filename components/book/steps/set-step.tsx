@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useBooking } from '@/lib/booking-context'
 import { findCollection } from '@/lib/content/collections'
 
@@ -11,6 +11,7 @@ export function SetStep() {
   const collection = findCollection(booking.collectionId)
   const [tab, setTab] = useState<TabKey>('gallery')
   const [heroSrc, setHeroSrc] = useState<string>('')
+  const thumbRefs = useRef<Record<string, HTMLButtonElement | null>>({})
 
   const selectedSet = collection?.sets.find((s) => s.id === booking.setId) ?? collection?.sets[0]
 
@@ -25,6 +26,10 @@ export function SetStep() {
 
   const choose = (id: string) => {
     setBooking((b) => ({ ...b, setId: id }))
+    // Scroll the matching thumb into view on the mobile rail. Smooth on touch
+    // devices; a no-op on desktop where the rail is a vertical column.
+    const el = thumbRefs.current[id]
+    if (el) el.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' })
   }
 
   return (
@@ -44,6 +49,9 @@ export function SetStep() {
             return (
               <button
                 key={s.id}
+                ref={(el) => {
+                  thumbRefs.current[s.id] = el
+                }}
                 type="button"
                 onClick={() => choose(s.id)}
                 className={`snap-start flex-none w-40 lg:w-full text-left transition-all border ${
@@ -69,6 +77,25 @@ export function SetStep() {
           </div>
           {/* Right-edge fade — hints horizontal scroll on mobile/tablet */}
           <div className="lg:hidden pointer-events-none absolute top-0 right-0 bottom-0 w-16 bg-gradient-to-l from-obsidian via-obsidian/70 to-transparent" />
+          {/* Pagination dots — mobile/tablet only, reflect selected set */}
+          <div className="lg:hidden flex items-center justify-center gap-2 mt-5" role="tablist" aria-label="Sets">
+            {collection.sets.map((s) => {
+              const active = s.id === selectedSet.id
+              return (
+                <button
+                  key={s.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={active}
+                  aria-label={s.name}
+                  onClick={() => choose(s.id)}
+                  className={`h-1.5 rounded-full transition-all duration-300 ${
+                    active ? 'w-8 bg-heritage-gold' : 'w-1.5 bg-ivory/30 hover:bg-ivory/60'
+                  }`}
+                />
+              )
+            })}
+          </div>
         </div>
 
         {/* Preview */}
