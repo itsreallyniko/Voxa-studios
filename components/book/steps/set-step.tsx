@@ -37,7 +37,8 @@ export function SetStep() {
 
       <div className="grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-8 lg:gap-12">
         {/* Thumbnail rail */}
-        <div className="flex lg:flex-col gap-4 overflow-x-auto lg:overflow-visible no-scrollbar">
+        <div className="relative">
+          <div className="flex lg:flex-col gap-4 overflow-x-auto lg:overflow-visible no-scrollbar snap-x snap-mandatory lg:snap-none">
           {collection.sets.map((s) => {
             const active = s.id === selectedSet.id
             return (
@@ -45,7 +46,7 @@ export function SetStep() {
                 key={s.id}
                 type="button"
                 onClick={() => choose(s.id)}
-                className={`flex-none w-40 lg:w-full text-left transition-all border ${
+                className={`snap-start flex-none w-40 lg:w-full text-left transition-all border ${
                   active ? 'border-heritage-gold' : 'border-slate-gray hover:border-white/30'
                 }`}
               >
@@ -65,6 +66,9 @@ export function SetStep() {
               </button>
             )
           })}
+          </div>
+          {/* Right-edge fade — hints horizontal scroll on mobile/tablet */}
+          <div className="lg:hidden pointer-events-none absolute top-0 right-0 bottom-0 w-16 bg-gradient-to-l from-obsidian via-obsidian/70 to-transparent" />
         </div>
 
         {/* Preview */}
@@ -106,33 +110,37 @@ export function SetStep() {
 
           <div className="mt-8 min-h-[140px]">
             {tab === 'gallery' && (
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-                {selectedSet.gallery.map((src, i) => {
-                  const active = src === heroSrc
-                  return (
-                    <button
-                      key={i}
-                      type="button"
-                      onClick={() => setHeroSrc(src)}
-                      aria-label={`Preview image ${i + 1}`}
-                      aria-pressed={active}
-                      className={`group relative aspect-[3/2] overflow-hidden border bg-surface-container-lowest transition-all ${
-                        active
-                          ? 'border-heritage-gold'
-                          : 'border-transparent hover:border-white/30 focus-visible:border-white/30'
-                      }`}
-                    >
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        alt=""
-                        src={src}
-                        className={`w-full h-full object-contain transition-all duration-500 ${
-                          active ? '' : 'grayscale group-hover:grayscale-0 group-hover:scale-[1.03]'
+              <div className="relative">
+                <div className="flex md:grid md:grid-cols-3 gap-2 overflow-x-auto md:overflow-visible no-scrollbar snap-x snap-mandatory md:snap-none">
+                  {selectedSet.gallery.map((src, i) => {
+                    const active = src === heroSrc
+                    return (
+                      <button
+                        key={i}
+                        type="button"
+                        onClick={() => setHeroSrc(src)}
+                        aria-label={`Preview image ${i + 1}`}
+                        aria-pressed={active}
+                        className={`snap-start flex-none w-[78%] md:w-auto group relative aspect-[3/2] overflow-hidden border bg-surface-container-lowest transition-all ${
+                          active
+                            ? 'border-heritage-gold'
+                            : 'border-transparent hover:border-white/30 focus-visible:border-white/30'
                         }`}
-                      />
-                    </button>
-                  )
-                })}
+                      >
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          alt=""
+                          src={src}
+                          className={`w-full h-full object-contain transition-all duration-500 ${
+                            active ? '' : 'grayscale group-hover:grayscale-0 group-hover:scale-[1.03]'
+                          }`}
+                        />
+                      </button>
+                    )
+                  })}
+                </div>
+                {/* Right-edge fade — hints horizontal swipe on mobile */}
+                <div className="md:hidden pointer-events-none absolute top-0 right-0 bottom-0 w-16 bg-gradient-to-l from-obsidian via-obsidian/70 to-transparent" />
               </div>
             )}
             {tab === 'equipment' && (
