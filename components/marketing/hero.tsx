@@ -27,12 +27,12 @@ export function Hero() {
             priority
             quality={95}
             sizes="100vw"
-            className="object-cover opacity-65 scale-[0.85]"
+            className="object-cover opacity-85 md:opacity-65 scale-[0.85]"
           />
         </div>
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_70%_at_50%_45%,_rgba(13,13,13,0.78)_0%,_rgba(13,13,13,0.35)_55%,_rgba(13,13,13,0.15)_100%)]" />
-        <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/40 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-r from-obsidian/30 via-transparent to-obsidian/30" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_75%_at_50%_45%,_rgba(13,13,13,0.45)_0%,_rgba(13,13,13,0.18)_55%,_rgba(13,13,13,0.06)_100%)] md:bg-[radial-gradient(ellipse_60%_70%_at_50%_45%,_rgba(13,13,13,0.78)_0%,_rgba(13,13,13,0.35)_55%,_rgba(13,13,13,0.15)_100%)]" />
+        <div className="absolute inset-0 bg-gradient-to-t from-obsidian/70 via-obsidian/25 to-transparent md:from-obsidian md:via-obsidian/40 md:to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-obsidian/10 via-transparent to-obsidian/10 md:from-obsidian/30 md:to-obsidian/30" />
       </div>
 
       <div className="relative z-10 w-full max-w-container-max mx-auto px-6 md:px-margin-edge flex flex-col items-center">
