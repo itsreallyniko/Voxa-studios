@@ -11,6 +11,9 @@ export function DetailsStep() {
   const update = (field: keyof typeof booking.details, value: string) => {
     setBooking((b) => ({ ...b, details: { ...b.details, [field]: value } }))
   }
+  const updateContact = (field: 'name' | 'email', value: string) => {
+    setBooking((b) => ({ ...b, contact: { ...b.contact, [field]: value } }))
+  }
 
   return (
     <div className="relative">
@@ -36,6 +39,24 @@ export function DetailsStep() {
 
       <div className="frosted-glass max-w-3xl p-8 md:p-12">
         <div className="flex flex-col gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <Input
+              label="YOUR NAME"
+              placeholder="Jane Founder"
+              value={booking.contact.name}
+              onChange={(e) => updateContact('name', e.target.value)}
+              autoComplete="name"
+            />
+            <Input
+              label="EMAIL"
+              type="email"
+              placeholder="jane@example.com"
+              value={booking.contact.email}
+              onChange={(e) => updateContact('email', e.target.value)}
+              autoComplete="email"
+              inputMode="email"
+            />
+          </div>
           <Input
             label="WHAT ARE YOU RECORDING?"
             placeholder="e.g., A 4-episode founder podcast, a VSL for a launch, weekly LinkedIn shorts"

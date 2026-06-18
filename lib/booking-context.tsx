@@ -21,13 +21,20 @@ type Ctx = {
   back: () => void
   totals: PricingResult
   isComplete: (s: StepKey) => boolean
+  wizardSessionId: string
 }
 
 const BookingContext = createContext<Ctx | null>(null)
 
+function makeId(): string {
+  if (typeof crypto !== 'undefined' && 'randomUUID' in crypto) return crypto.randomUUID()
+  return Math.random().toString(36).slice(2) + Date.now().toString(36)
+}
+
 export function BookingProvider({ children }: { children: React.ReactNode }) {
   const [booking, setBookingState] = useState<Booking>(initialBooking)
   const [currentStep, setCurrentStep] = useState<StepKey>('collection')
+  const wizardSessionId = useMemo(() => makeId(), [])
 
   const setBooking = useCallback((updater: (b: Booking) => Booking) => {
     setBookingState((prev) => updater(prev))
@@ -54,7 +61,9 @@ export function BookingProvider({ children }: { children: React.ReactNode }) {
   const isComplete = useCallback((s: StepKey) => isStepComplete(s, booking), [booking])
 
   return (
-    <BookingContext.Provider value={{ booking, setBooking, currentStep, goTo, next, back, totals, isComplete }}>
+    <BookingContext.Provider
+      value={{ booking, setBooking, currentStep, goTo, next, back, totals, isComplete, wizardSessionId }}
+    >
       {children}
     </BookingContext.Provider>
   )

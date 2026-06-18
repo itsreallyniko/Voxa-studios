@@ -1,0 +1,29 @@
+import { describe, it, expect } from 'vitest'
+import { recomputeTotalCents } from '@/lib/server/pricing'
+
+describe('recomputeTotalCents', () => {
+  it('returns 30000 (=$300) for 90 min, no add-ons', () => {
+    expect(recomputeTotalCents({ durationMinutes: 90, addonIds: [] })).toBe(30000)
+  })
+
+  it('adds 10000 (=$100) per extra hour above 90 min', () => {
+    expect(recomputeTotalCents({ durationMinutes: 150, addonIds: [] })).toBe(40000)
+    expect(recomputeTotalCents({ durationMinutes: 330, addonIds: [] })).toBe(70000)
+  })
+
+  it('adds known add-on prices', () => {
+    expect(
+      recomputeTotalCents({ durationMinutes: 90, addonIds: ['teleprompter', 'extra-camera'] })
+    ).toBe(30000 + 15000 + 25000)
+  })
+
+  it('ignores unknown add-on ids', () => {
+    expect(recomputeTotalCents({ durationMinutes: 90, addonIds: ['ghost-id'] })).toBe(30000)
+  })
+
+  it('combines extra time + add-ons', () => {
+    expect(recomputeTotalCents({ durationMinutes: 210, addonIds: ['producer'] })).toBe(
+      30000 + 20000 + 40000
+    )
+  })
+})
