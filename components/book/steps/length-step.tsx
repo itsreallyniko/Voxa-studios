@@ -4,8 +4,9 @@ import { useState } from 'react'
 import { useBooking } from '@/lib/booking-context'
 
 const MIN_MINUTES = 90
-// Capped at 2.5h until Cal.com event types support more length options.
-const MAX_MINUTES = 150
+const MAX_MINUTES = 300 // 5h
+const STEP_MINUTES = 30
+const STEP_PRICE = 50
 
 function fmt(min: number) {
   const h = Math.floor(min / 60)
@@ -43,9 +44,9 @@ export function LengthStep() {
 
         <div className="flex items-center gap-8">
           <button
-            onClick={() => change(-60)}
+            onClick={() => change(-STEP_MINUTES)}
             disabled={booking.durationMinutes <= MIN_MINUTES}
-            aria-label="Subtract one hour"
+            aria-label="Subtract 30 minutes"
             className="w-16 h-16 border border-slate-gray text-white hover:border-heritage-gold hover:text-heritage-gold disabled:opacity-30 disabled:cursor-not-allowed transition-colors flex items-center justify-center"
           >
             <span className="material-symbols-outlined text-3xl">remove</span>
@@ -58,16 +59,16 @@ export function LengthStep() {
                 key={bump.id}
                 className="absolute -top-6 left-1/2 -translate-x-1/2 text-label-caps text-heritage-gold animate-[bump_700ms_ease-out_forwards] whitespace-nowrap"
               >
-                {bump.sign}$100
+                {bump.sign}${STEP_PRICE}
               </span>
             )}
             <style>{`@keyframes bump { from { transform: translate(-50%, 0); opacity: 1 } to { transform: translate(-50%, -24px); opacity: 0 } }`}</style>
           </div>
 
           <button
-            onClick={() => change(60)}
+            onClick={() => change(STEP_MINUTES)}
             disabled={booking.durationMinutes >= MAX_MINUTES}
-            aria-label="Add one hour"
+            aria-label="Add 30 minutes"
             className="w-16 h-16 border border-slate-gray text-white hover:border-heritage-gold hover:text-heritage-gold disabled:opacity-30 disabled:cursor-not-allowed transition-colors flex items-center justify-center"
           >
             <span className="material-symbols-outlined text-3xl">add</span>
@@ -75,7 +76,7 @@ export function LengthStep() {
         </div>
 
         <p className="text-metadata text-ivory/40 max-w-md text-center">
-          ${totals.base} for the first 90 minutes. Add one extra hour for $100. Maximum 2.5 hours.
+          ${totals.base} for the first 90 minutes. ${STEP_PRICE} per additional 30 minutes. Maximum 5 hours.
         </p>
       </div>
     </div>

@@ -64,8 +64,11 @@ function SummaryContent() {
       <div className="h-px bg-slate-gray" />
       <dl className="flex flex-col gap-2 text-body-md">
         <Line label="Base (90 min)" value={`$${totals.base}`} />
-        {totals.extraHours > 0 && (
-          <Line label={`Extra time (${totals.extraHours}h)`} value={`+$${totals.extraTimePrice}`} />
+        {totals.extraIncrements > 0 && (
+          <Line
+            label={`Extra time (${(totals.extraIncrements * 0.5).toLocaleString(undefined, { maximumFractionDigits: 1 })}h)`}
+            value={`+$${totals.extraTimePrice}`}
+          />
         )}
         {totals.addonTotal > 0 && <Line label="Add-ons" value={`+$${totals.addonTotal}`} />}
       </dl>
