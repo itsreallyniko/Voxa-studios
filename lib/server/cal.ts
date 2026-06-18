@@ -29,8 +29,8 @@ export async function getSlots(args: {
 }): Promise<{ slotsByDate: Record<string, string[]> }> {
   const params = new URLSearchParams({
     eventTypeId: String(args.eventTypeId),
-    startTime: args.startISO,
-    endTime: args.endISO,
+    start: args.startISO,
+    end: args.endISO,
     duration: String(args.durationMinutes),
     timeZone: args.timeZone,
   })
@@ -40,10 +40,11 @@ export async function getSlots(args: {
     const body = await res.text().catch(() => '')
     throw new Error(`Cal.com /slots ${res.status}: ${body}`)
   }
-  const json = (await res.json()) as { data: { slots: Record<string, { time: string }[]> } }
+  const json = (await res.json()) as { data: Record<string, { start: string }[]> }
   const slotsByDate: Record<string, string[]> = {}
-  for (const [date, items] of Object.entries(json.data?.slots ?? {})) {
-    slotsByDate[date] = items.map((s) => hhmm(s.time))
+  for (const [date, items] of Object.entries(json.data ?? {})) {
+    if (!Array.isArray(items)) continue
+    slotsByDate[date] = items.map((s) => hhmm(s.start))
   }
   return { slotsByDate }
 }

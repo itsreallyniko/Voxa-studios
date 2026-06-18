@@ -20,13 +20,11 @@ describe('getSlots', () => {
       status: 200,
       json: async () => ({
         data: {
-          slots: {
-            '2026-06-20': [{ time: '2026-06-20T13:00:00-04:00' }],
-            '2026-06-21': [
-              { time: '2026-06-21T09:00:00-04:00' },
-              { time: '2026-06-21T15:00:00-04:00' },
-            ],
-          },
+          '2026-06-20': [{ start: '2026-06-20T13:00:00-04:00' }],
+          '2026-06-21': [
+            { start: '2026-06-21T09:00:00-04:00' },
+            { start: '2026-06-21T15:00:00-04:00' },
+          ],
         },
       }),
     })
@@ -45,7 +43,7 @@ describe('getSlots', () => {
     const [url, init] = fetchMock.mock.calls[0] as [string, RequestInit]
     expect(url).toContain('https://api.cal.com/v2/slots')
     expect(url).toContain('eventTypeId=42')
-    expect(url).toContain('startTime=2026-06-20')
+    expect(url).toContain('start=2026-06-20')
     expect(url).toContain('duration=90')
     expect(url).toContain('timeZone=America%2FNew_York')
     expect((init.headers as Record<string, string>).Authorization).toBe('Bearer test-key')

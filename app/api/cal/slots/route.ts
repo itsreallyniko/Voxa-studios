@@ -41,8 +41,8 @@ export async function GET(req: Request) {
   try {
     const r = await getSlots({
       eventTypeId,
-      startISO: `${start}T00:00:00`,
-      endISO: `${end}T23:59:59`,
+      startISO: `${start}T00:00:00.000Z`,
+      endISO: `${end}T23:59:59.999Z`,
       durationMinutes: duration,
       timeZone: tz,
     })
