@@ -98,8 +98,12 @@ body {
 }
 
 .animate-drift {
-  animation: drift 60s linear infinite;
+  animation: drift 35s linear infinite;
   will-change: transform;
+}
+
+@media (min-width: 768px) {
+  .animate-drift { animation-duration: 60s; }
 }
 
 .creations-track:hover { animation-play-state: paused; }
