@@ -38,6 +38,10 @@ export async function POST(req: Request) {
   const time = String(body?.schedule?.time ?? '')
   const name = String(body?.contact?.name ?? '').trim()
   const email = String(body?.contact?.email ?? '').trim()
+  const recordingType = String(body?.details?.recordingType ?? '').trim()
+  const guests = String(body?.details?.guests ?? '').trim()
+  const socials = String(body?.details?.socials ?? '').trim()
+  const notes = String(body?.details?.notes ?? '').trim()
 
   if (!paymentIntentId) return json({ error: 'missing paymentIntentId' }, 400)
   const eventTypeId = setIdToEventTypeId(setId)
@@ -59,13 +63,34 @@ export async function POST(req: Request) {
   const tz = process.env.STUDIO_TIMEZONE ?? 'America/New_York'
   const startISO = localISO(date, time, tz)
 
+  // Cal.com metadata: max 50 keys, max 500 chars/value. Truncate just in case.
+  const cap = (s: string) => (s.length > 480 ? s.slice(0, 477) + '...' : s)
+  const metadata: Record<string, string> = { paymentIntentId, setId }
+  if (recordingType) metadata.recordingType = cap(recordingType)
+  if (guests) metadata.guests = cap(guests)
+  if (socials) metadata.socials = cap(socials)
+  if (notes) metadata.notes = cap(notes)
+  if (addonIds.length) metadata.addonIds = addonIds.join(',')
+
+  const summaryLines = [
+    recordingType && `Recording: ${recordingType}`,
+    guests && `Guests: ${guests}`,
+    socials && `Socials: ${socials}`,
+    notes && `Notes: ${notes}`,
+    addonIds.length && `Add-ons: ${addonIds.join(', ')}`,
+  ].filter(Boolean) as string[]
+  const summary = summaryLines.join('\n')
+
   const attempt = async () =>
     createBooking({
       eventTypeId,
       startISO,
       durationMinutes,
       attendee: { name, email, timeZone: tz },
-      metadata: { wizardSessionId: paymentIntentId },
+      metadata,
+      // Cal.com event types include a default 'notes' booking field; this is
+      // a no-op if the event type has been customized to remove it.
+      bookingFieldsResponses: summary ? { notes: summary } : undefined,
       idempotencyKey: paymentIntentId,
     })
 

@@ -80,6 +80,7 @@ export async function createBooking(args: {
   durationMinutes: number
   attendee: { name: string; email: string; timeZone: string }
   metadata?: Record<string, string>
+  bookingFieldsResponses?: Record<string, string>
   idempotencyKey: string
 }): Promise<{ uid: string; id: number }> {
   const res = await fetch(`${base()}/bookings`, {
@@ -91,6 +92,9 @@ export async function createBooking(args: {
       lengthInMinutes: args.durationMinutes,
       attendee: args.attendee,
       metadata: args.metadata ?? {},
+      ...(args.bookingFieldsResponses
+        ? { bookingFieldsResponses: args.bookingFieldsResponses }
+        : {}),
     }),
     cache: 'no-store',
   })
