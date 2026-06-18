@@ -33,8 +33,8 @@ const CREATOR_SIDE = `${EXEC_DIR}/Gallery Images Creator/Preview_Side_creator.JP
 const CREATOR_BTS = `${EXEC_DIR}/Gallery Images Creator/BTS_Creator.JPG`
 
 // TODO: Replace with real Horizon photography once the set is built.
-const HORIZON_HERO = 'https://lh3.googleusercontent.com/aida/ADBb0ujOG5lOECLnhvFgTXRviMraX_PmwQ-wbztKdNrbLdhexTRjSvDVJ0GSNReX3GGiQkyKZTsDy6XofPCpnqTdrCrddPnSy1L-nlwXlHg2ioy91AWyRB_3pOYnT-JL8QRTV3UbRB4nyv4MweKnKrqqHMDpFDtxiU4vs_eWckBWuvpt9rW49nZOy2FDYKDzjGMMwXa5kf8TXb5l2dCJSSsEo1gPJXjcrk1yd-eaKX9bZRKVB4bxvV5JylTyHigb'
-const HORIZON_CLIP = 'https://lh3.googleusercontent.com/aida/ADBb0ujkabd-Yg9HDPoXBdp7TCrj8S4AhRxU8pPjoC8xTNSwxfd7Fhpe_Ou_YT8G5HBPPTjwu7IIuuBBXHMj2ozpsqu42ivCQegGcn0p9CC7-JpnxzYE3ru4FFAGYuCy6JT8i4XE1wxMCRLi2hCrQydr7TpIAGOXh7xcrxh83TKruaZTjBMtzd8PYg9GXS12MbXcjmub6R9eF65to1FipzfGzj1E4wIDA3lZ9FI_IykSBzeiiLUrhIoWGNY8mnmk'
+const HORIZON_HERO = '/horizon/coming-soon.jpg'
+const HORIZON_CLIP = '/horizon/coming-soon.jpg'
 
 export const collections: Collection[] = [
   {
