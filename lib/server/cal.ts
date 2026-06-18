@@ -4,12 +4,17 @@ function base(): string {
   return process.env.CAL_API_BASE ?? 'https://api.cal.com/v2'
 }
 
-function headers(): Record<string, string> {
+// Cal.com v2 uses per-endpoint API versions. Slots and bookings are pinned
+// independently so a version bump on one doesn't break the other.
+const VERSION_SLOTS = '2024-09-04'
+const VERSION_BOOKINGS = '2024-08-13'
+
+function headers(version: string): Record<string, string> {
   const key = process.env.CAL_API_KEY
   if (!key) throw new Error('CAL_API_KEY is not set')
   return {
     Authorization: `Bearer ${key}`,
-    'cal-api-version': process.env.CAL_API_VERSION ?? '2024-09-04',
+    'cal-api-version': version,
     'Content-Type': 'application/json',
   }
 }
@@ -18,6 +23,26 @@ function hhmm(iso: string): string {
   // "2026-06-20T13:00:00-04:00" → "13:00"
   const t = iso.split('T')[1] ?? ''
   return t.slice(0, 5)
+}
+
+// Format the studio timezone's UTC offset for a given moment as "+HH:MM"
+// or "-HH:MM" — DST aware via Intl.
+function tzOffset(date: Date, tz: string): string {
+  const parts = new Intl.DateTimeFormat('en-US', {
+    timeZone: tz,
+    timeZoneName: 'longOffset',
+  }).formatToParts(date)
+  const name = parts.find((p) => p.type === 'timeZoneName')?.value ?? 'GMT'
+  const m = name.match(/GMT([+-]\d{1,2})(?::?(\d{2}))?/)
+  if (!m) return '+00:00'
+  const hh = m[1].padStart(3, m[1].startsWith('-') ? '-0' : '+0').slice(0, 3)
+  const mm = (m[2] ?? '00').padStart(2, '0')
+  return `${hh}:${mm}`
+}
+
+export function localISO(dateYmd: string, timeHm: string, tz: string): string {
+  const utc = new Date(`${dateYmd}T${timeHm}:00Z`)
+  return `${dateYmd}T${timeHm}:00${tzOffset(utc, tz)}`
 }
 
 export async function getSlots(args: {
@@ -35,7 +60,7 @@ export async function getSlots(args: {
     timeZone: args.timeZone,
   })
   const url = `${base()}/slots?${params.toString()}`
-  const res = await fetch(url, { headers: headers(), method: 'GET', cache: 'no-store' })
+  const res = await fetch(url, { headers: headers(VERSION_SLOTS), method: 'GET', cache: 'no-store' })
   if (!res.ok) {
     const body = await res.text().catch(() => '')
     throw new Error(`Cal.com /slots ${res.status}: ${body}`)
@@ -59,7 +84,7 @@ export async function createBooking(args: {
 }): Promise<{ uid: string; id: number }> {
   const res = await fetch(`${base()}/bookings`, {
     method: 'POST',
-    headers: { ...headers(), 'idempotency-key': args.idempotencyKey },
+    headers: { ...headers(VERSION_BOOKINGS), 'idempotency-key': args.idempotencyKey },
     body: JSON.stringify({
       eventTypeId: args.eventTypeId,
       start: args.startISO,
@@ -82,7 +107,7 @@ export async function createBooking(args: {
 export async function cancelBooking(uid: string, reason: string): Promise<void> {
   const res = await fetch(`${base()}/bookings/${encodeURIComponent(uid)}/cancel`, {
     method: 'POST',
-    headers: headers(),
+    headers: headers(VERSION_BOOKINGS),
     body: JSON.stringify({ cancellationReason: reason }),
     cache: 'no-store',
   })

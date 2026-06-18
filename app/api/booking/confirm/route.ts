@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { createBooking } from '@/lib/server/cal'
+import { createBooking, localISO } from '@/lib/server/cal'
 import { recomputeTotalCents } from '@/lib/server/pricing'
 import { setIdToEventTypeId } from '@/lib/server/set-event-types'
 import { getStripe } from '@/lib/server/stripe'
@@ -57,7 +57,7 @@ export async function POST(req: Request) {
   }
 
   const tz = process.env.STUDIO_TIMEZONE ?? 'America/New_York'
-  const startISO = `${date}T${time}:00`
+  const startISO = localISO(date, time, tz)
 
   const attempt = async () =>
     createBooking({

@@ -3,6 +3,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 vi.mock('@/lib/server/cal', () => ({
   createBooking: vi.fn(),
   cancelBooking: vi.fn(),
+  localISO: (date: string, time: string) => `${date}T${time}:00-04:00`,
 }))
 const piRetrieve = vi.fn()
 const piCapture = vi.fn()
