@@ -44,7 +44,7 @@ function PreviewCards() {
                     className={`w-full h-full object-cover transition-[filter,transform] duration-[600ms] ease-[cubic-bezier(0.23,1,0.32,1)] ${
                       locked
                         ? 'blur-md scale-110 grayscale opacity-50'
-                        : 'grayscale group-hover:grayscale-0 group-hover:scale-[1.04]'
+                        : 'group-hover:scale-[1.04]'
                     }`}
                     src={c.heroImage}
                   />

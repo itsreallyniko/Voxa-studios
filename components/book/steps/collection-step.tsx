@@ -54,8 +54,8 @@ export function CollectionStep() {
                     locked
                       ? 'blur-md scale-110 grayscale opacity-50'
                       : isSelected
-                        ? 'grayscale-0 scale-105'
-                        : 'grayscale group-hover:grayscale-0 group-hover:scale-105'
+                        ? 'scale-105'
+                        : 'group-hover:scale-105'
                   }`}
                 />
                 {locked && (
