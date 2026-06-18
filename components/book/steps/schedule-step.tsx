@@ -1,33 +1,59 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import { useBooking } from '@/lib/booking-context'
 
-function getDays() {
-  const days: { iso: string; weekday: string; day: number; month: string }[] = []
+function nextNDays(n: number): { iso: string; weekday: string; day: number; month: string }[] {
+  const out: { iso: string; weekday: string; day: number; month: string }[] = []
   const today = new Date()
-  for (let i = 1; i <= 14; i++) {
+  for (let i = 1; i <= n; i++) {
     const d = new Date(today)
     d.setDate(today.getDate() + i)
-    days.push({
+    out.push({
       iso: d.toISOString().slice(0, 10),
       weekday: d.toLocaleDateString('en-US', { weekday: 'short' }).toUpperCase(),
       day: d.getDate(),
       month: d.toLocaleDateString('en-US', { month: 'short' }).toUpperCase(),
     })
   }
-  return days
+  return out
 }
-
-const TIMES = ['09:00', '11:00', '13:00', '15:00', '17:00']
 
 export function ScheduleStep() {
   const { booking, setBooking } = useBooking()
-  const days = getDays()
+  const days = nextNDays(14)
+  const [slotsByDate, setSlotsByDate] = useState<Record<string, string[]> | null>(null)
+  const [error, setError] = useState<string | null>(null)
+  const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    if (!booking.setId) return
+    const ctrl = new AbortController()
+    setLoading(true)
+    setError(null)
+    const start = days[0].iso
+    const end = days[days.length - 1].iso
+    const url = `/api/cal/slots?setId=${encodeURIComponent(booking.setId)}&start=${start}&end=${end}&duration=${booking.durationMinutes}`
+    fetch(url, { signal: ctrl.signal })
+      .then(async (r) => {
+        if (!r.ok) throw new Error(String(r.status))
+        return r.json() as Promise<{ slotsByDate: Record<string, string[]> }>
+      })
+      .then((data) => setSlotsByDate(data.slotsByDate))
+      .catch((e) => {
+        if (e.name !== 'AbortError') setError('Could not load availability')
+      })
+      .finally(() => setLoading(false))
+    return () => ctrl.abort()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [booking.setId, booking.durationMinutes])
 
   const pickDate = (iso: string) =>
     setBooking((b) => ({ ...b, schedule: { ...b.schedule, date: iso, time: null } }))
   const pickTime = (t: string) =>
     setBooking((b) => ({ ...b, schedule: { ...b.schedule, time: t } }))
+
+  const times = booking.schedule.date ? slotsByDate?.[booking.schedule.date] ?? [] : []
 
   return (
     <div>
@@ -38,7 +64,7 @@ export function ScheduleStep() {
           Showing slots that fit your {Math.floor(booking.durationMinutes / 60)}h{' '}
           {booking.durationMinutes % 60 ? `${booking.durationMinutes % 60}m ` : ''}session.
         </p>
-        <p className="text-metadata text-ivory/30 mt-2">[Placeholder calendar — Cal.com embed wires in here later]</p>
+        {error && <p className="text-metadata text-red-400 mt-2">{error}</p>}
       </header>
 
       <div className="grid grid-cols-1 md:grid-cols-[1fr_280px] gap-12">
@@ -47,14 +73,19 @@ export function ScheduleStep() {
           <div className="grid grid-cols-4 sm:grid-cols-7 gap-2">
             {days.map((d) => {
               const active = booking.schedule.date === d.iso
+              const available = (slotsByDate?.[d.iso]?.length ?? 0) > 0
+              const disabled = !loading && slotsByDate !== null && !available
               return (
                 <button
                   key={d.iso}
                   type="button"
-                  onClick={() => pickDate(d.iso)}
+                  onClick={() => available && pickDate(d.iso)}
+                  disabled={disabled || loading}
                   className={`p-2 sm:p-3 border text-center transition-colors ${
                     active
                       ? 'border-heritage-gold bg-heritage-gold/10 text-heritage-gold'
+                      : disabled
+                      ? 'border-slate-gray/40 text-ivory/20 cursor-not-allowed'
                       : 'border-slate-gray text-ivory/70 hover:border-white/30 hover:text-white'
                   }`}
                 >
@@ -71,9 +102,11 @@ export function ScheduleStep() {
           <span className="text-label-caps text-ivory/60 mb-4 block">SELECT TIME</span>
           {!booking.schedule.date ? (
             <p className="text-body-md text-ivory/40">Choose a date first.</p>
+          ) : times.length === 0 ? (
+            <p className="text-body-md text-ivory/40">No times available — try another date.</p>
           ) : (
             <div className="flex flex-col gap-3">
-              {TIMES.map((t) => {
+              {times.map((t) => {
                 const active = booking.schedule.time === t
                 return (
                   <button
