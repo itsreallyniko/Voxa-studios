@@ -4,7 +4,8 @@ import { useState } from 'react'
 import { useBooking } from '@/lib/booking-context'
 
 const MIN_MINUTES = 90
-const MAX_MINUTES = 90 + 6 * 60 // 90 min + up to 6 extra hours
+// Capped at 2.5h until Cal.com event types support more length options.
+const MAX_MINUTES = 150
 
 function fmt(min: number) {
   const h = Math.floor(min / 60)
@@ -74,7 +75,7 @@ export function LengthStep() {
         </div>
 
         <p className="text-metadata text-ivory/40 max-w-md text-center">
-          ${totals.base} for the first 90 minutes. Each additional hour is $100. Maximum {MAX_MINUTES / 60} hours.
+          ${totals.base} for the first 90 minutes. Add one extra hour for $100. Maximum 2.5 hours.
         </p>
       </div>
     </div>
