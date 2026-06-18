@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { createManualCaptureIntent } from '@/lib/server/stripe'
 import { recomputeTotalCents } from '@/lib/server/pricing'
 import { setIdToEventTypeId } from '@/lib/server/set-event-types'
+import { check, ipFromRequest } from '@/lib/server/rate-limit'
 
 export const runtime = 'nodejs'
 
@@ -12,6 +13,13 @@ function bad(message: string, status = 400) {
 }
 
 export async function POST(req: Request) {
+  const rl = check(ipFromRequest(req), 'stripe/intent')
+  if (!rl.ok) {
+    return NextResponse.json(
+      { error: 'rate limited' },
+      { status: 429, headers: { 'retry-after': Math.ceil(rl.retryAfterMs / 1000).toString() } }
+    )
+  }
   let body: any
   try {
     body = await req.json()
