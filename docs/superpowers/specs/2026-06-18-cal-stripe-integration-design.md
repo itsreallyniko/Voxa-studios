@@ -255,7 +255,11 @@ Webhooks are a safety net, not the primary path. The booking is confirmed synchr
 
 ---
 
-## 11. Open questions for the user
+## 11. Resolved parameters
 
-- **Studio time zone:** Cal.com slots are returned in UTC; we need to render in studio-local. Confirm the timezone (e.g. `America/New_York`) so we can hard-code it in slot rendering. *(If not specified, default to `America/New_York` in implementation.)*
-- **Event-type duration model:** does Cal.com v2 allow variable duration per booking on a single event type, or do we need a length variant per length we offer? *(Implementation will detect and adapt; resolution may add a small event-type-per-length matrix.)*
+- **Studio time zone:** `America/New_York` (EST/EDT). All slot rendering and Cal.com booking `start` values use this zone. The wizard does not currently support customer-local time-zone conversion; the booking confirmation email (sent by Cal.com) will show the customer's local time anyway.
+- **Session durations offered:** discrete steps starting at 90 minutes, incrementing by 60 minutes — `90, 150, 210, 270, 330, …` (already matches `lib/pricing.ts`: `BASE_MINUTES=90`, `EXTRA_HOUR_PRICE=100`, base $300). The Length step (05) caps at a reasonable max (e.g. 8h / 480 min — to be confirmed in the length-step UI; current behavior is the source of truth).
+
+## 12. Open question (implementation-time, no user decision needed)
+
+- **Cal.com event-type duration model:** Cal.com v2 supports `lengthInMinutes` on event types, but a single event type's bookable length per call depends on whether the event type is configured as fixed-length or variable. If v2 accepts a `lengthInMinutes` override on `POST /bookings`, we use one event type per set (6 total). If it doesn't, we create one event type per `(set, duration)` pair (6 × N where N = number of length options). Implementation will detect this on first wiring and the setup checklist (§8) will be amended accordingly. No user input required — the choice doesn't affect the wizard UX.
