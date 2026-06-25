@@ -57,7 +57,7 @@ export const collections: Collection[] = [
         description:
           'A cinematic two-seat conversation set built for long-form interviews. Warm practical lighting, leather chairs, and a deep obsidian backdrop frame your guest with intentionality.',
         bestFor: ['Long-form interviews', 'Founder conversations', 'Business podcasts'],
-        equipment: ['Four-camera coverage (4K)', 'Shure SM7B mics', 'Cinema lighting kit', 'Acoustic-treated room'],
+        equipment: ['Three-camera coverage', 'Shure SM7B mics', 'Cinema lighting kit'],
         capacity: { seats: 2, label: 'Host + 1 guest' },
         heroImage: POD_PREVIEW,
         gallery: [POD_PREVIEW, POD_PREVIEW_ALT, POD_BTS],
@@ -72,7 +72,7 @@ export const collections: Collection[] = [
         description:
           'A solo authority desk styled like a private office. Designed for direct-to-camera delivery — keynote talks, market commentary, expert breakdowns.',
         bestFor: ['VSLs', 'Expert commentary', 'Direct-to-camera talks'],
-        equipment: ['Three-camera coverage', 'Lavalier + boom audio', 'Teleprompter-ready', 'Editorial lighting'],
+        equipment: ['Two-camera coverage', 'Lavalier or Shure SM7B mic', 'Teleprompter-ready'],
         capacity: { seats: 1, label: 'Solo presenter' },
         heroImage: DESK_PREVIEW,
         gallery: [DESK_PREVIEW, DESK_SIDE, DESK_BTS],
@@ -87,7 +87,7 @@ export const collections: Collection[] = [
         description:
           'A versatile creator environment with the executive aesthetic — built for short-form, vertical, and horizontal output in the same session.',
         bestFor: ['Short-form clips', 'LinkedIn videos', 'Vertical + horizontal output'],
-        equipment: ['Vertical + horizontal cameras', 'Studio lighting', 'On-set monitor', 'Acoustic treatment'],
+        equipment: ['Two-camera coverage', 'Lavalier or Shure SM7B mic', 'Teleprompter-ready'],
         capacity: { seats: 1, label: 'Solo creator' },
         heroImage: CREATOR_PREVIEW,
         gallery: [CREATOR_PREVIEW, CREATOR_SIDE, CREATOR_BTS],

@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useBooking } from '@/lib/booking-context'
 import { findCollection } from '@/lib/content/collections'
 
-type TabKey = 'gallery' | 'equipment' | 'capacity' | 'examples'
+type TabKey = 'gallery' | 'equipment' | 'capacity'
 
 export function SetStep() {
   const { booking, setBooking } = useBooking()
@@ -119,7 +119,7 @@ export function SetStep() {
           {/* Tabs */}
           <div className="mt-10 border-b border-slate-gray">
             <div className="flex gap-8 overflow-x-auto no-scrollbar">
-              {(['gallery', 'equipment', 'capacity', 'examples'] as TabKey[]).map((k) => (
+              {(['gallery', 'equipment', 'capacity'] as TabKey[]).map((k) => (
                 <button
                   key={k}
                   onClick={() => setTab(k)}
@@ -180,20 +180,6 @@ export function SetStep() {
               <div>
                 <p className="text-headline-md text-white mb-2">{selectedSet.capacity.seats}</p>
                 <p className="text-body-md text-ivory/70">{selectedSet.capacity.label}</p>
-              </div>
-            )}
-            {tab === 'examples' && (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {selectedSet.exampleContent.map((ex, i) => (
-                  <div key={i} className="aspect-video overflow-hidden relative">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img alt={ex.label} src={ex.thumb} className="w-full h-full object-cover" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-obsidian to-transparent" />
-                    <div className="absolute bottom-3 left-3 right-3">
-                      <p className="text-label-caps text-white">{ex.label}</p>
-                    </div>
-                  </div>
-                ))}
               </div>
             )}
           </div>
