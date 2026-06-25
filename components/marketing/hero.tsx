@@ -4,6 +4,14 @@ import { useEffect, useRef } from 'react'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 
+const USE_CASES: { icon: string; label: string }[] = [
+  { icon: 'mic', label: 'Podcasts' },
+  { icon: 'smart_display', label: 'VSLs' },
+  { icon: 'groups', label: 'Webinars' },
+  { icon: 'school', label: 'Courses' },
+  { icon: 'phone_iphone', label: 'Social' },
+]
+
 export function Hero() {
   const imgRef = useRef<HTMLDivElement>(null)
 
@@ -17,7 +25,7 @@ export function Hero() {
   }, [])
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center pt-20 pb-36 md:pb-32 overflow-hidden">
       <div className="absolute inset-0 z-0 overflow-hidden">
         <div ref={imgRef} className="absolute inset-0 will-change-transform">
           <Image
@@ -54,22 +62,43 @@ export function Hero() {
             Turnkey podcast, VSL, and content production, engineer included.
           </p>
 
-          <div className="fade-up flex flex-col sm:flex-row gap-4 justify-center" style={{ animationDelay: '300ms' }}>
-            <a href="#book">
+          <div className="fade-up flex justify-center" style={{ animationDelay: '300ms' }}>
+            <a href="/book">
               <Button variant="primary" size="lg">
-                Explore Studio Sets
+                Book Your Session
               </Button>
             </a>
-            <Button variant="secondary" size="lg">
-              Book a Studio Tour
-            </Button>
           </div>
         </div>
       </div>
 
-      <div className="fade-up absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 opacity-50" style={{ animationDelay: '500ms' }}>
-        <span className="text-[10px] text-ivory/70 tracking-[0.4em] uppercase">Scroll</span>
-        <div className="w-px h-10 bg-gradient-to-b from-ivory/50 to-transparent" />
+      {/* Bottom strip — use cases (left) + pricing (right). Mirrors the ad's
+          bottom bar so cold ad traffic feels message-match continuity. */}
+      <div
+        className="fade-up absolute bottom-0 left-0 right-0 z-10 border-t border-slate-gray/60 backdrop-blur-md bg-obsidian/55"
+        style={{ animationDelay: '420ms' }}
+      >
+        <div className="max-w-container-max mx-auto px-6 md:px-margin-edge py-5 md:py-6 flex flex-col md:flex-row items-center justify-between gap-4 md:gap-8">
+          <ul className="flex items-center gap-x-5 md:gap-x-7 gap-y-2 flex-wrap justify-center">
+            {USE_CASES.map((uc) => (
+              <li key={uc.label} className="flex items-center gap-2">
+                <span className="material-symbols-outlined text-heritage-gold text-[18px] leading-none">
+                  {uc.icon}
+                </span>
+                <span className="text-[10px] md:text-[11px] tracking-[0.25em] uppercase text-white whitespace-nowrap">
+                  {uc.label}
+                </span>
+              </li>
+            ))}
+          </ul>
+          <div className="flex items-center gap-3 text-[10px] md:text-[11px] tracking-[0.25em] uppercase text-ivory/80 whitespace-nowrap">
+            <span>
+              From <span className="text-heritage-gold">$300</span> / 90 min
+            </span>
+            <span aria-hidden className="text-ivory/30">·</span>
+            <span>Tampa, FL</span>
+          </div>
+        </div>
       </div>
     </section>
   )
