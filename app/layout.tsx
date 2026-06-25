@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { DM_Sans } from 'next/font/google'
 import { Nav } from '@/components/nav'
+import { TourModalProvider } from '@/lib/tour-modal-context'
 import './globals.css'
 
 const dmSans = DM_Sans({
@@ -25,8 +26,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="bg-obsidian text-ivory antialiased">
-        <Nav />
-        {children}
+        <TourModalProvider>
+          <Nav />
+          {children}
+        </TourModalProvider>
       </body>
     </html>
   )
