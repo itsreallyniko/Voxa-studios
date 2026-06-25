@@ -42,9 +42,6 @@ export function Nav() {
             <VoxaLogo className="h-9 w-auto md:h-10" />
           </Link>
           <div className="hidden md:flex items-center gap-12">
-            <Link href="/#sets" className="text-label-caps text-ivory/60 hover:text-white transition-colors">
-              STUDIO SETS
-            </Link>
             <Link href="/#why" className="text-label-caps text-ivory/60 hover:text-white transition-colors">
               EXPERIENCE
             </Link>
@@ -90,22 +87,12 @@ export function Nav() {
       >
         <div className="flex flex-col h-full pt-24 px-6">
           <Link
-            href="/#sets"
-            onClick={close}
-            className={`text-display-lg-mobile text-white border-b border-white/5 py-6 transition-[opacity,transform] duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] ${
-              open ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'
-            }`}
-            style={{ transitionDelay: open ? '80ms' : '0ms' }}
-          >
-            Studio Sets
-          </Link>
-          <Link
             href="/#why"
             onClick={close}
             className={`text-display-lg-mobile text-white border-b border-white/5 py-6 transition-[opacity,transform] duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] ${
               open ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'
             }`}
-            style={{ transitionDelay: open ? '140ms' : '0ms' }}
+            style={{ transitionDelay: open ? '80ms' : '0ms' }}
           >
             Experience
           </Link>
@@ -115,7 +102,7 @@ export function Nav() {
             className={`text-display-lg-mobile text-heritage-gold border-b border-white/5 py-6 transition-[opacity,transform] duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] ${
               open ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'
             }`}
-            style={{ transitionDelay: open ? '200ms' : '0ms' }}
+            style={{ transitionDelay: open ? '140ms' : '0ms' }}
           >
             Book a Session
           </a>
