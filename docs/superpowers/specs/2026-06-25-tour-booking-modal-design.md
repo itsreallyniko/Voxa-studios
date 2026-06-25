@@ -11,7 +11,6 @@ Keep cold paid traffic on the Voxa Studios domain through the entire tour bookin
 ## Out of Scope
 
 - Payment (tours are free).
-- Multi-step wizard (single-screen modal is intentional — tour has only 4 inputs).
 - Replacing the existing paid-session booking flow at `book-section.tsx`. That flow stays as-is.
 - Tour rescheduling/cancellation from the modal. Users use the Cal.com confirmation email link for that.
 
@@ -82,8 +81,10 @@ Client component. Single file. No external deps beyond what's already in the pro
 
 **Local state:**
 ```ts
-type Status = 'idle' | 'loading-slots' | 'submitting' | 'success' | 'error'
+type Step = 'details' | 'schedule' | 'success'
+type Status = 'idle' | 'loading-slots' | 'submitting' | 'error'
 {
+  step: Step
   name: string
   email: string
   phone: string
@@ -96,28 +97,51 @@ type Status = 'idle' | 'loading-slots' | 'submitting' | 'success' | 'error'
 }
 ```
 
-**Layout (single screen):**
+**Layout — Step 1: Details**
 
 ```
 ┌───────────────────────────────────────┐
 │ [×]                                   │
 │                                       │
 │ BOOK A STUDIO TOUR                    │
-│ 15 min · Tampa, FL                    │
+│ 15 min · Tampa, FL    Step 1 of 2     │
 │                                       │
-│ [NAME] [EMAIL] [PHONE]                │  3-col on desktop, stack on mobile
+│ NAME                                  │
+│ [ Jane Founder                     ]  │
 │                                       │
-│ SELECT DATE                           │
-│ [date strip — 14 days]                │
+│ EMAIL                                 │
+│ [ jane@example.com                 ]  │
 │                                       │
-│ SELECT TIME                           │
-│ [time chips grid]                     │
+│ PHONE                                 │
+│ [ +1 555 555 5555                  ]  │
 │                                       │
-│        [ CONFIRM TOUR ]               │  Disabled until valid
+│        [ CONTINUE → ]                 │  Disabled until all 3 valid
 └───────────────────────────────────────┘
 ```
 
-**On success the modal content swaps in place:**
+Slots pre-fetch in the background the moment the modal opens, so Step 2 renders instantly when they continue.
+
+**Layout — Step 2: Schedule**
+
+```
+┌───────────────────────────────────────┐
+│ [×]                                   │
+│                                       │
+│ PICK A TIME                           │
+│ 15 min · Tampa, FL    Step 2 of 2     │
+│                       [← Back]        │
+│                                       │
+│ SELECT DATE                           │
+│ [Mon][Tue][Wed][Thu][Fri][Sat][Sun]   │  14-day strip, dim days w/no slots
+│                                       │
+│ SELECT TIME                           │
+│ [09:00] [09:30] [10:00] [10:30] ...   │  Time chips grid
+│                                       │
+│        [ CONFIRM TOUR ]               │  Disabled until date+time picked
+└───────────────────────────────────────┘
+```
+
+**Layout — Step 3: Success**
 
 ```
 ┌───────────────────────────────────────┐
@@ -130,10 +154,22 @@ type Status = 'idle' | 'loading-slots' | 'submitting' | 'success' | 'error'
 │ Confirmation sent to                  │
 │ jane@example.com                      │
 │                                       │
-│ [ + Add to calendar ]                 │
+│ [ + Add to calendar ]                 │  .ics download
 │ [ Close ]                             │
 └───────────────────────────────────────┘
 ```
+
+**Flow:**
+
+1. Modal opens → state initializes to `step: 'details'`. Slots fetch fires immediately in the background (`GET /api/tour/slots?start=<today+1>&end=<today+14>`) so the data is ready when the user advances.
+2. User fills name/email/phone. Light client-side validation (email regex, phone min 7 chars, name non-empty). CONTINUE button disabled until all 3 pass.
+3. User clicks CONTINUE → `step` transitions to `'schedule'`. If slots are still loading, schedule view shows a brief loading state.
+4. User picks date → times for that date render. User picks time → CONFIRM TOUR enables.
+5. User clicks CONFIRM TOUR → `POST /api/tour/book` with `{ name, email, phone, date, time }`. Button disables, `status` flips to `'submitting'`.
+6. Server creates Cal.com booking, returns `{ uid, startISO, durationMinutes }`.
+7. `step` transitions to `'success'`. Date/time + email shown. `.ics` calendar-add link generated client-side.
+8. Cal.com sends its own confirmation email + (if event type configured) SMS reminder.
+9. User can hit BACK on the schedule step to fix a typo in details. Hitting BACK preserves all entered values (fields + selected date/time stay populated).
 
 **Visual language:** `liquid-glass` panel on `bg-obsidian/95` backdrop, heritage-gold accents on labels and CTAs, ivory text. Matches the existing wizard step styling so it feels native to the site.
 
@@ -222,8 +258,8 @@ Generated as a Blob, exposed via `URL.createObjectURL`, downloaded via an `<a do
 
 ## Deployment notes
 
-1. Create/confirm the Studio Tour event type on Cal.com (15 min, in-person, with a `phone` booking field configured).
-2. Add `CAL_EVENT_TYPE_TOUR` to Vercel production env.
-3. Add to `.env.local` for local dev.
+1. Studio Tour event type is already created on Cal.com — event type ID is **`6123370`**. Confirm a `phone` booking field is enabled on the event type before merge.
+2. Add `CAL_EVENT_TYPE_TOUR=6123370` to Vercel production env.
+3. Add `CAL_EVENT_TYPE_TOUR=6123370` to `.env.local` for local dev.
 4. Merge.
 5. Smoke-test by booking a real tour through the modal, verifying confirmation email arrives.
