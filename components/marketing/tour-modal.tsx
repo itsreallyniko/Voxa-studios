@@ -15,6 +15,63 @@ function validDetails(name: string, email: string, phone: string): boolean {
   return name.trim().length > 0 && EMAIL_RE.test(email.trim()) && phone.trim().length >= 7
 }
 
+function isoToICSDate(iso: string): string {
+  const d = new Date(iso)
+  const pad = (n: number) => String(n).padStart(2, '0')
+  return (
+    d.getUTCFullYear().toString() +
+    pad(d.getUTCMonth() + 1) +
+    pad(d.getUTCDate()) +
+    'T' +
+    pad(d.getUTCHours()) +
+    pad(d.getUTCMinutes()) +
+    pad(d.getUTCSeconds()) +
+    'Z'
+  )
+}
+
+function buildICS(args: { uid: string; startISO: string; durationMinutes: number }): string {
+  const start = new Date(args.startISO)
+  const end = new Date(start.getTime() + args.durationMinutes * 60_000)
+  return [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'PRODID:-//Voxa Studios//Tour//EN',
+    'BEGIN:VEVENT',
+    `UID:${args.uid}`,
+    `DTSTAMP:${isoToICSDate(new Date().toISOString())}`,
+    `DTSTART:${isoToICSDate(args.startISO)}`,
+    `DTEND:${isoToICSDate(end.toISOString())}`,
+    'SUMMARY:Voxa Studios Tour',
+    'LOCATION:4021 N Armenia Ave\\, Suite 102\\, Tampa\\, FL 33607',
+    "DESCRIPTION:Studio tour at Voxa Studios. We'll meet you at the door.",
+    'END:VEVENT',
+    'END:VCALENDAR',
+  ].join('\r\n')
+}
+
+function downloadICS(result: { uid: string; startISO: string; durationMinutes: number }) {
+  const ics = buildICS(result)
+  const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' })
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = 'voxa-studio-tour.ics'
+  document.body.appendChild(a)
+  a.click()
+  document.body.removeChild(a)
+  setTimeout(() => URL.revokeObjectURL(url), 1000)
+}
+
+function formatBookingTime(iso: string): string {
+  const d = new Date(iso)
+  return d.toLocaleDateString('en-US', {
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric',
+  }) + ' at ' + d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })
+}
+
 function nextNDays(n: number): { iso: string; weekday: string; day: number; month: string }[] {
   const out: { iso: string; weekday: string; day: number; month: string }[] = []
   const today = new Date()
@@ -325,6 +382,40 @@ export function TourModal() {
             >
               {status === 'submitting' ? 'Booking…' : 'Confirm Tour'}
             </button>
+          </div>
+        )}
+
+        {step === 'success' && bookingResult && (
+          <div className="text-center">
+            <div className="mx-auto mb-8 w-14 h-14 rounded-full border border-heritage-gold/60 flex items-center justify-center text-heritage-gold">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+            </div>
+            <span className="text-label-caps text-heritage-gold mb-3 block">TOUR BOOKED</span>
+            <h2 id="tour-modal-title" className="text-headline-md text-white mb-4">
+              {formatBookingTime(bookingResult.startISO)}
+            </h2>
+            <p className="text-body-md text-ivory/60 mb-10">
+              Confirmation sent to <span className="text-ivory/90">{email}</span>
+            </p>
+
+            <div className="flex flex-col gap-3">
+              <button
+                type="button"
+                onClick={() => downloadICS(bookingResult)}
+                className="w-full py-5 border border-heritage-gold/60 text-label-caps text-heritage-gold hover:bg-heritage-gold hover:text-obsidian hover:border-heritage-gold transition-colors duration-200"
+              >
+                + Add to Calendar
+              </button>
+              <button
+                type="button"
+                onClick={close}
+                className="w-full py-4 text-label-caps text-ivory/60 hover:text-white transition-colors"
+              >
+                Close
+              </button>
+            </div>
           </div>
         )}
       </div>
