@@ -9,6 +9,8 @@ export const runtime = 'nodejs'
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const DATE = /^\d{4}-\d{2}-\d{2}$/
 const TIME = /^\d{2}:\d{2}$/
+const MIN_PHONE = 7
+const MAX_PHONE = 30
 
 function json(payload: unknown, status: number) {
   return NextResponse.json(payload, { status })
@@ -38,6 +40,7 @@ export async function POST(req: Request) {
   const time = String(body?.schedule?.time ?? '')
   const name = String(body?.contact?.name ?? '').trim()
   const email = String(body?.contact?.email ?? '').trim()
+  const phone = String(body?.contact?.phone ?? '').trim()
   const recordingType = String(body?.details?.recordingType ?? '').trim()
   const guests = String(body?.details?.guests ?? '').trim()
   const socials = String(body?.details?.socials ?? '').trim()
@@ -49,6 +52,7 @@ export async function POST(req: Request) {
   if (!Number.isFinite(durationMinutes) || durationMinutes < 90) return json({ error: 'invalid duration' }, 400)
   if (!DATE.test(date) || !TIME.test(time)) return json({ error: 'invalid schedule' }, 400)
   if (!name || !EMAIL.test(email)) return json({ error: 'invalid contact' }, 400)
+  if (phone.length < MIN_PHONE || phone.length > MAX_PHONE) return json({ error: 'invalid phone' }, 400)
 
   const stripe = getStripe()
   const pi = await stripe.paymentIntents.retrieve(paymentIntentId)
@@ -65,7 +69,7 @@ export async function POST(req: Request) {
 
   // Cal.com metadata: max 50 keys, max 500 chars/value. Truncate just in case.
   const cap = (s: string) => (s.length > 480 ? s.slice(0, 477) + '...' : s)
-  const metadata: Record<string, string> = { paymentIntentId, setId }
+  const metadata: Record<string, string> = { paymentIntentId, setId, phone }
   if (recordingType) metadata.recordingType = cap(recordingType)
   if (guests) metadata.guests = cap(guests)
   if (socials) metadata.socials = cap(socials)
@@ -88,9 +92,12 @@ export async function POST(req: Request) {
       durationMinutes,
       attendee: { name, email, timeZone: tz },
       metadata,
-      // Cal.com event types include a default 'notes' booking field; this is
-      // a no-op if the event type has been customized to remove it.
-      bookingFieldsResponses: summary ? { notes: summary } : undefined,
+      // Cal.com event types include a default 'notes' booking field; phone is
+      // the custom field configured on each session event type.
+      bookingFieldsResponses: {
+        phone,
+        ...(summary ? { notes: summary } : {}),
+      },
       idempotencyKey: paymentIntentId,
     })
 

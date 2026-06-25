@@ -9,23 +9,45 @@ const base: Booking = {
 }
 
 describe('isStepComplete(details)', () => {
-  it('is incomplete when name + email are missing', () => {
+  it('is incomplete when name + email + phone are missing', () => {
     expect(isStepComplete('details', base)).toBe(false)
   })
 
   it('is incomplete when email is invalid', () => {
-    const b: Booking = { ...base, contact: { name: 'Jane', email: 'not-an-email' } }
+    const b: Booking = {
+      ...base,
+      contact: { name: 'Jane', email: 'not-an-email', phone: '+15555555555' },
+    }
     expect(isStepComplete('details', b)).toBe(false)
   })
 
-  it('is complete when recordingType, name, and valid email are all present', () => {
-    const b: Booking = { ...base, contact: { name: 'Jane', email: 'jane@example.com' } }
+  it('is incomplete when phone is missing', () => {
+    const b: Booking = {
+      ...base,
+      contact: { name: 'Jane', email: 'jane@example.com', phone: '' },
+    }
+    expect(isStepComplete('details', b)).toBe(false)
+  })
+
+  it('is incomplete when phone is too short', () => {
+    const b: Booking = {
+      ...base,
+      contact: { name: 'Jane', email: 'jane@example.com', phone: '12345' },
+    }
+    expect(isStepComplete('details', b)).toBe(false)
+  })
+
+  it('is complete when recordingType, name, valid email, and phone are all present', () => {
+    const b: Booking = {
+      ...base,
+      contact: { name: 'Jane', email: 'jane@example.com', phone: '+15555555555' },
+    }
     expect(isStepComplete('details', b)).toBe(true)
   })
 })
 
 describe('initialBooking', () => {
   it('includes an empty contact field', () => {
-    expect(initialBooking.contact).toEqual({ name: '', email: '' })
+    expect(initialBooking.contact).toEqual({ name: '', email: '', phone: '' })
   })
 })

@@ -39,7 +39,7 @@ const validBody = {
   durationMinutes: 90,
   addonIds: [],
   schedule: { date: '2026-06-20', time: '13:00' },
-  contact: { name: 'Jane', email: 'jane@example.com' },
+  contact: { name: 'Jane', email: 'jane@example.com', phone: '+15555555555' },
   details: { recordingType: 'Podcast', guests: '', socials: '', notes: '' },
 }
 
@@ -89,6 +89,28 @@ describe('POST /api/booking/confirm', () => {
     expect(res.status).toBe(400)
     expect(createBooking).not.toHaveBeenCalled()
     expect(piCancel).not.toHaveBeenCalled()
+  })
+
+  it('400s on missing or short phone', async () => {
+    piRetrieve.mockResolvedValue({ id: 'pi_1', status: 'requires_capture', amount: 30000 })
+    const res = await post({
+      ...validBody,
+      contact: { ...validBody.contact, phone: '123' },
+    })
+    expect(res.status).toBe(400)
+    expect(createBooking).not.toHaveBeenCalled()
+  })
+
+  it('passes phone to Cal via bookingFieldsResponses and metadata', async () => {
+    piRetrieve.mockResolvedValue({ id: 'pi_1', status: 'requires_capture', amount: 30000 })
+    vi.mocked(createBooking).mockResolvedValue({ uid: 'cal_abc', id: 5 })
+    piCapture.mockResolvedValue({ id: 'pi_1', status: 'succeeded' })
+
+    await post(validBody)
+
+    const callArgs = vi.mocked(createBooking).mock.calls[0][0]
+    expect(callArgs.bookingFieldsResponses?.phone).toBe('+15555555555')
+    expect(callArgs.metadata?.phone).toBe('+15555555555')
   })
 
   it('retries once on Cal 5xx then cancels PI', async () => {

@@ -11,7 +11,7 @@ export function DetailsStep() {
   const update = (field: keyof typeof booking.details, value: string) => {
     setBooking((b) => ({ ...b, details: { ...b.details, [field]: value } }))
   }
-  const updateContact = (field: 'name' | 'email', value: string) => {
+  const updateContact = (field: 'name' | 'email' | 'phone', value: string) => {
     setBooking((b) => ({ ...b, contact: { ...b.contact, [field]: value } }))
   }
 
@@ -57,6 +57,15 @@ export function DetailsStep() {
               inputMode="email"
             />
           </div>
+          <Input
+            label="PHONE"
+            type="tel"
+            placeholder="+1 555 555 5555"
+            value={booking.contact.phone}
+            onChange={(e) => updateContact('phone', e.target.value)}
+            autoComplete="tel"
+            inputMode="tel"
+          />
           <Input
             label="WHAT ARE YOU RECORDING?"
             placeholder="e.g., A 4-episode founder podcast, a VSL for a launch, weekly LinkedIn shorts"

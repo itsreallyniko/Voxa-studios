@@ -25,7 +25,7 @@ function Seed() {
       ...b,
       collectionId: 'executive',
       setId: 'executive-podcast',
-      contact: { name: 'Jane', email: 'jane@example.com' },
+      contact: { name: 'Jane', email: 'jane@example.com', phone: '+15555555555' },
       details: { ...b.details, recordingType: 'Podcast' },
       schedule: { date: '2026-06-20', time: '13:00' },
     }))

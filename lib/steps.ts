@@ -21,7 +21,7 @@ export type Booking = {
   collectionId: 'executive' | 'horizon' | null
   setId: string | null
   addonIds: string[]
-  contact: { name: string; email: string }
+  contact: { name: string; email: string; phone: string }
   details: {
     recordingType: string
     guests: string
@@ -36,7 +36,7 @@ export const initialBooking: Booking = {
   collectionId: null,
   setId: null,
   addonIds: [],
-  contact: { name: '', email: '' },
+  contact: { name: '', email: '', phone: '' },
   details: { recordingType: '', guests: '', socials: '', notes: '' },
   durationMinutes: 90,
   schedule: { date: null, time: null },
@@ -55,7 +55,8 @@ export function isStepComplete(step: StepKey, b: Booking): boolean {
       return (
         b.details.recordingType.trim().length > 0 &&
         b.contact.name.trim().length > 0 &&
-        emailOk
+        emailOk &&
+        b.contact.phone.trim().length >= 7
       )
     }
     case 'length':
