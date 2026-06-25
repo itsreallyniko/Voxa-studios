@@ -9,9 +9,22 @@ export function Footer() {
           <p className="text-ivory/30 text-xs tracking-widest">LUXURY CONTENT ENVIRONMENTS</p>
         </div>
         <div className="flex flex-wrap justify-center gap-6 sm:gap-12">
-          <a href="#" className="text-label-caps text-ivory/40 hover:text-white transition-colors">INSTAGRAM</a>
-          <a href="#" className="text-label-caps text-ivory/40 hover:text-white transition-colors">TWITTER</a>
-          <a href="#" className="text-label-caps text-ivory/40 hover:text-white transition-colors">LINKEDIN</a>
+          <a
+            href="https://instagram.com/voxastudios.fl/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-label-caps text-ivory/40 hover:text-white transition-colors"
+          >
+            INSTAGRAM
+          </a>
+          <a
+            href="https://www.linkedin.com/company/voxa-studios/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-label-caps text-ivory/40 hover:text-white transition-colors"
+          >
+            LINKEDIN
+          </a>
         </div>
         <div className="text-[10px] text-ivory/20 tracking-[0.4em]">© 2026 VOXA STUDIOS. ALL RIGHTS RESERVED.</div>
       </div>
