@@ -132,6 +132,16 @@ function PreviewCard({
             </>
           )}
         </button>
+        {!locked && (
+          <a
+            href="https://cal.com/niko-torres-n4iwe3/studio-tour"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-4 block text-center text-xs text-ivory/45 hover:text-ivory/80 transition-colors"
+          >
+            Not ready to book? Tour the studio first →
+          </a>
+        )}
       </div>
     </div>
   )

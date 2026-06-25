@@ -20,7 +20,13 @@ export function FinalCTA() {
             <a href="#book">
               <Button variant="primary" size="lg">Explore Studio Sets</Button>
             </a>
-            <Button variant="secondary" size="lg">Book A Studio Tour</Button>
+            <a
+              href="https://cal.com/niko-torres-n4iwe3/studio-tour"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button variant="secondary" size="lg">Book A Studio Tour</Button>
+            </a>
           </div>
         </Reveal>
       </div>
