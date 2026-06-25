@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from 'react'
 import { BookingProvider, useBooking } from '@/lib/booking-context'
 import { Wizard } from '@/components/book/wizard'
 import { collections } from '@/lib/content/collections'
-import { Tag } from '@/components/ui/tag'
 import { Reveal } from '@/components/ui/reveal'
 
 function shortLabel(setName: string, collectionName: string) {
@@ -59,11 +58,16 @@ function PreviewCards() {
                 <div className={`p-8 md:p-12 liquid-glass border-t-0 ${locked ? 'opacity-60' : ''}`}>
                   <h3 className="text-headline-md text-white mb-2">{c.name}</h3>
                   <span className="text-label-caps text-heritage-gold/80 mb-6 block">
-                    Includes {c.sets.length} Studio Sets · Pick One Inside
+                    {c.sets.length} Studio Sets
                   </span>
                   <div className="flex flex-wrap gap-3 mb-10">
                     {c.sets.map((s) => (
-                      <Tag key={s.id}>{shortLabel(s.name, c.name)}</Tag>
+                      <span
+                        key={s.id}
+                        className="inline-flex px-4 py-1.5 rounded-full border border-white/25 text-metadata text-ivory/90"
+                      >
+                        {shortLabel(s.name, c.name)}
+                      </span>
                     ))}
                   </div>
                   <div
@@ -73,7 +77,7 @@ function PreviewCards() {
                         : 'border-heritage-gold/60 text-heritage-gold group-hover:bg-heritage-gold group-hover:text-obsidian group-hover:border-heritage-gold'
                     }`}
                   >
-                    {locked ? 'Coming Soon' : 'Start Booking →'}
+                    {locked ? 'Coming Soon' : 'Start Booking → Pick Your Set'}
                   </div>
                 </div>
               </button>
