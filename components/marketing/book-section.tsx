@@ -67,10 +67,10 @@ function PreviewCards() {
                     className={`w-full py-5 border text-label-caps text-center transition-[background-color,color,border-color] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] ${
                       locked
                         ? 'border-white/5 text-ivory/40'
-                        : 'border-white/10 text-white group-hover:bg-white group-hover:text-obsidian'
+                        : 'border-heritage-gold/60 text-heritage-gold group-hover:bg-heritage-gold group-hover:text-obsidian group-hover:border-heritage-gold'
                     }`}
                   >
-                    {locked ? 'Coming Soon' : 'Explore Sets'}
+                    {locked ? 'Coming Soon' : 'Start Booking →'}
                   </div>
                 </div>
               </button>
@@ -114,11 +114,11 @@ export function BookSection() {
       >
         <div className="max-w-container-max mx-auto px-6 md:px-margin-edge">
           <Reveal className="mb-16 max-w-3xl">
-            <span className="text-label-caps text-heritage-gold mb-4 block">COLLECTIONS</span>
-            <h2 className="text-headline-xl text-white">
-              Choose the Environment <br />
-              That Fits Your Brand
-            </h2>
+            <span className="text-label-caps text-heritage-gold mb-4 block">BOOK YOUR SESSION</span>
+            <h2 className="text-headline-xl text-white">Pick your set</h2>
+            <p className="text-body-lg text-ivory/60 mt-6">
+              Choose the collection that fits your shoot. Date and time on the next step.
+            </p>
           </Reveal>
         </div>
         <SectionContent inView={inView} />

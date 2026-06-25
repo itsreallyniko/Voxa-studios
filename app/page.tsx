@@ -11,8 +11,8 @@ export default function Home() {
     <>
       <Hero />
       <CreationsMarquee />
-      <BookSection />
       <WhyVoxa />
+      <BookSection />
       <ComeVisitUs />
       <FinalCTA />
       <Footer />
