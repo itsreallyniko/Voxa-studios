@@ -1,7 +1,11 @@
+'use client'
+
 import { Button } from '@/components/ui/button'
 import { Reveal } from '@/components/ui/reveal'
+import { useTourModal } from '@/lib/tour-modal-context'
 
 export function FinalCTA() {
+  const { open } = useTourModal()
   return (
     <section className="py-[160px] bg-obsidian text-center border-t border-white/5">
       <div className="max-w-container-max mx-auto px-6 md:px-margin-edge">
@@ -20,13 +24,9 @@ export function FinalCTA() {
             <a href="#book">
               <Button variant="primary" size="lg">Explore Studio Sets</Button>
             </a>
-            <a
-              href="https://cal.com/niko-torres-n4iwe3/studio-tour"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <button type="button" onClick={open}>
               <Button variant="secondary" size="lg">Book A Studio Tour</Button>
-            </a>
+            </button>
           </div>
         </Reveal>
       </div>

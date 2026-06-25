@@ -5,6 +5,7 @@ import { BookingProvider, useBooking } from '@/lib/booking-context'
 import { Wizard } from '@/components/book/wizard'
 import { collections, type Collection } from '@/lib/content/collections'
 import { Reveal } from '@/components/ui/reveal'
+import { useTourModal } from '@/lib/tour-modal-context'
 
 function shortLabel(setName: string, collectionName: string) {
   const collectionPrefix = collectionName.split(' ')[0] + ' '
@@ -19,6 +20,7 @@ function PreviewCard({
   onStart: () => void
 }) {
   const locked = !!c.comingSoon
+  const { open: openTour } = useTourModal()
   const [activeIdx, setActiveIdx] = useState(0)
   const setsCount = c.sets.length
   const previewSet = c.sets[activeIdx]
@@ -133,14 +135,13 @@ function PreviewCard({
           )}
         </button>
         {!locked && (
-          <a
-            href="https://cal.com/niko-torres-n4iwe3/studio-tour"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-4 block text-center text-xs text-ivory/45 hover:text-ivory/80 transition-colors"
+          <button
+            type="button"
+            onClick={openTour}
+            className="mt-4 block w-full text-center text-xs text-ivory/45 hover:text-ivory/80 transition-colors"
           >
             Not ready to book? Tour the studio first →
-          </a>
+          </button>
         )}
       </div>
     </div>
