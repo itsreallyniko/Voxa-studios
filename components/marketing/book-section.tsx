@@ -57,7 +57,10 @@ function PreviewCards() {
                   )}
                 </div>
                 <div className={`p-8 md:p-12 liquid-glass border-t-0 ${locked ? 'opacity-60' : ''}`}>
-                  <h3 className="text-headline-md text-white mb-6">{c.name}</h3>
+                  <h3 className="text-headline-md text-white mb-2">{c.name}</h3>
+                  <span className="text-label-caps text-heritage-gold/80 mb-6 block">
+                    Includes {c.sets.length} Studio Sets · Pick One Inside
+                  </span>
                   <div className="flex flex-wrap gap-3 mb-10">
                     {c.sets.map((s) => (
                       <Tag key={s.id}>{shortLabel(s.name, c.name)}</Tag>
@@ -115,10 +118,10 @@ export function BookSection() {
         <div className="max-w-container-max mx-auto px-6 md:px-margin-edge">
           <Reveal className="mb-16 max-w-3xl">
             <span className="text-label-caps text-heritage-gold mb-4 block">BOOK YOUR SESSION</span>
-            <h2 className="text-headline-xl text-white">Pick your set</h2>
-            <p className="text-body-lg text-ivory/60 mt-6">
-              Choose the collection that fits your shoot. Date and time on the next step.
-            </p>
+            <h2 className="text-headline-xl text-white">
+              Choose the Environment <br />
+              That Fits Your Brand
+            </h2>
           </Reveal>
         </div>
         <SectionContent inView={inView} />
