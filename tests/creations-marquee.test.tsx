@@ -44,11 +44,14 @@ describe('CreationsMarquee', () => {
     ).toBeInTheDocument()
   })
 
-  it('renders all six images with descriptive alt text, duplicated for the loop', () => {
+  it('renders all six images with descriptive alt text across desktop marquee (primary + clone) and mobile carousel', () => {
+    // Each unique creation renders 3x: once in the desktop primary track, once
+    // in the cloned track for the seamless loop, and once in the mobile snap
+    // carousel. JSDOM doesn't apply responsive CSS so both surfaces mount.
     render(<CreationsMarquee />)
-    expect(screen.getAllByAltText(/Executive Creator Set/i)).toHaveLength(3 * 2)
-    expect(screen.getAllByAltText(/Authority Desk/i)).toHaveLength(1 * 2)
-    expect(screen.getAllByAltText(/Executive Podcast Set/i)).toHaveLength(2 * 2)
+    expect(screen.getAllByAltText(/Executive Creator Set/i)).toHaveLength(3 * 3)
+    expect(screen.getAllByAltText(/Authority Desk/i)).toHaveLength(1 * 3)
+    expect(screen.getAllByAltText(/Executive Podcast Set/i)).toHaveLength(2 * 3)
   })
 
   it('renders two track halves: one visible, one aria-hidden for the loop', () => {
@@ -65,12 +68,13 @@ describe('CreationsMarquee', () => {
   })
 
   it('shows the set name and byline for each unique creation', () => {
+    // Each card renders 3x total (desktop primary + clone + mobile carousel).
     render(<CreationsMarquee />)
-    expect(screen.getAllByText('EXECUTIVE CREATOR SET')).toHaveLength(3 * 2)
-    expect(screen.getAllByText('AUTHORITY DESK')).toHaveLength(1 * 2)
-    expect(screen.getAllByText('EXECUTIVE PODCAST SET')).toHaveLength(2 * 2)
-    expect(screen.getAllByText('@mirandacohenfit')).toHaveLength(2)
-    expect(screen.getAllByText('@julietteastor')).toHaveLength(2)
-    expect(screen.getAllByText('Interesting Times · NYT')).toHaveLength(2 * 2)
+    expect(screen.getAllByText('EXECUTIVE CREATOR SET')).toHaveLength(3 * 3)
+    expect(screen.getAllByText('AUTHORITY DESK')).toHaveLength(1 * 3)
+    expect(screen.getAllByText('EXECUTIVE PODCAST SET')).toHaveLength(2 * 3)
+    expect(screen.getAllByText('@mirandacohenfit')).toHaveLength(3)
+    expect(screen.getAllByText('@julietteastor')).toHaveLength(3)
+    expect(screen.getAllByText('Interesting Times · NYT')).toHaveLength(2 * 3)
   })
 })
