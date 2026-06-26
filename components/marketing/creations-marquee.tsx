@@ -25,9 +25,10 @@ function CreationCard({ c, priority }: { c: Creation; priority?: boolean }) {
         <div className="text-heritage-gold text-[10px] tracking-[0.4em] uppercase">
           {c.set}
         </div>
-        <div className="text-white/60 text-sm mt-1 lowercase">
-          {c.byline}
-        </div>
+        <div className="text-white/60 text-sm mt-1 lowercase">{c.byline}</div>
+        {c.credential && (
+          <div className="text-white/40 text-xs mt-0.5">{c.credential}</div>
+        )}
       </figcaption>
     </figure>
   )
@@ -51,22 +52,28 @@ function Track({ half }: { half: 'primary' | 'clone' }) {
   )
 }
 
+const OBJECT_POSITION_CLASS: Record<NonNullable<Creation['objectPosition']>, string> = {
+  left: 'object-left',
+  center: 'object-center',
+  right: 'object-right',
+}
+
 function MobileCreationCard({ c, active }: { c: Creation; active: boolean }) {
-  const aspectClass = c.aspect === '9:16' ? 'aspect-[4/5]' : 'aspect-[16/9]'
+  const positionClass = OBJECT_POSITION_CLASS[c.objectPosition ?? 'center']
   return (
     <figure
       className={`relative shrink-0 w-[72vw] snap-center transition-opacity duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] ${
         active ? 'opacity-100' : 'opacity-40'
       }`}
     >
-      <div className={`relative overflow-hidden rounded-2xl bg-black border border-white/5 ${aspectClass}`}>
+      <div className="relative overflow-hidden rounded-2xl bg-black border border-white/5 aspect-square">
         <Image
           src={c.src}
           alt={c.alt}
           fill
           sizes="72vw"
           quality={90}
-          className="object-cover"
+          className={`object-cover ${positionClass}`}
         />
       </div>
       <figcaption className="border-t border-white/5 mt-3 pt-3 px-1">
@@ -74,6 +81,9 @@ function MobileCreationCard({ c, active }: { c: Creation; active: boolean }) {
           {c.set}
         </div>
         <div className="text-white/70 text-sm mt-1 lowercase">{c.byline}</div>
+        {c.credential && (
+          <div className="text-white/45 text-xs mt-0.5">{c.credential}</div>
+        )}
       </figcaption>
     </figure>
   )

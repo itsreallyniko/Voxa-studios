@@ -4,6 +4,11 @@ export type Creation = {
   aspect: '16:9' | '9:16'
   set: string
   byline: string
+  credential?: string
+  // Overrides the default object-position (center) for object-cover on the
+  // mobile snap carousel. Use 'left' when the source image has important
+  // content on its left edge that center-cropping would lose (e.g., NYT logo).
+  objectPosition?: 'left' | 'center' | 'right'
 }
 
 export const creations: Creation[] = [
@@ -13,6 +18,7 @@ export const creations: Creation[] = [
     aspect: '16:9',
     set: 'AUTHORITY DESK',
     byline: '@matt_thecloser',
+    credential: 'Founder, Novations',
   },
   {
     src: '/creations/NYT_Anna_paulina_luna.jpg',
@@ -20,6 +26,8 @@ export const creations: Creation[] = [
     aspect: '16:9',
     set: 'EXECUTIVE PODCAST SET',
     byline: 'Interesting Times · NYT',
+    credential: 'U.S. Rep. · Florida',
+    objectPosition: 'left',
   },
   {
     src: '/creations/NYT_Ross_Douthat.jpg',
@@ -27,6 +35,8 @@ export const creations: Creation[] = [
     aspect: '16:9',
     set: 'EXECUTIVE PODCAST SET',
     byline: 'Interesting Times · NYT',
+    credential: 'NYT Columnist',
+    objectPosition: 'left',
   },
   {
     src: '/creations/julietteastor.jpg',
@@ -34,6 +44,7 @@ export const creations: Creation[] = [
     aspect: '9:16',
     set: 'EXECUTIVE CREATOR SET',
     byline: '@julietteastor',
+    credential: 'MD · Founder, Terra Wellness',
   },
   {
     src: '/creations/mirandacohenfit.png',
@@ -41,6 +52,7 @@ export const creations: Creation[] = [
     aspect: '9:16',
     set: 'EXECUTIVE CREATOR SET',
     byline: '@mirandacohenfit',
+    credential: '5M+ followers',
   },
   {
     src: '/creations/Jasonkalambay.jpg',
@@ -48,5 +60,6 @@ export const creations: Creation[] = [
     aspect: '16:9',
     set: 'EXECUTIVE CREATOR SET',
     byline: '@jasonkalambay',
+    credential: 'Founder · 1M+ followers',
   },
 ]
