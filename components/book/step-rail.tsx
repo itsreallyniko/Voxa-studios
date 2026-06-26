@@ -1,21 +1,23 @@
 'use client'
 
-import { STEPS, StepKey } from '@/lib/steps'
+import { applicableSteps, StepKey } from '@/lib/steps'
 import { useBooking } from '@/lib/booking-context'
 
 export function StepRail() {
-  const { currentStep, goTo, isComplete } = useBooking()
+  const { booking, currentStep, goTo, isComplete } = useBooking()
+  const steps = applicableSteps(booking.setId)
 
   const reachable: Record<StepKey, boolean> = {} as never
   let blocked = false
-  for (const s of STEPS) {
+  for (const s of steps) {
     reachable[s.key] = !blocked || s.key === currentStep
     if (!isComplete(s.key)) blocked = true
   }
 
-  const cur = STEPS.find((s) => s.key === currentStep)!
-  const idx = STEPS.findIndex((s) => s.key === currentStep)
-  const pct = ((idx + 1) / STEPS.length) * 100
+  const cur = steps.find((s) => s.key === currentStep) ?? steps[0]
+  const idx = Math.max(0, steps.findIndex((s) => s.key === currentStep))
+  const pct = ((idx + 1) / steps.length) * 100
+  const pad2 = (n: number) => String(n).padStart(2, '0')
 
   return (
     <div className="sticky top-20 z-30 bg-obsidian/95 backdrop-blur-md border-b border-slate-gray">
@@ -24,7 +26,7 @@ export function StepRail() {
         <div className="lg:hidden">
           <div className="flex items-baseline justify-between">
             <span className="text-label-caps text-heritage-gold tabular-nums">
-              {cur.number} / 0{STEPS.length}
+              {pad2(idx + 1)} / {pad2(steps.length)}
             </span>
             <span className="text-label-caps text-white">{cur.label}</span>
           </div>
@@ -38,7 +40,7 @@ export function StepRail() {
 
         {/* Desktop full rail */}
         <ol className="hidden lg:flex items-center justify-between gap-2">
-          {STEPS.map((s, i) => {
+          {steps.map((s, i) => {
             const isCurrent = s.key === currentStep
             const isDone = isComplete(s.key) && !isCurrent
             const canClick = reachable[s.key] && (isDone || isCurrent)
@@ -61,12 +63,12 @@ export function StepRail() {
                   }`}
                 >
                   <span className={`text-metadata tabular-nums ${isCurrent ? 'text-heritage-gold' : ''}`}>
-                    {s.number}
+                    {pad2(i + 1)}
                   </span>
                   <span className="text-label-caps whitespace-nowrap">{s.label}</span>
                 </button>
                 {isCurrent && <span className="h-px w-6 bg-heritage-gold" />}
-                {i < STEPS.length - 1 && <span className="h-px flex-1 bg-slate-gray min-w-4" />}
+                {i < steps.length - 1 && <span className="h-px flex-1 bg-slate-gray min-w-4" />}
               </li>
             )
           })}

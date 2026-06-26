@@ -1,7 +1,8 @@
 'use client'
 
-import { createContext, useCallback, useContext, useMemo, useState } from 'react'
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import {
+  addonsRelevantFor,
   Booking,
   initialBooking,
   isStepComplete,
@@ -9,7 +10,7 @@ import {
   prevStep,
   StepKey,
 } from './steps'
-import { addons } from './content/addons'
+import { addonsForSet } from './content/addons'
 import { getTotal, PricingResult } from './pricing'
 
 type Ctx = {
@@ -45,17 +46,42 @@ export function BookingProvider({ children }: { children: React.ReactNode }) {
   const next = useCallback(() => {
     setCurrentStep((cur) => {
       if (!isStepComplete(cur, booking)) return cur
-      return nextStep(cur) ?? cur
+      let n = nextStep(cur)
+      if (n === 'addons' && !addonsRelevantFor(booking.setId)) {
+        n = nextStep('addons')
+      }
+      return n ?? cur
     })
   }, [booking])
 
   const back = useCallback(() => {
-    setCurrentStep((cur) => prevStep(cur) ?? cur)
-  }, [])
+    setCurrentStep((cur) => {
+      let p = prevStep(cur)
+      if (p === 'addons' && !addonsRelevantFor(booking.setId)) {
+        p = prevStep('addons')
+      }
+      return p ?? cur
+    })
+  }, [booking.setId])
+
+  // Prune any addon selections that don't apply to the currently-chosen set.
+  useEffect(() => {
+    const allowed = new Set(addonsForSet(booking.setId).map((a) => a.id))
+    if (booking.addonIds.some((id) => !allowed.has(id))) {
+      setBookingState((prev) => ({
+        ...prev,
+        addonIds: prev.addonIds.filter((id) => allowed.has(id)),
+      }))
+    }
+  }, [booking.setId, booking.addonIds])
 
   const totals = useMemo(
-    () => getTotal({ durationMinutes: booking.durationMinutes, addonIds: booking.addonIds }, addons),
-    [booking.durationMinutes, booking.addonIds]
+    () =>
+      getTotal(
+        { durationMinutes: booking.durationMinutes, addonIds: booking.addonIds },
+        addonsForSet(booking.setId)
+      ),
+    [booking.durationMinutes, booking.addonIds, booking.setId]
   )
 
   const isComplete = useCallback((s: StepKey) => isStepComplete(s, booking), [booking])

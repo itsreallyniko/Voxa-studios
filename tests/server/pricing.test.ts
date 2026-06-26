@@ -11,19 +11,43 @@ describe('recomputeTotalCents', () => {
     expect(recomputeTotalCents({ durationMinutes: 330, addonIds: [] })).toBe(70000)
   })
 
-  it('adds known add-on prices', () => {
+  it('adds clip-repurposing when the chosen set is podcast', () => {
     expect(
-      recomputeTotalCents({ durationMinutes: 90, addonIds: ['teleprompter', 'extra-camera'] })
-    ).toBe(30000 + 15000 + 25000)
+      recomputeTotalCents({
+        durationMinutes: 90,
+        addonIds: ['clip-repurposing'],
+        setId: 'executive-podcast',
+      })
+    ).toBe(30000 + 5000)
+  })
+
+  it('drops clip-repurposing when the chosen set is not podcast', () => {
+    expect(
+      recomputeTotalCents({
+        durationMinutes: 90,
+        addonIds: ['clip-repurposing'],
+        setId: 'authority-desk',
+      })
+    ).toBe(30000)
   })
 
   it('ignores unknown add-on ids', () => {
-    expect(recomputeTotalCents({ durationMinutes: 90, addonIds: ['ghost-id'] })).toBe(30000)
+    expect(
+      recomputeTotalCents({
+        durationMinutes: 90,
+        addonIds: ['ghost-id'],
+        setId: 'executive-podcast',
+      })
+    ).toBe(30000)
   })
 
-  it('combines extra time + add-ons', () => {
-    expect(recomputeTotalCents({ durationMinutes: 210, addonIds: ['producer'] })).toBe(
-      30000 + 20000 + 40000
-    )
+  it('combines extra time + applicable add-ons', () => {
+    expect(
+      recomputeTotalCents({
+        durationMinutes: 210,
+        addonIds: ['clip-repurposing'],
+        setId: 'executive-podcast',
+      })
+    ).toBe(30000 + 20000 + 5000)
   })
 })

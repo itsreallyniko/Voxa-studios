@@ -1,11 +1,12 @@
 'use client'
 
 import { useBooking } from '@/lib/booking-context'
-import { addons } from '@/lib/content/addons'
+import { addonsForSet } from '@/lib/content/addons'
 import { CheckboxToggle } from '@/components/ui/checkbox-toggle'
 
 export function AddonsStep() {
   const { booking, setBooking } = useBooking()
+  const visibleAddons = addonsForSet(booking.setId)
   const toggle = (id: string) => {
     setBooking((b) => ({
       ...b,
@@ -19,12 +20,12 @@ export function AddonsStep() {
         <span className="text-label-caps text-heritage-gold mb-4 block">STEP 03 — ADD-ONS</span>
         <h2 className="text-headline-xl text-white">Augment Your Session</h2>
         <p className="text-body-lg text-ivory/60 mt-6">
-          Optional upgrades. Pick any combination — selections update your total instantly.
+          Optional upgrades. Selections update your total instantly.
         </p>
       </header>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {addons.map((a) => {
+        {visibleAddons.map((a) => {
           const checked = booking.addonIds.includes(a.id)
           return (
             <CheckboxToggle

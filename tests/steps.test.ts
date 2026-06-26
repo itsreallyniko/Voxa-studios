@@ -1,5 +1,12 @@
 import { describe, it, expect } from 'vitest'
-import { initialBooking, isStepComplete, type Booking } from '@/lib/steps'
+import {
+  addonsRelevantFor,
+  applicableSteps,
+  initialBooking,
+  isStepComplete,
+  STEPS,
+  type Booking,
+} from '@/lib/steps'
 
 const base: Booking = {
   ...initialBooking,
@@ -49,5 +56,24 @@ describe('isStepComplete(details)', () => {
 describe('initialBooking', () => {
   it('includes an empty contact field', () => {
     expect(initialBooking.contact).toEqual({ name: '', email: '', phone: '' })
+  })
+})
+
+describe('addonsRelevantFor / applicableSteps', () => {
+  it('shows add-ons step before a set is chosen', () => {
+    expect(addonsRelevantFor(null)).toBe(true)
+    expect(applicableSteps(null)).toEqual(STEPS)
+  })
+
+  it('shows add-ons step for podcast sets', () => {
+    expect(addonsRelevantFor('executive-podcast')).toBe(true)
+    expect(addonsRelevantFor('horizon-podcast')).toBe(true)
+    expect(applicableSteps('executive-podcast').map((s) => s.key)).toContain('addons')
+  })
+
+  it('hides add-ons step for non-podcast sets', () => {
+    expect(addonsRelevantFor('authority-desk')).toBe(false)
+    expect(addonsRelevantFor('authority-creator')).toBe(false)
+    expect(applicableSteps('authority-desk').map((s) => s.key)).not.toContain('addons')
   })
 })

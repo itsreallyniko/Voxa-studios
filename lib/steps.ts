@@ -1,3 +1,5 @@
+import { addonsForSet } from './content/addons'
+
 export type StepKey =
   | 'collection'
   | 'set'
@@ -6,6 +8,16 @@ export type StepKey =
   | 'length'
   | 'schedule'
   | 'checkout'
+
+export function addonsRelevantFor(setId: string | null): boolean {
+  if (!setId) return true
+  return addonsForSet(setId).length > 0
+}
+
+export function applicableSteps(setId: string | null): typeof STEPS {
+  if (addonsRelevantFor(setId)) return STEPS
+  return STEPS.filter((s) => s.key !== 'addons')
+}
 
 export const STEPS: { key: StepKey; number: string; label: string }[] = [
   { key: 'collection', number: '01', label: 'Collection' },

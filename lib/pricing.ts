@@ -9,6 +9,8 @@ export type Addon = {
   description: string
   price: number
   image: string
+  // Studio set IDs this add-on applies to. Undefined means it applies to all sets.
+  appliesTo?: string[]
 }
 
 export type PricingInput = {

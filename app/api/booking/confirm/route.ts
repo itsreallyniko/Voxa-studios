@@ -58,7 +58,7 @@ export async function POST(req: Request) {
   const pi = await stripe.paymentIntents.retrieve(paymentIntentId)
   if (pi.status !== 'requires_capture') return json({ error: 'payment not authorized' }, 400)
 
-  const expectedCents = recomputeTotalCents({ durationMinutes, addonIds })
+  const expectedCents = recomputeTotalCents({ durationMinutes, addonIds, setId })
   if (pi.amount !== expectedCents) {
     await tryCancel(paymentIntentId)
     return json({ error: 'amount mismatch' }, 400)

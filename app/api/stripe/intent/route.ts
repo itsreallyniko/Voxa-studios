@@ -40,7 +40,7 @@ export async function POST(req: Request) {
   if (!name) return bad('missing name')
   if (!EMAIL.test(email)) return bad('invalid email')
 
-  const amountCents = recomputeTotalCents({ durationMinutes, addonIds })
+  const amountCents = recomputeTotalCents({ durationMinutes, addonIds, setId })
 
   try {
     const pi = await createManualCaptureIntent({
