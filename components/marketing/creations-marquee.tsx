@@ -52,14 +52,7 @@ function Track({ half }: { half: 'primary' | 'clone' }) {
   )
 }
 
-const OBJECT_POSITION_CLASS: Record<NonNullable<Creation['objectPosition']>, string> = {
-  left: 'object-left',
-  center: 'object-center',
-  right: 'object-right',
-}
-
 function MobileCreationCard({ c, active }: { c: Creation; active: boolean }) {
-  const positionClass = OBJECT_POSITION_CLASS[c.objectPosition ?? 'center']
   return (
     <figure
       className={`relative shrink-0 w-[72vw] snap-center transition-opacity duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] ${
@@ -73,7 +66,8 @@ function MobileCreationCard({ c, active }: { c: Creation; active: boolean }) {
           fill
           sizes="72vw"
           quality={90}
-          className={`object-cover ${positionClass}`}
+          className="object-cover"
+          style={c.objectPosition ? { objectPosition: c.objectPosition } : undefined}
         />
       </div>
       <figcaption className="border-t border-white/5 mt-3 pt-3 px-1">

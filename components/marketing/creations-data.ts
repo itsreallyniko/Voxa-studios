@@ -5,10 +5,9 @@ export type Creation = {
   set: string
   byline: string
   credential?: string
-  // Overrides the default object-position (center) for object-cover on the
-  // mobile snap carousel. Use 'left' when the source image has important
-  // content on its left edge that center-cropping would lose (e.g., NYT logo).
-  objectPosition?: 'left' | 'center' | 'right'
+  // CSS object-position for the mobile 4:5 crop. Defaults to '50% center'.
+  // Use e.g. '30% center' to pull the visible window left, '65% center' to push right.
+  objectPosition?: string
 }
 
 export const creations: Creation[] = [
@@ -27,6 +26,7 @@ export const creations: Creation[] = [
     set: 'EXECUTIVE PODCAST SET',
     byline: 'Interesting Times · NYT',
     credential: 'U.S. Rep. · Florida',
+    objectPosition: '30% center',
   },
   {
     src: '/creations/NYT_Ross_Douthat.jpg',
@@ -35,6 +35,7 @@ export const creations: Creation[] = [
     set: 'EXECUTIVE PODCAST SET',
     byline: 'Interesting Times · NYT',
     credential: 'NYT Columnist',
+    objectPosition: '65% center',
   },
   {
     src: '/creations/julietteastor.jpg',
