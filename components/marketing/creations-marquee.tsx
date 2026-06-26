@@ -52,7 +52,7 @@ function Track({ half }: { half: 'primary' | 'clone' }) {
 }
 
 function MobileCreationCard({ c, active }: { c: Creation; active: boolean }) {
-  const aspectClass = c.aspect === '9:16' ? 'aspect-[9/16]' : 'aspect-[16/9]'
+  const aspectClass = c.aspect === '9:16' ? 'aspect-[4/5]' : 'aspect-[16/9]'
   return (
     <figure
       className={`relative shrink-0 w-[72vw] snap-center transition-opacity duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] ${
