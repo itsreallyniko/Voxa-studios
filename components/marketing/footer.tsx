@@ -6,7 +6,7 @@ export function Footer() {
       <div className="max-w-container-max mx-auto px-6 md:px-margin-edge flex flex-col md:flex-row justify-between items-center gap-12">
         <div className="flex flex-col gap-4 items-center md:items-start text-white">
           <VoxaLogo className="h-10 w-auto" />
-          <p className="text-ivory/30 text-xs tracking-widest">LUXURY CONTENT ENVIRONMENTS</p>
+          <p className="text-ivory/30 text-xs tracking-widest">PODCAST &amp; CONTENT STUDIO · TAMPA, FL</p>
         </div>
         <div className="flex flex-wrap justify-center gap-6 sm:gap-12">
           <a
