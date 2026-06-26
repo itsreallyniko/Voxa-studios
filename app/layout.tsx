@@ -11,7 +11,7 @@ const dmSans = DM_Sans({
   display: 'swap',
 })
 
-const SITE_URL = 'https://voxastudiosfl.com'
+const SITE_URL = 'https://voxastudios.com'
 const TITLE = 'Voxa Studios — Podcast & Content Studio in Tampa, FL'
 const DESCRIPTION =
   "Tampa's turnkey podcast and content studio. Multi-cam recording, studio lighting, audio, and on-site producer included — from $300 / 90 min."
