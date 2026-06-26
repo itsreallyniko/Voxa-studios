@@ -10,6 +10,12 @@ export function Footer() {
         </div>
         <div className="flex flex-wrap justify-center gap-6 sm:gap-12">
           <a
+            href="tel:+18137317075"
+            className="text-label-caps text-ivory/60 hover:text-white transition-colors tabular-nums"
+          >
+            (813) 731-7075
+          </a>
+          <a
             href="https://instagram.com/voxastudios.fl/"
             target="_blank"
             rel="noopener noreferrer"

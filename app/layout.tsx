@@ -11,10 +11,36 @@ const dmSans = DM_Sans({
   display: 'swap',
 })
 
-const SITE_URL = 'https://voxastudios.com'
+const SITE_URL = 'https://voxastudiosfl.com'
 const TITLE = 'Voxa Studios — Podcast & Content Studio in Tampa, FL'
 const DESCRIPTION =
   "Tampa's turnkey podcast and content studio. Multi-cam recording, studio lighting, audio, and on-site producer included — from $300 / 90 min."
+
+const LOCAL_BUSINESS_JSONLD = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  '@id': `${SITE_URL}/#localbusiness`,
+  name: 'Voxa Studios',
+  description:
+    'Turnkey podcast, VSL, and content production studio in Tampa, FL. Multi-cam recording, studio lighting, audio, and on-site producer included.',
+  image: `${SITE_URL}/hero.jpg`,
+  url: SITE_URL,
+  telephone: '+1-813-731-7075',
+  email: 'voxastudiosfl@gmail.com',
+  priceRange: '$300+',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: '4021 N Armenia Ave, Suite 102',
+    addressLocality: 'Tampa',
+    addressRegion: 'FL',
+    postalCode: '33607',
+    addressCountry: 'US',
+  },
+  sameAs: [
+    'https://instagram.com/voxastudios.fl/',
+    'https://www.linkedin.com/company/voxa-studios/',
+  ],
+}
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -56,6 +82,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="bg-obsidian text-ivory antialiased">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(LOCAL_BUSINESS_JSONLD) }}
+        />
         <TourModalProvider>
           <Nav />
           {children}
