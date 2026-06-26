@@ -26,7 +26,7 @@ export const creations: Creation[] = [
     set: 'EXECUTIVE PODCAST SET',
     byline: 'Interesting Times · NYT',
     credential: 'U.S. Rep. · Florida',
-    objectPosition: '30% center',
+    objectPosition: '15% center',
   },
   {
     src: '/creations/NYT_Ross_Douthat.jpg',
@@ -35,7 +35,7 @@ export const creations: Creation[] = [
     set: 'EXECUTIVE PODCAST SET',
     byline: 'Interesting Times · NYT',
     credential: 'NYT Columnist',
-    objectPosition: '65% center',
+    objectPosition: '72% center',
   },
   {
     src: '/creations/julietteastor.jpg',
