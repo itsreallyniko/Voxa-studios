@@ -25,7 +25,8 @@ function CreationCard({ c, priority }: { c: Creation; priority?: boolean }) {
         <div className="text-heritage-gold text-[10px] tracking-[0.4em] uppercase">
           {c.set}
         </div>
-        <div className="text-white/60 text-sm mt-1 lowercase">{c.byline}</div>
+        {c.name && <div className="text-white text-sm mt-1">{c.name}</div>}
+        <div className={`text-white/60 text-sm ${c.name ? 'mt-0.5' : 'mt-1'}`}>{c.byline}</div>
         {c.credential && (
           <div className="text-white/40 text-xs mt-0.5">{c.credential}</div>
         )}
@@ -74,7 +75,8 @@ function MobileCreationCard({ c, active }: { c: Creation; active: boolean }) {
         <div className="text-heritage-gold text-[10px] tracking-[0.4em] uppercase">
           {c.set}
         </div>
-        <div className="text-white/70 text-sm mt-1 lowercase">{c.byline}</div>
+        {c.name && <div className="text-white text-sm mt-1">{c.name}</div>}
+        <div className={`text-white/70 text-sm ${c.name ? 'mt-0.5' : 'mt-1'}`}>{c.byline}</div>
         {c.credential && (
           <div className="text-white/45 text-xs mt-0.5">{c.credential}</div>
         )}

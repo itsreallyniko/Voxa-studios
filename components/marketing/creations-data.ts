@@ -4,6 +4,7 @@ export type Creation = {
   aspect: '16:9' | '9:16'
   set: string
   byline: string
+  name?: string
   credential?: string
   // CSS object-position for the mobile 4:5 crop. Defaults to '50% center'.
   // Use e.g. '30% center' to pull the visible window left, '65% center' to push right.
@@ -25,6 +26,7 @@ export const creations: Creation[] = [
     aspect: '16:9',
     set: 'EXECUTIVE PODCAST SET',
     byline: 'Interesting Times · NYT',
+    name: 'Anna Paulina Luna',
     credential: 'U.S. Rep. · Florida',
     objectPosition: '15% center',
   },
@@ -34,6 +36,7 @@ export const creations: Creation[] = [
     aspect: '16:9',
     set: 'EXECUTIVE PODCAST SET',
     byline: 'Interesting Times · NYT',
+    name: 'Ross Douthat',
     credential: 'NYT Columnist',
     objectPosition: '72% center',
   },
