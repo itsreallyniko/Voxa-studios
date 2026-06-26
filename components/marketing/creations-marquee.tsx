@@ -52,13 +52,14 @@ function Track({ half }: { half: 'primary' | 'clone' }) {
 }
 
 function MobileCreationCard({ c, active }: { c: Creation; active: boolean }) {
+  const aspectClass = c.aspect === '9:16' ? 'aspect-[9/16]' : 'aspect-[16/9]'
   return (
     <figure
       className={`relative shrink-0 w-[72vw] snap-center transition-opacity duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] ${
         active ? 'opacity-100' : 'opacity-40'
       }`}
     >
-      <div className="relative overflow-hidden rounded-2xl bg-black border border-white/5 aspect-[4/5]">
+      <div className={`relative overflow-hidden rounded-2xl bg-black border border-white/5 ${aspectClass}`}>
         <Image
           src={c.src}
           alt={c.alt}
@@ -126,7 +127,7 @@ function MobileSnapCarousel() {
     <div>
       <div
         ref={scrollRef}
-        className="flex gap-3 overflow-x-auto snap-x snap-mandatory px-[14vw] no-scrollbar"
+        className="flex items-start gap-3 overflow-x-auto snap-x snap-mandatory px-[14vw] no-scrollbar"
       >
         {creations.map((c, i) => (
           <MobileCreationCard key={c.src} c={c} active={i === activeIdx} />
