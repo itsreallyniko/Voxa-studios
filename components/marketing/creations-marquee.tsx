@@ -66,7 +66,7 @@ function MobileCreationCard({ c, active }: { c: Creation; active: boolean }) {
         active ? 'opacity-100' : 'opacity-40'
       }`}
     >
-      <div className="relative overflow-hidden rounded-2xl bg-black border border-white/5 aspect-square">
+      <div className="relative overflow-hidden rounded-2xl bg-black border border-white/5 aspect-[4/5]">
         <Image
           src={c.src}
           alt={c.alt}
