@@ -54,12 +54,12 @@ export function Hero() {
           </div>
 
           <h1 className="fade-up text-display-lg-mobile md:text-display-lg leading-[1.05] tracking-tight text-white text-balance mb-8 [text-shadow:0_2px_24px_rgba(13,13,13,0.55)]" style={{ animationDelay: '140ms' }}>
-            Professional content
-            <br className="hidden md:block" /> effortlessly
+            Professional Content
+            <br className="hidden md:block" /> Effortlessly
           </h1>
 
           <p className="fade-up text-body-lg text-ivory/85 leading-relaxed max-w-xl mx-auto mb-14 text-balance" style={{ animationDelay: '220ms' }}>
-            Turnkey podcast, VSL, and content production, engineer included.
+            Podcast, VSL, and content production — engineer on-site.
           </p>
 
           <div className="fade-up flex justify-center" style={{ animationDelay: '300ms' }}>

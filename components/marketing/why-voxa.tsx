@@ -17,7 +17,7 @@ export function WhyVoxa() {
       <div className="max-w-container-max mx-auto px-6 md:px-margin-edge">
         <Reveal className="max-w-3xl mb-24">
           <span className="text-label-caps text-heritage-gold mb-4 block">THE EXPERIENCE</span>
-          <h2 className="text-headline-xl text-white">Everything Is Already Ready</h2>
+          <h2 className="text-headline-xl text-white">Built To Be Ready</h2>
           <p className="text-body-lg text-ivory/60 mt-6">
             Forget the technical overhead. Our studios are engineered for immediate performance.
           </p>
