@@ -76,25 +76,35 @@ export function FAQ() {
           </h2>
         </Reveal>
 
-        <div className="max-w-3xl">
-          {FAQS.map((f, i) => {
-            const isOpen = openIdx === i
-            return (
-              <Reveal key={f.question} delay={i * 40}>
-                <div className="border-b border-white/10">
+        <Reveal className="max-w-3xl">
+          <div className="bg-surface-container-low liquid-glass">
+            {FAQS.map((f, i) => {
+              const isOpen = openIdx === i
+              const isLast = i === FAQS.length - 1
+              return (
+                <div
+                  key={f.question}
+                  className={`relative ${isLast ? '' : 'border-b border-white/5'}`}
+                >
+                  {isOpen && (
+                    <span
+                      aria-hidden="true"
+                      className="absolute left-0 top-0 bottom-0 w-px bg-heritage-gold"
+                    />
+                  )}
                   <button
                     type="button"
                     aria-expanded={isOpen}
                     aria-controls={`faq-answer-${i}`}
                     onClick={() => setOpenIdx(isOpen ? null : i)}
-                    className="w-full flex items-center justify-between gap-6 py-6 text-left group"
+                    className={`w-full flex items-center justify-between gap-6 px-6 py-5 md:px-8 md:py-6 text-left transition-colors duration-200 ${
+                      isOpen ? 'bg-white/[0.02]' : 'hover:bg-white/[0.015]'
+                    }`}
                   >
-                    <h3 className="text-body-lg text-white group-hover:text-heritage-gold transition-colors duration-200">
-                      {f.question}
-                    </h3>
+                    <h3 className="text-body-lg text-white">{f.question}</h3>
                     <span
                       className={`shrink-0 transition-colors duration-200 ${
-                        isOpen ? 'text-heritage-gold' : 'text-ivory/60 group-hover:text-heritage-gold'
+                        isOpen ? 'text-heritage-gold' : 'text-ivory/50'
                       }`}
                     >
                       <ChevronIcon open={isOpen} />
@@ -109,16 +119,16 @@ export function FAQ() {
                     }`}
                   >
                     <div className="overflow-hidden">
-                      <p className="text-body-md text-ivory/70 leading-relaxed pb-6 pr-10">
+                      <p className="text-body-md text-ivory/70 leading-relaxed px-6 pb-6 md:px-8 md:pb-8 md:pr-16">
                         {f.answer}
                       </p>
                     </div>
                   </div>
                 </div>
-              </Reveal>
-            )
-          })}
-        </div>
+              )
+            })}
+          </div>
+        </Reveal>
       </div>
 
       <script
