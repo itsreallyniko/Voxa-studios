@@ -68,7 +68,7 @@ export function FAQ() {
   return (
     <section id="faq" className="py-section-gap bg-obsidian">
       <div className="max-w-container-max mx-auto px-6 md:px-margin-edge">
-        <Reveal className="max-w-3xl mb-16">
+        <Reveal className="max-w-3xl mx-auto mb-16 text-center">
           <span className="text-label-caps text-heritage-gold mb-4 block">FAQ</span>
           <h2 className="text-headline-xl text-white">
             Common Questions, <br />
@@ -76,7 +76,7 @@ export function FAQ() {
           </h2>
         </Reveal>
 
-        <Reveal className="max-w-3xl">
+        <Reveal className="max-w-3xl mx-auto">
           <div className="bg-surface-container-low liquid-glass">
             {FAQS.map((f, i) => {
               const isOpen = openIdx === i
