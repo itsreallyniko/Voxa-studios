@@ -56,7 +56,6 @@ export async function POST(req: Request) {
     createBooking({
       eventTypeId,
       startISO,
-      durationMinutes: TOUR_DURATION_MINUTES,
       attendee: { name, email, timeZone: tz },
       bookingFieldsResponses: { phone },
       idempotencyKey,

@@ -75,7 +75,8 @@ describe('POST /api/tour/book', () => {
 
     const callArgs = vi.mocked(createBooking).mock.calls[0][0]
     expect(callArgs.eventTypeId).toBe(6123370)
-    expect(callArgs.durationMinutes).toBe(15)
+    // Tour event type is fixed-length in Cal.com; do not send lengthInMinutes.
+    expect(callArgs.durationMinutes).toBeUndefined()
     expect(callArgs.attendee.name).toBe('Jane Founder')
     expect(callArgs.attendee.email).toBe('jane@example.com')
     expect(callArgs.bookingFieldsResponses?.phone).toBe('+15555555555')

@@ -77,7 +77,9 @@ export async function getSlots(args: {
 export async function createBooking(args: {
   eventTypeId: number
   startISO: string
-  durationMinutes: number
+  // Only set for event types with multiple possible lengths. Cal.com rejects
+  // the field on fixed-length event types.
+  durationMinutes?: number
   attendee: { name: string; email: string; timeZone: string }
   metadata?: Record<string, string>
   bookingFieldsResponses?: Record<string, string>
@@ -89,7 +91,7 @@ export async function createBooking(args: {
     body: JSON.stringify({
       eventTypeId: args.eventTypeId,
       start: args.startISO,
-      lengthInMinutes: args.durationMinutes,
+      ...(args.durationMinutes !== undefined ? { lengthInMinutes: args.durationMinutes } : {}),
       attendee: args.attendee,
       metadata: args.metadata ?? {},
       ...(args.bookingFieldsResponses
