@@ -138,7 +138,7 @@ function PreviewCard({
           <button
             type="button"
             onClick={openTour}
-            className="mt-4 block w-full text-center text-xs text-ivory/45 hover:text-ivory/80 transition-colors"
+            className="mt-3 w-full py-4 border border-white/30 hover:bg-white/5 hover:border-white/60 text-label-caps text-ivory/80 hover:text-ivory text-center transition-[background-color,color,border-color] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.995]"
           >
             Not ready to book? Tour the studio first →
           </button>
