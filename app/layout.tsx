@@ -1,6 +1,11 @@
 import type { Metadata } from 'next'
 import { DM_Sans } from 'next/font/google'
 import { Nav } from '@/components/nav'
+import { MetaPixel } from '@/components/meta-pixel'
+import {
+  GoogleTagManagerScript,
+  GoogleTagManagerNoScript,
+} from '@/components/google-tag-manager'
 import { TourModalProvider } from '@/lib/tour-modal-context'
 import './globals.css'
 
@@ -80,12 +85,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@200,0..1&display=swap"
         />
+        <GoogleTagManagerScript />
       </head>
       <body className="bg-obsidian text-ivory antialiased">
+        <GoogleTagManagerNoScript />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(LOCAL_BUSINESS_JSONLD) }}
         />
+        <MetaPixel />
         <TourModalProvider>
           <Nav />
           {children}

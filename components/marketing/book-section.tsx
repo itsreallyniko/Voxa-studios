@@ -6,6 +6,7 @@ import { Wizard } from '@/components/book/wizard'
 import { collections, type Collection } from '@/lib/content/collections'
 import { Reveal } from '@/components/ui/reveal'
 import { useTourModal } from '@/lib/tour-modal-context'
+import { track } from '@/lib/meta-pixel'
 
 function shortLabel(setName: string, collectionName: string) {
   const collectionPrefix = collectionName.split(' ')[0] + ' '
@@ -155,6 +156,7 @@ function PreviewCards() {
     setBooking((b) => ({ ...b, collectionId: id }))
     // Jump straight to "Set" — they've already chosen a collection.
     goTo('set')
+    track('Lead', { content_name: 'Studio Wizard', content_category: id })
   }
 
   return (

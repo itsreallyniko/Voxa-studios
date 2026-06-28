@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { useTourModal } from '@/lib/tour-modal-context'
 import { Input } from '@/components/ui/input'
+import { track } from '@/lib/meta-pixel'
 
 type Step = 'details' | 'schedule' | 'success'
 type Status = 'idle' | 'loading-slots' | 'submitting' | 'error'
@@ -119,6 +120,7 @@ export function TourModal() {
     setStatus('idle')
     setErrorMsg(null)
     setBookingResult(null)
+    track('Lead', { content_name: 'Tour Form' })
   }, [isOpen])
 
   useEffect(() => {
@@ -195,6 +197,7 @@ export function TourModal() {
       setBookingResult(body as BookingResult)
       setStep('success')
       setStatus('idle')
+      track('Schedule', { content_name: 'Studio Tour' })
     } catch {
       setStatus('error')
       setErrorMsg("Couldn't reach our calendar — try again in a moment.")

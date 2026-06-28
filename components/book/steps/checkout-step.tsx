@@ -6,6 +6,7 @@ import { loadStripe } from '@stripe/stripe-js'
 import { useBooking } from '@/lib/booking-context'
 import { findCollection, findSet } from '@/lib/content/collections'
 import { CheckoutForm } from '@/components/book/checkout-form'
+import { track } from '@/lib/meta-pixel'
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY ?? '')
 
@@ -52,6 +53,12 @@ export function CheckoutStep() {
         setClientSecret(d.clientSecret)
         setPaymentIntentId(d.paymentIntentId)
         setAmountCents(d.amountCents)
+        track('InitiateCheckout', {
+          value: d.amountCents / 100,
+          currency: 'USD',
+          content_ids: booking.setId ? [booking.setId] : undefined,
+          content_name: set?.name,
+        })
       })
       .catch(() => setBootError('Could not start payment. Refresh and try again.'))
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -148,7 +155,17 @@ export function CheckoutStep() {
               <CheckoutForm
                 paymentIntentId={paymentIntentId}
                 amountCents={amountCents}
-                onPaid={(info) => setPaid({ bookingUid: info.bookingUid })}
+                onPaid={(info) => {
+                  setPaid({ bookingUid: info.bookingUid })
+                  track('Purchase', {
+                    value: totals.total,
+                    currency: 'USD',
+                    content_ids: booking.setId ? [booking.setId] : undefined,
+                    content_name: set?.name,
+                    content_type: 'product',
+                    num_items: 1,
+                  })
+                }}
                 onSlotTaken={() => setSlotTaken(true)}
               />
             </Elements>
