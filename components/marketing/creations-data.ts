@@ -18,7 +18,7 @@ export const creations: Creation[] = [
     aspect: '16:9',
     set: 'AUTHORITY DESK',
     byline: '@matt_thecloser',
-    credential: 'Founder, Novations',
+    credential: 'Founder, Nova Elite',
   },
   {
     src: '/creations/NYT_Anna_paulina_luna.jpg',
