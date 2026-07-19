@@ -25,7 +25,7 @@ describe('ScheduleStep with real fetch', () => {
   it('renders dates returned by /api/cal/slots and disables empties', async () => {
     const slotsByDate: Record<string, string[]> = {}
     const today = new Date()
-    for (let i = 1; i <= 14; i++) {
+    for (let i = 1; i <= 60; i++) {
       const d = new Date(today)
       d.setDate(today.getDate() + i)
       const iso = d.toISOString().slice(0, 10)
