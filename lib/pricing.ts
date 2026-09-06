@@ -1,7 +1,7 @@
 export const BASE_PRICE_USD = 300
 export const BASE_MINUTES = 90
 export const EXTRA_INCREMENT_MINUTES = 30
-export const EXTRA_INCREMENT_PRICE = 50
+export const EXTRA_INCREMENT_PRICE = 100
 
 export type Addon = {
   id: string

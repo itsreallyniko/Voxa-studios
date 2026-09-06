@@ -6,9 +6,9 @@ describe('recomputeTotalCents', () => {
     expect(recomputeTotalCents({ durationMinutes: 90, addonIds: [] })).toBe(30000)
   })
 
-  it('adds 10000 (=$100) per extra hour above 90 min', () => {
-    expect(recomputeTotalCents({ durationMinutes: 150, addonIds: [] })).toBe(40000)
-    expect(recomputeTotalCents({ durationMinutes: 330, addonIds: [] })).toBe(70000)
+  it('adds 20000 (=$200) per extra hour above 90 min', () => {
+    expect(recomputeTotalCents({ durationMinutes: 150, addonIds: [] })).toBe(50000)
+    expect(recomputeTotalCents({ durationMinutes: 330, addonIds: [] })).toBe(110000)
   })
 
   it('adds clip-repurposing when the chosen set is podcast', () => {
@@ -48,6 +48,6 @@ describe('recomputeTotalCents', () => {
         addonIds: ['clip-repurposing'],
         setId: 'executive-podcast',
       })
-    ).toBe(30000 + 20000 + 5000)
+    ).toBe(30000 + 40000 + 5000)
   })
 })
