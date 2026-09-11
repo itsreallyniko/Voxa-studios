@@ -32,9 +32,16 @@ const CREATOR_PREVIEW = `${EXEC_DIR}/Gallery Images Creator/Preview_Creator3.JPG
 const CREATOR_SIDE = `${EXEC_DIR}/Gallery Images Creator/Preview_Side_creator.JPG`
 const CREATOR_BTS = `${EXEC_DIR}/Gallery Images Creator/BTS_Creator.JPG`
 
-// TODO: Replace with real Horizon photography once the set is built.
-const HORIZON_HERO = '/horizon/coming-soon.jpg'
-const HORIZON_CLIP = '/horizon/coming-soon.jpg'
+const HORIZON_DIR = '/horizon'
+const HORIZON_POD_HORIZONTAL = `${HORIZON_DIR}/Gallery Images Podcast/Horizon_Podcast_Horizontal-3.jpg`
+const HORIZON_POD_1 = `${HORIZON_DIR}/Gallery Images Podcast/Horizon_Podcast.jpg`
+const HORIZON_POD_2 = `${HORIZON_DIR}/Gallery Images Podcast/Horizon_Podcast-2.jpg`
+const HORIZON_POD_3 = `${HORIZON_DIR}/Gallery Images Podcast/Horizon_Podcast-3.jpg`
+const HORIZON_DESK_HORIZONTAL = `${HORIZON_DIR}/Gallery Images Desk/Horizon_Desk_Horizontal.jpg`
+const HORIZON_DESK_VERTICAL = `${HORIZON_DIR}/Gallery Images Desk/Horizon_Desk_Vertical.jpg`
+const HORIZON_CREATOR_1 = `${HORIZON_DIR}/Gallery Images Creator/Horizon_Creator_Vertical.jpg`
+const HORIZON_CREATOR_2 = `${HORIZON_DIR}/Gallery Images Creator/Horizon_Creator_Vertical-1.jpg`
+const HORIZON_CREATOR_3 = `${HORIZON_DIR}/Gallery Images Creator/Horizon_Creator_Vertical-2.jpg`
 
 export const collections: Collection[] = [
   {
@@ -104,8 +111,7 @@ export const collections: Collection[] = [
     tagline: 'Bright, modern, approachable environments.',
     audience: ['Wellness brands', 'Creators', 'Educators', 'Lifestyle businesses', 'Coaches'],
     visualTraits: ['Bright atmosphere', 'Natural textures', 'Clean modern design', 'Lifestyle aesthetic'],
-    heroImage: HORIZON_HERO,
-    comingSoon: true,
+    heroImage: HORIZON_POD_HORIZONTAL,
     sets: [
       {
         id: 'horizon-podcast',
@@ -113,13 +119,13 @@ export const collections: Collection[] = [
         description:
           'A bright two-seat conversation set with natural textures and warm wood accents — designed to feel welcoming and conversational.',
         bestFor: ['Wellness podcasts', 'Lifestyle interviews', 'Educational conversations'],
-        equipment: ['Four-camera coverage (4K)', 'Shure SM7B mics', 'Soft daylight lighting', 'Acoustic treatment'],
+        equipment: ['Three-camera coverage', 'Shure SM7B mics', 'Soft daylight lighting'],
         capacity: { seats: 2, label: 'Host + 1 guest' },
-        heroImage: HORIZON_HERO,
-        gallery: [HORIZON_HERO, HORIZON_CLIP, HORIZON_HERO, HORIZON_CLIP],
+        heroImage: HORIZON_POD_HORIZONTAL,
+        gallery: [HORIZON_POD_HORIZONTAL, HORIZON_POD_1, HORIZON_POD_2, HORIZON_POD_3],
         exampleContent: [
-          { thumb: HORIZON_CLIP, label: 'Wellness shorts' },
-          { thumb: HORIZON_HERO, label: 'Lifestyle interviews' },
+          { thumb: HORIZON_POD_HORIZONTAL, label: 'Lifestyle interviews' },
+          { thumb: HORIZON_POD_2, label: 'Wellness shorts' },
         ],
       },
       {
@@ -128,28 +134,28 @@ export const collections: Collection[] = [
         description:
           'A bright solo desk with a modern wellness aesthetic. Built for teaching, course content, and lifestyle direct-to-camera delivery.',
         bestFor: ['Online courses', 'Wellness content', 'Educational direct-to-camera'],
-        equipment: ['Three-camera coverage', 'Lavalier audio', 'Teleprompter-ready', 'Soft natural lighting'],
+        equipment: ['Two-camera coverage', 'Lavalier or Shure SM7B mic', 'Teleprompter-ready'],
         capacity: { seats: 1, label: 'Solo presenter' },
-        heroImage: HORIZON_HERO,
-        gallery: [HORIZON_HERO, HORIZON_CLIP, HORIZON_HERO, HORIZON_CLIP],
+        heroImage: HORIZON_DESK_HORIZONTAL,
+        gallery: [HORIZON_DESK_HORIZONTAL, HORIZON_DESK_VERTICAL],
         exampleContent: [
-          { thumb: HORIZON_HERO, label: 'Course modules' },
-          { thumb: HORIZON_CLIP, label: 'Wellness shorts' },
+          { thumb: HORIZON_DESK_HORIZONTAL, label: 'Course modules' },
+          { thumb: HORIZON_DESK_VERTICAL, label: 'Wellness shorts' },
         ],
       },
       {
         id: 'horizon-creator',
         name: 'Horizon Creator Set',
         description:
-          'A creator-friendly bright set with vertical and horizontal capture. Built for high-volume short-form content with a modern wellness feel.',
+          'A versatile bright creator environment built for short-form, vertical, and horizontal output in the same session.',
         bestFor: ['Lifestyle shorts', 'Wellness reels', 'Educational clips'],
-        equipment: ['Vertical + horizontal cameras', 'Soft studio lighting', 'On-set monitor', 'Acoustic treatment'],
+        equipment: ['Two-camera coverage', 'Lavalier or Shure SM7B mic', 'Teleprompter-ready'],
         capacity: { seats: 1, label: 'Solo creator' },
-        heroImage: HORIZON_CLIP,
-        gallery: [HORIZON_CLIP, HORIZON_HERO, HORIZON_CLIP, HORIZON_HERO],
+        heroImage: HORIZON_CREATOR_1,
+        gallery: [HORIZON_CREATOR_1, HORIZON_CREATOR_2, HORIZON_CREATOR_3],
         exampleContent: [
-          { thumb: HORIZON_CLIP, label: 'Wellness reels' },
-          { thumb: HORIZON_HERO, label: 'Lifestyle shorts' },
+          { thumb: HORIZON_CREATOR_1, label: 'Wellness reels' },
+          { thumb: HORIZON_CREATOR_2, label: 'Lifestyle shorts' },
         ],
       },
     ],
