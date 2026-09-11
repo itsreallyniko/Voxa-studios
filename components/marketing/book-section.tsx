@@ -139,9 +139,24 @@ function PreviewCard({
           <button
             type="button"
             onClick={openTour}
-            className="mt-3 w-full py-4 border border-white/30 hover:bg-white/5 hover:border-white/60 text-label-caps text-ivory/80 hover:text-ivory text-center transition-[background-color,color,border-color] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.995]"
+            className="group/tour mt-3 w-full py-4 px-4 border border-heritage-gold/30 bg-heritage-gold/[0.04] hover:bg-heritage-gold/10 hover:border-heritage-gold/70 text-label-caps text-ivory hover:text-heritage-gold text-center inline-flex items-center justify-center gap-2.5 transition-[background-color,color,border-color] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.995]"
           >
-            Not ready to book? Tour the studio first →
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.75"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+              className="text-heritage-gold/80 group-hover/tour:text-heritage-gold transition-colors"
+            >
+              <path d="M12 21s-7-6.5-7-12a7 7 0 0 1 14 0c0 5.5-7 12-7 12z" />
+              <circle cx="12" cy="9" r="2.5" />
+            </svg>
+            <span>Not ready to book? Tour the studio first →</span>
           </button>
         )}
       </div>
