@@ -3,6 +3,7 @@
 import { useEffect, useRef } from 'react'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
+import { useTourModal } from '@/lib/tour-modal-context'
 
 const USE_CASES: { icon: string; label: string }[] = [
   { icon: 'mic', label: 'Podcasts' },
@@ -14,6 +15,7 @@ const USE_CASES: { icon: string; label: string }[] = [
 
 export function Hero() {
   const imgRef = useRef<HTMLDivElement>(null)
+  const { open: openTour } = useTourModal()
 
   useEffect(() => {
     const onScroll = () => {
@@ -62,12 +64,37 @@ export function Hero() {
             Podcast, VSL, and content production — engineer on-site.
           </p>
 
-          <div className="fade-up flex justify-center" style={{ animationDelay: '300ms' }}>
-            <a href="/book">
-              <Button variant="primary" size="lg">
+          <div
+            className="fade-up flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4"
+            style={{ animationDelay: '300ms' }}
+          >
+            <a href="/book" className="flex">
+              <Button variant="primary" size="lg" className="w-full sm:w-auto">
                 Book Your Session
               </Button>
             </a>
+            <Button
+              variant="ghost"
+              size="lg"
+              onClick={openTour}
+              className="w-full sm:w-auto gap-2.5"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.75"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M12 21s-7-6.5-7-12a7 7 0 0 1 14 0c0 5.5-7 12-7 12z" />
+                <circle cx="12" cy="9" r="2.5" />
+              </svg>
+              Book a Free Tour
+            </Button>
           </div>
         </div>
       </div>
