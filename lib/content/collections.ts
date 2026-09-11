@@ -33,14 +33,15 @@ const CREATOR_SIDE = `${EXEC_DIR}/Gallery Images Creator/Preview_Side_creator.JP
 const CREATOR_BTS = `${EXEC_DIR}/Gallery Images Creator/BTS_Creator.JPG`
 
 const HORIZON_DIR = '/horizon'
-const HORIZON_POD_HORIZONTAL = `${HORIZON_DIR}/Gallery Images Podcast/Horizon_Podcast_Horizontal-3.jpg`
+const HORIZON_POD_HORIZONTAL = `${HORIZON_DIR}/Gallery Images Podcast/Horizon_Podcast_Horizontal-4.jpg`
+const HORIZON_POD_HORIZONTAL_ALT = `${HORIZON_DIR}/Gallery Images Podcast/Horizon_Podcast_Horizontal-3.jpg`
 const HORIZON_POD_1 = `${HORIZON_DIR}/Gallery Images Podcast/Horizon_Podcast.jpg`
 const HORIZON_POD_2 = `${HORIZON_DIR}/Gallery Images Podcast/Horizon_Podcast-2.jpg`
 const HORIZON_POD_3 = `${HORIZON_DIR}/Gallery Images Podcast/Horizon_Podcast-3.jpg`
 const HORIZON_DESK_HORIZONTAL = `${HORIZON_DIR}/Gallery Images Desk/Horizon_Desk_Horizontal.jpg`
 const HORIZON_DESK_VERTICAL = `${HORIZON_DIR}/Gallery Images Desk/Horizon_Desk_Vertical.jpg`
-const HORIZON_CREATOR_1 = `${HORIZON_DIR}/Gallery Images Creator/Horizon_Creator_Vertical.jpg`
-const HORIZON_CREATOR_2 = `${HORIZON_DIR}/Gallery Images Creator/Horizon_Creator_Vertical-1.jpg`
+const HORIZON_CREATOR_1 = `${HORIZON_DIR}/Gallery Images Creator/Horizon_Creator_Vertical-1.jpg`
+const HORIZON_CREATOR_2 = `${HORIZON_DIR}/Gallery Images Creator/Horizon_Creator_Vertical.jpg`
 const HORIZON_CREATOR_3 = `${HORIZON_DIR}/Gallery Images Creator/Horizon_Creator_Vertical-2.jpg`
 
 export const collections: Collection[] = [
@@ -122,7 +123,7 @@ export const collections: Collection[] = [
         equipment: ['Three-camera coverage', 'Shure SM7B mics', 'Soft daylight lighting'],
         capacity: { seats: 2, label: 'Host + 1 guest' },
         heroImage: HORIZON_POD_HORIZONTAL,
-        gallery: [HORIZON_POD_HORIZONTAL, HORIZON_POD_1, HORIZON_POD_2, HORIZON_POD_3],
+        gallery: [HORIZON_POD_HORIZONTAL, HORIZON_POD_HORIZONTAL_ALT, HORIZON_POD_1, HORIZON_POD_2, HORIZON_POD_3],
         exampleContent: [
           { thumb: HORIZON_POD_HORIZONTAL, label: 'Lifestyle interviews' },
           { thumb: HORIZON_POD_2, label: 'Wellness shorts' },
