@@ -24,9 +24,9 @@ export function FinalCTA() {
             <a href="#book">
               <Button variant="primary" size="lg">Explore Studio Sets</Button>
             </a>
-            <button type="button" onClick={open}>
-              <Button variant="secondary" size="lg">Book A Studio Tour</Button>
-            </button>
+            <Button variant="secondary" size="lg" onClick={open}>
+              Book A Studio Tour
+            </Button>
           </div>
         </Reveal>
       </div>

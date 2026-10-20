@@ -12,6 +12,10 @@ export function pushDataLayer(event: Record<string, unknown>): void {
     window.dataLayer.push({ ecommerce: null })
   }
   window.dataLayer.push(event)
+  if (process.env.NODE_ENV !== 'production') {
+    // eslint-disable-next-line no-console
+    console.log(`[dataLayer] ${event.event ?? '(no event)'}`, event)
+  }
 }
 
 export async function sha256Hex(input: string): Promise<string | undefined> {

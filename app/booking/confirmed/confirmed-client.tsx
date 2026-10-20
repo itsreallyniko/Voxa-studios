@@ -39,8 +39,11 @@ export function ConfirmedClient() {
     setData(stash)
 
     if (!uid) return
-    // Dedup across refresh / back-button so Purchase fires exactly once per booking.
+    // Dedup across refresh / back-button / React StrictMode double-mount.
+    // Set the flag SYNCHRONOUSLY before any async work so the second mount bails cleanly.
     if (window.localStorage.getItem(firedKey(uid))) return
+    window.localStorage.setItem(firedKey(uid), '1')
+    window.sessionStorage.removeItem(STASH_KEY)
 
     const value = stash?.value ?? 0
     const currency = stash?.currency ?? 'USD'
@@ -72,9 +75,6 @@ export function ConfirmedClient() {
         },
         user_data: emailHash ? { sha256_email_address: emailHash } : undefined,
       })
-
-      window.localStorage.setItem(firedKey(uid), '1')
-      window.sessionStorage.removeItem(STASH_KEY)
     }
     void fire()
   }, [uid])
