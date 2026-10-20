@@ -15,6 +15,11 @@ vi.mock('@stripe/react-stripe-js', () => {
 })
 vi.mock('@stripe/stripe-js', () => ({ loadStripe: () => Promise.resolve({}) }))
 
+const routerPush = vi.fn()
+vi.mock('next/navigation', () => ({
+  useRouter: () => ({ push: routerPush, replace: vi.fn(), prefetch: vi.fn() }),
+}))
+
 function Seed() {
   const { setBooking } = useBooking()
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -36,6 +41,8 @@ function Seed() {
 beforeEach(() => {
   vi.restoreAllMocks()
   stripeConfirm.mockReset()
+  routerPush.mockReset()
+  window.sessionStorage.clear()
   ;(Seed as any)._ = false
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY = 'pk_test'
 })
@@ -54,7 +61,7 @@ async function setupHappyMocks() {
 }
 
 describe('CheckoutStep with real flow', () => {
-  it('happy path: intent → confirm → book → paid screen', async () => {
+  it('happy path: intent → confirm → book → redirect to /booking/confirmed', async () => {
     await setupHappyMocks()
     render(
       <BookingProvider>
@@ -68,8 +75,14 @@ describe('CheckoutStep with real flow', () => {
     const pay = await screen.findByRole('button', { name: /pay \$/i })
     await userEvent.click(pay)
 
-    await waitFor(() => expect(screen.getByText(/you're booked/i)).toBeInTheDocument())
+    await waitFor(() => expect(routerPush).toHaveBeenCalledWith('/booking/confirmed?booking=cal_abc'))
     expect(stripeConfirm).toHaveBeenCalledOnce()
+
+    const stashed = JSON.parse(window.sessionStorage.getItem('voxa:lastBooking') ?? '{}')
+    expect(stashed.uid).toBe('cal_abc')
+    expect(stashed.value).toBe(300)
+    expect(stashed.currency).toBe('USD')
+    expect(stashed.setId).toBe('executive-podcast')
   })
 
   it('slot-taken: confirm returns 409 → error UI with retry-from-schedule', async () => {

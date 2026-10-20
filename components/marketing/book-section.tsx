@@ -7,6 +7,7 @@ import { collections, type Collection } from '@/lib/content/collections'
 import { Reveal } from '@/components/ui/reveal'
 import { useTourModal } from '@/lib/tour-modal-context'
 import { track } from '@/lib/meta-pixel'
+import { pushDataLayer } from '@/lib/data-layer'
 
 function shortLabel(setName: string, collectionName: string) {
   const collectionPrefix = collectionName.split(' ')[0] + ' '
@@ -172,6 +173,7 @@ function PreviewCards() {
     // Jump straight to "Set" — they've already chosen a collection.
     goTo('set')
     track('Lead', { content_name: 'Studio Wizard', content_category: id })
+    pushDataLayer({ event: 'generate_lead', lead_source: 'studio_wizard', collection_id: id })
   }
 
   return (

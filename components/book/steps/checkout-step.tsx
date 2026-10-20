@@ -1,12 +1,14 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { Elements } from '@stripe/react-stripe-js'
 import { loadStripe } from '@stripe/stripe-js'
 import { useBooking } from '@/lib/booking-context'
 import { findCollection, findSet } from '@/lib/content/collections'
 import { CheckoutForm } from '@/components/book/checkout-form'
 import { track } from '@/lib/meta-pixel'
+import { pushDataLayer } from '@/lib/data-layer'
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY ?? '')
 
@@ -20,6 +22,7 @@ function Row({ k, v }: { k: string; v: string }) {
 }
 
 export function CheckoutStep() {
+  const router = useRouter()
   const { booking, totals, goTo, wizardSessionId } = useBooking()
   const collection = findCollection(booking.collectionId)
   const set = findSet(booking.collectionId, booking.setId)
@@ -28,7 +31,6 @@ export function CheckoutStep() {
   const [paymentIntentId, setPaymentIntentId] = useState<string | null>(null)
   const [amountCents, setAmountCents] = useState<number | null>(null)
   const [bootError, setBootError] = useState<string | null>(null)
-  const [paid, setPaid] = useState<{ bookingUid: string } | null>(null)
   const [slotTaken, setSlotTaken] = useState(false)
 
   useEffect(() => {
@@ -59,32 +61,18 @@ export function CheckoutStep() {
           content_ids: booking.setId ? [booking.setId] : undefined,
           content_name: set?.name,
         })
+        pushDataLayer({
+          event: 'begin_checkout',
+          ecommerce: {
+            currency: 'USD',
+            value: d.amountCents / 100,
+            items: [{ item_id: booking.setId, item_name: set?.name, quantity: 1, price: d.amountCents / 100 }],
+          },
+        })
       })
       .catch(() => setBootError('Could not start payment. Refresh and try again.'))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [booking.setId, booking.durationMinutes, booking.addonIds.join(',')])
-
-  if (paid) {
-    return (
-      <div className="flex flex-col items-center text-center py-24">
-        <span className="material-symbols-outlined text-heritage-gold text-6xl mb-8">check_circle</span>
-        <span className="text-label-caps text-heritage-gold mb-4 block">SESSION CONFIRMED</span>
-        <h2 className="text-headline-xl text-white mb-6">You&apos;re booked.</h2>
-        <p className="text-body-lg text-ivory/60 max-w-xl">
-          A confirmation has been sent to {booking.contact.email}. Our team will reach out 24 hours before your session.
-        </p>
-        <div className="mt-12 frosted-glass p-8 max-w-md w-full text-left">
-          <p className="text-label-caps text-ivory/60 mb-2">YOUR SESSION</p>
-          <p className="text-body-lg text-white">{set?.name}</p>
-          <p className="text-body-md text-ivory/60 mt-1">
-            {booking.schedule.date} · {booking.schedule.time}
-          </p>
-          <p className="text-headline-md text-heritage-gold mt-6 tabular-nums">${totals.total.toLocaleString()}</p>
-          <p className="text-metadata text-ivory/30 mt-4">Booking #{paid.bookingUid}</p>
-        </div>
-      </div>
-    )
-  }
 
   return (
     <div>
@@ -156,15 +144,22 @@ export function CheckoutStep() {
                 paymentIntentId={paymentIntentId}
                 amountCents={amountCents}
                 onPaid={(info) => {
-                  setPaid({ bookingUid: info.bookingUid })
-                  track('Purchase', {
+                  const stash = {
+                    uid: info.bookingUid,
                     value: totals.total,
                     currency: 'USD',
-                    content_ids: booking.setId ? [booking.setId] : undefined,
-                    content_name: set?.name,
-                    content_type: 'product',
-                    num_items: 1,
-                  })
+                    setId: booking.setId,
+                    setName: set?.name,
+                    date: booking.schedule.date,
+                    time: booking.schedule.time,
+                    email: booking.contact.email,
+                  }
+                  try {
+                    window.sessionStorage.setItem('voxa:lastBooking', JSON.stringify(stash))
+                  } catch {
+                    // sessionStorage unavailable (private mode, quota) — confirmation page falls back to minimal UI.
+                  }
+                  router.push(`/booking/confirmed?booking=${encodeURIComponent(info.bookingUid)}`)
                 }}
                 onSlotTaken={() => setSlotTaken(true)}
               />

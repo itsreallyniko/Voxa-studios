@@ -5,6 +5,7 @@ import { createPortal } from 'react-dom'
 import { useTourModal } from '@/lib/tour-modal-context'
 import { Input } from '@/components/ui/input'
 import { track } from '@/lib/meta-pixel'
+import { pushDataLayer, sha256Hex } from '@/lib/data-layer'
 
 type Step = 'details' | 'schedule' | 'success'
 type Status = 'idle' | 'loading-slots' | 'submitting' | 'error'
@@ -194,10 +195,19 @@ export function TourModal() {
         setErrorMsg("Couldn't reach our calendar — try again in a moment.")
         return
       }
-      setBookingResult(body as BookingResult)
+      const result = body as BookingResult
+      setBookingResult(result)
       setStep('success')
       setStatus('idle')
       track('Schedule', { content_name: 'Studio Tour' })
+      const emailHash = await sha256Hex(email.trim())
+      pushDataLayer({
+        event: 'tour_booked',
+        transaction_id: result.uid,
+        tour_date: date,
+        tour_time: time,
+        user_data: emailHash ? { sha256_email_address: emailHash } : undefined,
+      })
     } catch {
       setStatus('error')
       setErrorMsg("Couldn't reach our calendar — try again in a moment.")
@@ -274,7 +284,15 @@ export function TourModal() {
             <button
               type="button"
               disabled={!detailsValid}
-              onClick={() => setStep('schedule')}
+              onClick={async () => {
+                setStep('schedule')
+                const emailHash = await sha256Hex(email.trim())
+                pushDataLayer({
+                  event: 'generate_lead',
+                  lead_source: 'tour_modal',
+                  user_data: emailHash ? { sha256_email_address: emailHash } : undefined,
+                })
+              }}
               className={`w-full py-5 border text-label-caps text-center transition-colors duration-200 ${
                 detailsValid
                   ? 'border-heritage-gold/60 text-heritage-gold hover:bg-heritage-gold hover:text-obsidian hover:border-heritage-gold'
