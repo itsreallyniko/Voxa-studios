@@ -7,10 +7,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "check:onsite": "node scripts/check-onsite-copy.mjs",
     "test": "vitest run",
     "test:watch": "vitest"
   },
   "dependencies": {
+    "@calcom/embed-react": "^1.5.3",
     "@stripe/react-stripe-js": "^6.6.0",
     "@stripe/stripe-js": "^9.8.0",
     "framer-motion": "^11.18.2",

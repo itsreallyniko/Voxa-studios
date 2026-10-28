@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { VoxaLogo } from '@/components/voxa-logo'
 
 export function Footer() {
@@ -9,6 +10,12 @@ export function Footer() {
           <p className="text-ivory/30 text-xs tracking-widest">PODCAST &amp; CONTENT STUDIO · TAMPA, FL</p>
         </div>
         <div className="flex flex-wrap justify-center gap-6 sm:gap-12">
+          <Link
+            href="/onsite"
+            className="text-label-caps text-ivory/60 hover:text-white transition-colors"
+          >
+            ON-SITE
+          </Link>
           <a
             href="tel:+18137317075"
             className="text-label-caps text-ivory/60 hover:text-white transition-colors tabular-nums"

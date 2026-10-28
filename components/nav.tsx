@@ -19,16 +19,24 @@ export function Nav() {
         scrolled ? 'bg-obsidian/80 backdrop-blur-md h-16' : 'bg-transparent h-20'
       } flex items-center`}
     >
-      <div className="max-w-container-max mx-auto w-full px-6 md:px-margin-edge flex items-center justify-between">
-        <Link href="/" aria-label="Voxa Studios — Home" className="text-white">
+      <div className="max-w-container-max mx-auto w-full px-6 md:px-margin-edge flex items-center justify-between gap-4">
+        <Link href="/" aria-label="Voxa Studios — Home" className="text-white shrink-0">
           <VoxaLogo className="h-9 w-auto md:h-10" />
         </Link>
-        <a
-          href="#book"
-          className="text-label-caps text-heritage-gold hover:text-white transition-colors"
-        >
-          BOOK A SESSION
-        </a>
+        <div className="flex items-center gap-5 sm:gap-7">
+          <Link
+            href="/onsite"
+            className="text-label-caps text-ivory/60 hover:text-white transition-colors whitespace-nowrap"
+          >
+            ON-SITE
+          </Link>
+          <a
+            href="/#book"
+            className="text-label-caps text-heritage-gold hover:text-white transition-colors whitespace-nowrap"
+          >
+            BOOK A SESSION
+          </a>
+        </div>
       </div>
     </nav>
   )

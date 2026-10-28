@@ -1,0 +1,57 @@
+export type PackageId = 'interview-session' | 'content-day' | 'commercial'
+
+export type OnsitePackage = {
+  id: PackageId
+  name: string
+  shape: string
+  includes: string[]
+  deliverables: string[]
+}
+
+export type FaqItem = { q: string; a: string }
+
+export type ProofSlot =
+  | { kind: 'logo'; placeholder: true; label?: string }
+  | { kind: 'stat'; placeholder: true; label?: string }
+  | { kind: 'quote'; placeholder: true; label?: string }
+
+export type CrewSlot = { role: string; placeholder: true }
+export type CaseSlot = { title: string; placeholder: true }
+
+export type ProjectType =
+  | 'interview'
+  | 'content-day'
+  | 'event'
+  | 'commercial'
+  | 'not-sure'
+
+export type HowItWorksStep = { title: string; body: string }
+
+export type OnsitePage = {
+  slug: string
+  draft: boolean
+  seo: {
+    title: string
+    description: string
+    ogImage: string
+  }
+  hero: {
+    eyebrow: string
+    headline: string
+    subline: string
+    muteLoopVideo: string | null
+  }
+  proof: ProofSlot[]
+  problem: { heading: string; paragraphs: string[] }
+  deliverables: {
+    heading: string
+    cards: { title: string; body: string }[]
+  }
+  packages: PackageId[]
+  howItWorks: { heading: string; steps: HowItWorksStep[] }
+  cases: CaseSlot[]
+  crew: CrewSlot[]
+  serviceArea: { cities: string[]; travelLine: string }
+  faq: FaqItem[]
+  form: { preselect: ProjectType }
+}
