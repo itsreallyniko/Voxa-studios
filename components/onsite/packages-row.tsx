@@ -36,8 +36,9 @@ export function PackagesRow({
 
   return (
     <OnsiteSection
-      eyebrow="PACKAGES THAT FIT"
-      heading="Three ways to work with us on-site."
+      eyebrow="EXAMPLE PACKAGES"
+      heading="Common shapes projects take."
+      body="Every project is scoped to fit — these are a few of the shapes we build from most often. The final mix of crew, cameras, and deliverables is agreed in your proposal."
       tone="surface"
     >
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
@@ -52,7 +53,7 @@ export function PackagesRow({
               </p>
 
               <div className="mb-6">
-                <p className="text-label-caps text-ivory/50 mb-3">INCLUDES</p>
+                <p className="text-label-caps text-ivory/50 mb-3">TYPICALLY INCLUDES</p>
                 <ul className="flex flex-col gap-3">
                   {pkg.includes.map((b) => (
                     <li
@@ -69,7 +70,7 @@ export function PackagesRow({
               </div>
 
               <div className="mb-8">
-                <p className="text-label-caps text-ivory/50 mb-3">YOU GET</p>
+                <p className="text-label-caps text-ivory/50 mb-3">TYPICAL DELIVERABLES</p>
                 <ul className="flex flex-col gap-3">
                   {pkg.deliverables.map((b) => (
                     <li

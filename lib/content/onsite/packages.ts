@@ -19,16 +19,16 @@ export const ONSITE_PACKAGES: Record<string, OnsitePackage> = {
   'content-day': {
     id: 'content-day',
     name: 'On-Site Content Day',
-    shape: 'A full day at your location',
+    shape: 'A full day at your location — social-first',
     includes: [
-      'Interviews, b-roll, and day-in-the-life or event coverage',
-      'Two to three cameras with producer and lighting',
-      'Teleprompter available on request',
+      'Day-in-the-life, team-on-camera, and product-in-use coverage',
+      'Vertical-first capture with producer and lighting',
+      'Short interview blocks for reel-sized moments',
     ],
     deliverables: [
-      'A hero film built from the day',
-      'A set of vertical clips',
-      'Raw selects delivered to your team',
+      'A set of short vertical and horizontal clips',
+      'Day-in-the-life sequences ready for social',
+      'B-roll library and raw selects for your team',
     ],
   },
   commercial: {

@@ -14,6 +14,7 @@ const SERVICE_CITIES = [
 export const advocacyEducationVideo: OnsitePage = {
   slug: 'advocacy-education-video',
   draft: true,
+  buyerLabel: 'For school districts, education nonprofits, and foundations',
   seo: {
     title: 'Advocacy & Education Video — Voxa On-Site',
     description:

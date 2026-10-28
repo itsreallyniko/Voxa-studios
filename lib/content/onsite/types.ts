@@ -15,8 +15,29 @@ export type ProofSlot =
   | { kind: 'stat'; placeholder: true; label?: string }
   | { kind: 'quote'; placeholder: true; label?: string }
 
-export type CrewSlot = { role: string; placeholder: true }
-export type CaseSlot = { title: string; placeholder: true }
+export type CrewSlot =
+  | { role: string; placeholder: true }
+  | {
+      role: string
+      name: string
+      bio: string
+      photo: string
+      preview?: boolean
+      placeholder?: false
+    }
+
+export type CaseSlot =
+  | { title: string; placeholder: true }
+  | {
+      client: string
+      title: string
+      type: string
+      description: string
+      thumbnail: string
+      href: string
+      preview?: boolean
+      placeholder?: false
+    }
 
 export type ProjectType =
   | 'interview'
@@ -30,6 +51,8 @@ export type HowItWorksStep = { title: string; body: string }
 export type OnsitePage = {
   slug: string
   draft: boolean
+  /** Short "FOR …" label used on the hub listing card. Keep it specific. */
+  buyerLabel: string
   seo: {
     title: string
     description: string

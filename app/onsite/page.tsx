@@ -61,14 +61,14 @@ export default function OnsiteHubPage() {
                 href={`/onsite/${p.slug}`}
                 className="group block h-full p-8 border border-white/10 bg-surface-container-low hover:border-heritage-gold/60 transition-colors"
               >
-                <span className="text-label-caps text-heritage-gold mb-4 block">
-                  {p.hero.eyebrow}
-                </span>
-                <h3 className="text-headline-md text-white mb-3 leading-tight group-hover:text-heritage-gold transition-colors">
+                <h3 className="text-headline-md text-white mb-4 leading-tight group-hover:text-heritage-gold transition-colors">
                   {p.hero.headline}
                 </h3>
-                <p className="text-sm text-ivory/60 leading-relaxed">
+                <p className="text-sm text-ivory/60 leading-relaxed mb-5">
                   {p.hero.subline}
+                </p>
+                <p className="text-metadata uppercase tracking-[0.2em] text-heritage-gold/80">
+                  {p.buyerLabel}
                 </p>
                 <span className="text-label-caps text-ivory/50 mt-6 inline-flex items-center gap-2 group-hover:text-heritage-gold transition-colors">
                   SEE THE PAGE

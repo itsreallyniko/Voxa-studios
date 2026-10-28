@@ -1,11 +1,11 @@
 import type { OnsitePage } from './types'
 import { testimonialVideosTampa } from './pages/testimonial-videos-tampa'
-import { eventVideoTampa } from './pages/event-video-tampa'
+import { contentDayTampa } from './pages/content-day-tampa'
 import { advocacyEducationVideo } from './pages/advocacy-education-video'
 
 export const onsitePages: OnsitePage[] = [
   testimonialVideosTampa,
-  eventVideoTampa,
+  contentDayTampa,
   advocacyEducationVideo,
 ]
 
