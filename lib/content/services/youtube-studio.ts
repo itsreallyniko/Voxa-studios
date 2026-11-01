@@ -2,20 +2,20 @@ import type { ServicePage } from './types'
 
 export const youtubeStudio: ServicePage = {
   slug: 'youtube-studio-tampa',
-  published: false,
+  published: true,
   lastModified: '2026-11-01',
-  navLabel: 'YouTube Studio',
+  navLabel: 'YouTube Videos',
   title: 'YouTube Studio in Tampa, FL | Voxa Studios',
   description:
     'Film YouTube videos in a professional Tampa studio with a teleprompter, two-camera coverage and an on-site producer. Sessions from $300 / 90 min.',
-  h1: 'A YouTube Studio in Tampa',
+  h1: 'Film Your YouTube Videos in Tampa',
   directAnswer:
     'Voxa Studios is a Tampa studio where you can film YouTube videos on a professional desk or creator set, with two-camera coverage, a teleprompter, studio lighting, audio and an on-site producer included. Sessions start at $300 for 90 minutes.',
   images: [
     {
-      src: '/executive/Gallery Images Creator/Preview_Side_creator.JPG',
-      alt: 'Authority Creator Set with a leather chair and studio microphone against a slatted wall',
-      caption: 'Authority Creator Set',
+      src: '/horizon/Gallery Images Desk/Horizon_Desk_Horizontal.jpg',
+      alt: 'Horizon Desk Set with a studio microphone at a bright wooden desk',
+      caption: 'Horizon Desk Set',
     },
     {
       src: '/executive/Gallery Images Desk/Preview_Desk.JPG',
@@ -28,9 +28,9 @@ export const youtubeStudio: ServicePage = {
       caption: 'Horizon Creator Set',
     },
     {
-      src: '/horizon/Gallery Images Desk/Horizon_Desk_Horizontal.jpg',
-      alt: 'Horizon Desk Set with a studio microphone at a bright wooden desk',
-      caption: 'Horizon Desk Set',
+      src: '/executive/Gallery Images Creator/Preview_Side_creator.JPG',
+      alt: 'Authority Creator Set with a leather chair and studio microphone against a slatted wall',
+      caption: 'Authority Creator Set',
       wide: true,
     },
   ],
@@ -50,6 +50,13 @@ export const youtubeStudio: ServicePage = {
       ],
     },
     {
+      heading: 'Screen recording and extra editing',
+      body: [
+        'Referencing something on your laptop? Screen recording is available, so you can capture what you are walking through during your session.',
+        'You can also ask about additional editing, such as motion graphics, overlays or a floating-head overlay on top of your screen. Tell us what you have in mind and we can work out what fits your channel.',
+      ],
+    },
+    {
       heading: 'Pricing and session length',
       body: [
         'Sessions start at $300 for 90 minutes. You can extend in 30-minute increments at $100 each, up to 5 hours, so you can flex the session to film one video or several.',
@@ -57,7 +64,7 @@ export const youtubeStudio: ServicePage = {
     },
   ],
   delivery:
-    'Authority Desk and Authority Creator sessions deliver broadcast-quality multi-cam files the same day, with each camera angle as its own file, color-corrected and audio-synced, ready for your editor.',
+    'Sessions include same-day delivery of broadcast-quality multi-cam files, with each camera angle as its own file, color-corrected and audio-synced, ready for your editor.',
   related: { href: '/studios/podcast-studio-tampa', label: 'Filming with a guest? See the podcast studio' },
   reviewTag: 'youtube',
   faqs: [
@@ -73,7 +80,16 @@ export const youtubeStudio: ServicePage = {
     {
       question: 'Will my YouTube video be edited?',
       answer:
-        'Authority Desk and Authority Creator sessions deliver multi-cam files ready for your editor, with each camera angle as its own file, color-corrected and audio-synced.',
+        'Sessions include multi-cam files ready for your editor, with each camera angle as its own file, color-corrected and audio-synced.',
+    },
+    {
+      question: 'Can I show what is on my laptop?',
+      answer: 'Yes. Screen recording is available if you are referencing material on your laptop.',
+    },
+    {
+      question: 'Can you add motion graphics or overlays?',
+      answer:
+        'Ask us about additional editing, such as motion graphics, overlays or a floating-head overlay on top of your screen.',
     },
     {
       question: 'Can I see the studio first?',

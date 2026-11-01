@@ -2,7 +2,7 @@ import type { ServicePage } from './types'
 
 export const courseWebinar: ServicePage = {
   slug: 'course-webinar-tampa',
-  published: false,
+  published: true,
   lastModified: '2026-11-01',
   navLabel: 'Courses & Webinars',
   title: 'Course & Webinar Filming Studio in Tampa, FL | Voxa Studios',
@@ -43,6 +43,13 @@ export const courseWebinar: ServicePage = {
       ],
     },
     {
+      heading: 'Screen recording and extra editing',
+      body: [
+        'Referencing slides or other material on your laptop? Screen recording is available, so you can capture what you are teaching from during your session.',
+        'You can also ask about additional editing, such as motion graphics, overlays or a floating-head overlay on top of your screen. Tell us what you have in mind and we can work out what fits your course.',
+      ],
+    },
+    {
       heading: 'Pricing and session length',
       body: [
         'Sessions start at $300 for 90 minutes. You can extend in 30-minute increments at $100 each, up to 5 hours. A free 15-minute tour is a good way to work out how to approach your course.',
@@ -50,13 +57,22 @@ export const courseWebinar: ServicePage = {
     },
   ],
   delivery:
-    'Authority Desk sessions deliver multi-cam files the same day, with each camera angle as its own file, color-corrected and audio-synced, ready for your editor.',
+    'Sessions include same-day delivery of multi-cam files, with each camera angle as its own file, color-corrected and audio-synced, ready for your editor.',
   reviewTag: 'course',
   faqs: [
     {
       question: 'Do I need a script?',
       answer:
         'You bring your own material. A teleprompter is available on all sets if you want to read from a script.',
+    },
+    {
+      question: 'Can I show what is on my laptop?',
+      answer: 'Yes. Screen recording is available if you are referencing slides or other material on your laptop.',
+    },
+    {
+      question: 'Can you add motion graphics or overlays?',
+      answer:
+        'Ask us about additional editing, such as motion graphics, overlays or a floating-head overlay on top of your screen.',
     },
     {
       question: 'Can I see the studio first?',

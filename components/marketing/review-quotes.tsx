@@ -1,5 +1,5 @@
 import { Reveal } from '@/components/ui/reveal'
-import { usableReviews, type ServiceTag } from '@/lib/content/reviews'
+import { pageReviews, usableReviews, type ServiceTag } from '@/lib/content/reviews'
 
 const SOURCE_LABEL = { google: 'Google', peerspace: 'Peerspace' } as const
 
@@ -27,8 +27,8 @@ function GoogleMark() {
   )
 }
 
-export function ReviewQuotes({ tag }: { tag?: ServiceTag }) {
-  const reviews = usableReviews(tag)
+export function ReviewQuotes({ tag, limit }: { tag?: ServiceTag; limit?: number }) {
+  const reviews = tag ? pageReviews(tag) : usableReviews().slice(0, limit)
   if (reviews.length === 0) return null
 
   return (
@@ -36,9 +36,11 @@ export function ReviewQuotes({ tag }: { tag?: ServiceTag }) {
       <div className="max-w-container-max mx-auto px-6 md:px-margin-edge">
         <Reveal className="mb-8">
           <span className="text-label-caps text-heritage-gold mb-2 block">CLIENT REVIEWS</span>
-          <h2 className="text-3xl text-white">In Their Words</h2>
+          <h2 className="text-3xl text-white">
+            {tag ? 'What clients say about filming here' : 'A few words from some of the people who’ve filmed here'}
+          </h2>
         </Reveal>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className={`grid grid-cols-1 md:grid-cols-2 gap-4 ${tag ? '' : 'xl:grid-cols-4'}`}>
           {reviews.map((r, i) => (
             <Reveal key={r.id} delay={i * 80}>
               <figure className="h-full bg-surface-container-low border border-white/10 rounded-lg p-5">

@@ -11,16 +11,23 @@ export function Footer() {
           <VoxaLogo className="h-10 w-auto" />
           <p className="text-ivory/30 text-xs tracking-widest">PODCAST &amp; CONTENT STUDIO · TAMPA, FL</p>
         </div>
+        {services.length > 0 && (
+          <nav aria-label="What You Can Film at Voxa" className="flex flex-col items-center md:items-start gap-3">
+            <p className="text-label-caps text-ivory/60">What You Can Film at Voxa</p>
+            <div className="flex flex-wrap justify-center md:justify-start gap-x-6 gap-y-2">
+              {services.map((s) => (
+                <Link
+                  key={s.slug}
+                  href={`/studios/${s.slug}`}
+                  className="text-label-caps text-ivory/40 hover:text-white transition-colors"
+                >
+                  {s.navLabel}
+                </Link>
+              ))}
+            </div>
+          </nav>
+        )}
         <div className="flex flex-wrap justify-center gap-6 sm:gap-12">
-          {services.map((s) => (
-            <Link
-              key={s.slug}
-              href={`/studios/${s.slug}`}
-              className="text-label-caps text-ivory/40 hover:text-white transition-colors"
-            >
-              {s.navLabel}
-            </Link>
-          ))}
           <a
             href="tel:+18137317075"
             className="text-label-caps text-ivory/60 hover:text-white transition-colors tabular-nums"

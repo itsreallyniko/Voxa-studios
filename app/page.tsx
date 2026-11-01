@@ -16,7 +16,7 @@ export default function Home() {
       <CreationsMarquee />
       <WhyVoxa />
       <WhatYouGet />
-      <ReviewQuotes />
+      <ReviewQuotes limit={4} />
       <BookSection />
       <FAQ />
       <ComeVisitUs />

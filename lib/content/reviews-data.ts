@@ -4,6 +4,16 @@ import type { Review } from './reviews'
 // client has agreed to appear on the site.
 export const REVIEWS: Review[] = [
   {
+    id: 'alex-cooper',
+    quote:
+      'I love shooting at this studio. It’s hands down the best one in Tampa. The space looks great on camera and the whole experience just feels smooth. Thank you Niko!!',
+    name: 'Alex Cooper',
+    recorded: 'YouTube videos and product demos',
+    source: 'google',
+    permissionConfirmed: true,
+    services: ['youtube'],
+  },
+  {
     id: 'j-s',
     quote:
       'I’ve worked with several studios in the area, and Voxa Studios is easily one of the most well-rounded and professional experiences I’ve had.',
@@ -33,5 +43,15 @@ export const REVIEWS: Review[] = [
     source: 'google',
     permissionConfirmed: true,
     services: ['course', 'youtube'],
+  },
+  {
+    id: 'kyle-gregory',
+    quote:
+      'Excellent studio with all the equipment you could need for a professional setup. Niko is also fantastic with service and helping it be a seamless experience',
+    name: 'Kyle Gregory',
+    recorded: 'YouTube videos and VSLs',
+    source: 'google',
+    permissionConfirmed: true,
+    services: ['vsl', 'youtube'],
   },
 ]

@@ -48,7 +48,10 @@ export function ServicePageView({ page }: { page: ServicePage }) {
           <h1 className="text-display-lg-mobile md:text-headline-xl text-white leading-[1.1] mb-8">
             {page.h1}
           </h1>
-          <p className="text-body-lg text-ivory/85 leading-relaxed mb-12">{page.directAnswer}</p>
+          <p className="text-body-lg text-ivory/85 leading-relaxed mb-4">{page.directAnswer}</p>
+          <p className="text-body-md text-heritage-gold mb-12">
+            One Tampa studio with six sets, so you can choose the look that fits your content.
+          </p>
 
           {lead && <ServiceImage image={lead} aspect="aspect-video" sizes="(min-width: 768px) 768px, 100vw" priority />}
 
@@ -107,7 +110,7 @@ export function ServicePageView({ page }: { page: ServicePage }) {
           __html: jsonLd({
             '@context': 'https://schema.org',
             '@type': 'Service',
-            name: page.h1,
+            name: page.title.split(' | ')[0],
             description: page.description,
             url: `${SITE_URL}/studios/${page.slug}`,
             areaServed: 'Tampa, FL',

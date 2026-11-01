@@ -2,13 +2,13 @@ import type { ServicePage } from './types'
 
 export const podcastStudio: ServicePage = {
   slug: 'podcast-studio-tampa',
-  published: false,
+  published: true,
   lastModified: '2026-11-01',
-  navLabel: 'Podcast Studio',
+  navLabel: 'Podcasts',
   title: 'Podcast Studio in Tampa, FL | Voxa Studios',
   description:
     'A turnkey Tampa podcast studio with multi-cam recording, studio audio, lighting and an on-site producer. Sessions from $300 / 90 min.',
-  h1: 'A Podcast Studio in Tampa',
+  h1: 'Record Your Podcast in Tampa',
   directAnswer:
     'Voxa Studios is a turnkey podcast studio in Tampa, FL, with multi-camera recording, studio lighting, broadcast audio and an on-site producer included in every session. Sessions start at $300 for 90 minutes, so you can try a show without buying any gear.',
   images: [
@@ -56,7 +56,7 @@ export const podcastStudio: ServicePage = {
     },
   ],
   delivery:
-    'Executive Podcast Set sessions are delivered within 48 hours as an edited, live-switched program, color-graded and audio-cleaned.',
+    'Sessions include delivery of an edited, live-switched program within 48 hours, color-graded and audio-cleaned.',
   reviewTag: 'podcast',
   faqs: [
     {
@@ -67,7 +67,7 @@ export const podcastStudio: ServicePage = {
     {
       question: 'Do you edit my podcast?',
       answer:
-        'Executive Podcast Set sessions are delivered as a 48-hour edited switched program, color-graded and audio-cleaned.',
+        'Yes. Sessions include an edited, live-switched program delivered within 48 hours, color-graded and audio-cleaned.',
     },
     {
       question: 'Where is the studio?',

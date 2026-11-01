@@ -4,7 +4,7 @@ export const vslMetaAds: ServicePage = {
   slug: 'vsl-meta-ads-tampa',
   published: true,
   lastModified: '2026-11-01',
-  navLabel: 'VSL & Meta Ads',
+  navLabel: 'VSLs & Ads',
   title: 'VSL & Meta Ad Filming Studio in Tampa, FL | Voxa Studios',
   description:
     'Film your VSL or Meta ads in a professional Tampa studio with a teleprompter, multi-cam recording and an on-site producer. Sessions from $300 / 90 min.',
@@ -57,7 +57,7 @@ export const vslMetaAds: ServicePage = {
     },
   ],
   delivery:
-    'Authority Desk and Authority Creator sessions deliver broadcast-quality multi-cam files the same day, with each camera angle as its own file, color-corrected and audio-synced, ready for your editor. These are not finished, edited ads.',
+    'Sessions include same-day delivery of broadcast-quality multi-cam files, with each camera angle as its own file, color-corrected and audio-synced, ready for your editor. These are not finished, edited ads.',
   reviewTag: 'vsl',
   faqs: [
     {
@@ -68,7 +68,7 @@ export const vslMetaAds: ServicePage = {
     {
       question: 'Will I get a finished ad at the end of the session?',
       answer:
-        'Authority Desk and Authority Creator sessions deliver multi-cam files ready for your editor, with each camera angle as its own file, color-corrected and audio-synced.',
+        'Sessions include multi-cam files ready for your editor, with each camera angle as its own file, color-corrected and audio-synced.',
     },
     {
       question: 'Is a teleprompter included?',
