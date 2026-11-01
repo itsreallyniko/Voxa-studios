@@ -27,6 +27,11 @@ describe('crawl foundations', () => {
     for (const u of SAME_AS) expect(u).toMatch(/^https:\/\//)
   })
 
+  it('SAME_AS links the Google profile and Peerspace listing', () => {
+    expect(SAME_AS).toContain('https://www.google.com/search?kgmid=/g/11ysvny0qr')
+    expect(SAME_AS).toContain('https://www.peerspace.com/pages/listings/693b578462b47a0349a047de')
+  })
+
   it('business id is anchored to the site', () => {
     expect(LOCAL_BUSINESS_ID).toBe(`${SITE_URL}/#localbusiness`)
   })
