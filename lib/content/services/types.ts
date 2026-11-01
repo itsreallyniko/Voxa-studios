@@ -10,7 +10,8 @@ export type ServicePage = {
   h1: string
   directAnswer: string
   // The first image leads the page; the rest sit after the sections.
-  images: { src: string; alt: string; caption?: string }[]
+  // `wide` keeps a landscape photo at full width instead of a portrait crop.
+  images: { src: string; alt: string; caption?: string; wide?: boolean }[]
   sections: { heading: string; body: string[] }[]
   delivery: string
   reviewTag: ServiceTag

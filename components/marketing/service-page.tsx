@@ -66,12 +66,13 @@ export function ServicePageView({ page }: { page: ServicePage }) {
           {rest.length > 0 && (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-16">
               {rest.map((image) => (
-                <ServiceImage
-                  key={image.src}
-                  image={image}
-                  aspect="aspect-[4/5]"
-                  sizes="(min-width: 640px) 640px, 100vw"
-                />
+                <div key={image.src} className={image.wide ? 'sm:col-span-2' : undefined}>
+                  <ServiceImage
+                    image={image}
+                    aspect={image.wide ? 'aspect-video' : 'aspect-[4/5]'}
+                    sizes={image.wide ? '(min-width: 768px) 768px, 100vw' : '(min-width: 640px) 640px, 100vw'}
+                  />
+                </div>
               ))}
             </div>
           )}

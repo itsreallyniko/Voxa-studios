@@ -45,7 +45,7 @@ export const courseWebinar: ServicePage = {
     {
       heading: 'Pricing and session length',
       body: [
-        'Sessions start at $300 for 90 minutes. You can extend in 30-minute increments at $50 each, up to 5 hours. A free 15-minute tour is a good way to work out how to approach your course.',
+        'Sessions start at $300 for 90 minutes. You can extend in 30-minute increments at $100 each, up to 5 hours. A free 15-minute tour is a good way to work out how to approach your course.',
       ],
     },
   ],
