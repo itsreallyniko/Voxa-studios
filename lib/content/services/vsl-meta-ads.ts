@@ -2,7 +2,7 @@ import type { ServicePage } from './types'
 
 export const vslMetaAds: ServicePage = {
   slug: 'vsl-meta-ads-tampa',
-  published: false,
+  published: true,
   lastModified: '2026-11-01',
   navLabel: 'VSL & Meta Ads',
   title: 'VSL & Meta Ad Filming Studio in Tampa, FL | Voxa Studios',

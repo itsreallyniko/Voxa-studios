@@ -1,16 +1,16 @@
 import type { ServicePage } from './types'
 
-export const podcastYoutube: ServicePage = {
-  slug: 'podcast-youtube-tampa',
+export const podcastStudio: ServicePage = {
+  slug: 'podcast-studio-tampa',
   published: false,
   lastModified: '2026-11-01',
-  navLabel: 'Podcast & YouTube',
-  title: 'Podcast & YouTube Studio in Tampa, FL | Voxa Studios',
+  navLabel: 'Podcast Studio',
+  title: 'Podcast Studio in Tampa, FL | Voxa Studios',
   description:
-    'A turnkey Tampa podcast and YouTube studio with multi-cam recording, studio audio, lighting and an on-site producer. Sessions from $300 / 90 min.',
-  h1: 'A Podcast and YouTube Studio in Tampa',
+    'A turnkey Tampa podcast studio with multi-cam recording, studio audio, lighting and an on-site producer. Sessions from $300 / 90 min.',
+  h1: 'A Podcast Studio in Tampa',
   directAnswer:
-    'Voxa Studios is a turnkey podcast and video studio in Tampa, FL, with multi-camera recording, studio lighting, broadcast audio and an on-site producer included in every session. Sessions start at $300 for 90 minutes, so you can try a show without buying any gear.',
+    'Voxa Studios is a turnkey podcast studio in Tampa, FL, with multi-camera recording, studio lighting, broadcast audio and an on-site producer included in every session. Sessions start at $300 for 90 minutes, so you can try a show without buying any gear.',
   images: [
     {
       src: '/horizon/Gallery Images Podcast/Horizon_Podcast_Horizontal-4.jpg',
@@ -43,12 +43,6 @@ export const podcastYoutube: ServicePage = {
       ],
     },
     {
-      heading: 'Solo YouTube videos',
-      body: [
-        'For direct-to-camera videos, the desk and creator sets offer two-camera coverage and a teleprompter. The creator sets can capture vertical and horizontal output in the same session.',
-      ],
-    },
-    {
       heading: 'New to podcasting?',
       body: [
         'You do not need your own equipment or technical experience. A producer is on-site to help with tech and direction, and a free 15-minute tour lets you see the sets and talk through your idea before you book.',
@@ -62,7 +56,7 @@ export const podcastYoutube: ServicePage = {
     },
   ],
   delivery:
-    'Executive Podcast Set sessions are delivered within 48 hours as an edited, live-switched program, color-graded and audio-cleaned. Authority Desk and Authority Creator sessions deliver multi-cam files the same day, ready for your editor.',
+    'Executive Podcast Set sessions are delivered within 48 hours as an edited, live-switched program, color-graded and audio-cleaned.',
   reviewTag: 'podcast',
   faqs: [
     {

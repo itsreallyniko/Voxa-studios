@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import { ComeVisitUs } from '@/components/marketing/come-visit-us'
 import { FAQ } from '@/components/marketing/faq'
 import { FinalCTA } from '@/components/marketing/final-cta'
@@ -26,6 +27,7 @@ function ServiceImage({
           alt={image.alt}
           fill
           sizes={sizes}
+          quality={90}
           priority={priority}
           className="object-cover"
         />
@@ -81,6 +83,15 @@ export function ServicePageView({ page }: { page: ServicePage }) {
             <h2 className="text-label-caps text-heritage-gold mb-4">WHAT YOU WALK OUT WITH</h2>
             <p className="text-body-md text-ivory/85 leading-relaxed">{page.delivery}</p>
           </section>
+
+          {page.related && (
+            <Link
+              href={page.related.href}
+              className="inline-block mt-10 text-body-md text-heritage-gold hover:text-white transition-colors"
+            >
+              {page.related.label}
+            </Link>
+          )}
         </div>
       </main>
 

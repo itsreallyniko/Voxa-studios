@@ -1,6 +1,7 @@
 import { courseWebinar } from './course-webinar'
-import { podcastYoutube } from './podcast-youtube'
+import { podcastStudio } from './podcast-studio'
 import type { ServicePage } from './types'
 import { vslMetaAds } from './vsl-meta-ads'
+import { youtubeStudio } from './youtube-studio'
 
-export const SERVICE_PAGES: ServicePage[] = [vslMetaAds, podcastYoutube, courseWebinar]
+export const SERVICE_PAGES: ServicePage[] = [vslMetaAds, podcastStudio, youtubeStudio, courseWebinar]

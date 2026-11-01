@@ -14,6 +14,7 @@ export type ServicePage = {
   images: { src: string; alt: string; caption?: string; wide?: boolean }[]
   sections: { heading: string; body: string[] }[]
   delivery: string
+  related?: { href: string; label: string }
   reviewTag: ServiceTag
   faqs: { question: string; answer: string }[]
 }

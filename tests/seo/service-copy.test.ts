@@ -5,10 +5,11 @@ const banned =
   /(we|our team)\s+(write|craft|script)|scriptwriting service|funnel strategy|media buying|ad management|\/onsite|guaranteed/i
 
 describe('service page copy', () => {
-  it('has the three planned pages', () => {
+  it('has the four planned pages', () => {
     expect(allServices().map((p) => p.slug)).toEqual([
       'vsl-meta-ads-tampa',
-      'podcast-youtube-tampa',
+      'podcast-studio-tampa',
+      'youtube-studio-tampa',
       'course-webinar-tampa',
     ])
   })

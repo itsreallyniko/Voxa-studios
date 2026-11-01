@@ -21,7 +21,7 @@ describe('extension price in copy', () => {
 
 describe('podcast page photos', () => {
   it('leads with the wide Horizon photo, then the wide Executive photo', () => {
-    const page = allServices().find((p) => p.slug === 'podcast-youtube-tampa')!
+    const page = allServices().find((p) => p.slug === 'podcast-studio-tampa')!
     expect(page.images[0].src).toBe('/horizon/Gallery Images Podcast/Horizon_Podcast_Horizontal-4.jpg')
     expect(page.images[1].src).toBe('/executive/Gallery Images Podcast/Preview_Podcast.JPG')
     expect(page.images[1].wide).toBe(true)

@@ -1,6 +1,6 @@
 import { REVIEWS } from './reviews-data'
 
-export type ServiceTag = 'vsl' | 'podcast' | 'course'
+export type ServiceTag = 'vsl' | 'podcast' | 'youtube' | 'course'
 
 export type Review = {
   id: string

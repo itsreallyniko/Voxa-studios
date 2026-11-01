@@ -27,3 +27,44 @@ describe('service page images', () => {
     }
   })
 })
+
+describe('service image quality', () => {
+  it('serves photos at high quality', () => {
+    const page = allServices()[0]
+    render(
+      <TourModalProvider>
+        <ServicePageView page={page} />
+      </TourModalProvider>,
+    )
+    expect(screen.getByAltText(page.images[0].alt).getAttribute('src')).toContain('q=90')
+  })
+})
+
+describe('podcast and YouTube pages', () => {
+  const find = (slug: string) => allServices().find((p) => p.slug === slug)!
+
+  it('YouTube page shows desk and creator sets, not podcast sets', () => {
+    const srcs = find('youtube-studio-tampa').images.map((i) => i.src).join()
+    expect(srcs).toMatch(/Desk/)
+    expect(srcs).toMatch(/Creator/)
+    expect(srcs).not.toMatch(/Podcast/)
+  })
+
+  it('YouTube page covers the Horizon desk and creator sets', () => {
+    const page = find('youtube-studio-tampa')
+    const srcs = page.images.map((i) => i.src).join()
+    expect(srcs).toMatch(/horizon\/Gallery Images Desk/)
+    expect(srcs).toMatch(/horizon\/Gallery Images Creator/)
+    const text = JSON.stringify(page.sections)
+    expect(text).toContain('Horizon Desk Set')
+    expect(text).toContain('Horizon Creator Set')
+  })
+
+  it('podcast page no longer covers solo YouTube videos', () => {
+    expect(JSON.stringify(find('podcast-studio-tampa'))).not.toMatch(/YouTube/)
+  })
+
+  it('YouTube page sends interview shows to the podcast page', () => {
+    expect(JSON.stringify(find('youtube-studio-tampa'))).toContain('/studios/podcast-studio-tampa')
+  })
+})
