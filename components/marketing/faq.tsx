@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { Reveal } from '@/components/ui/reveal'
+import { jsonLd } from '@/lib/seo/site'
 
 type FAQItem = {
   question: string
@@ -62,7 +63,7 @@ function ChevronIcon({ open }: { open: boolean }) {
   )
 }
 
-export function FAQ() {
+export function FAQ({ items = FAQS }: { items?: FAQItem[] }) {
   const [openIdx, setOpenIdx] = useState<number | null>(null)
 
   return (
@@ -75,9 +76,9 @@ export function FAQ() {
 
         <Reveal className="max-w-3xl mx-auto">
           <div className="bg-surface-container-low liquid-glass">
-            {FAQS.map((f, i) => {
+            {items.map((f, i) => {
               const isOpen = openIdx === i
-              const isLast = i === FAQS.length - 1
+              const isLast = i === items.length - 1
               return (
                 <div
                   key={f.question}
@@ -131,10 +132,10 @@ export function FAQ() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
+          __html: jsonLd({
             '@context': 'https://schema.org',
             '@type': 'FAQPage',
-            mainEntity: FAQS.map((f) => ({
+            mainEntity: items.map((f) => ({
               '@type': 'Question',
               name: f.question,
               acceptedAnswer: {

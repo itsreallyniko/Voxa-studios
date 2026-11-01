@@ -24,7 +24,7 @@ export function Nav() {
           <VoxaLogo className="h-9 w-auto md:h-10" />
         </Link>
         <a
-          href="#book"
+          href="/#book"
           className="text-label-caps text-heritage-gold hover:text-white transition-colors"
         >
           BOOK A SESSION

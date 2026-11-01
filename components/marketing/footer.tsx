@@ -1,6 +1,9 @@
+import Link from 'next/link'
 import { VoxaLogo } from '@/components/voxa-logo'
+import { publishedServices } from '@/lib/content/services'
 
 export function Footer() {
+  const services = publishedServices()
   return (
     <footer className="py-20 bg-obsidian border-t border-white/5">
       <div className="max-w-container-max mx-auto px-6 md:px-margin-edge flex flex-col md:flex-row justify-between items-center gap-12">
@@ -9,6 +12,15 @@ export function Footer() {
           <p className="text-ivory/30 text-xs tracking-widest">PODCAST &amp; CONTENT STUDIO · TAMPA, FL</p>
         </div>
         <div className="flex flex-wrap justify-center gap-6 sm:gap-12">
+          {services.map((s) => (
+            <Link
+              key={s.slug}
+              href={`/studios/${s.slug}`}
+              className="text-label-caps text-ivory/40 hover:text-white transition-colors"
+            >
+              {s.navLabel}
+            </Link>
+          ))}
           <a
             href="tel:+18137317075"
             className="text-label-caps text-ivory/60 hover:text-white transition-colors tabular-nums"
