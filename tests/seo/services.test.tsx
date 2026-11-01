@@ -12,6 +12,7 @@ function page(slug: string, published: boolean, navLabel: string): ServicePage {
     description: `${navLabel} description`,
     h1: `${navLabel} heading`,
     directAnswer: 'A direct answer.',
+    images: [],
     sections: [{ heading: 'Section', body: ['Body text.'] }],
     delivery: 'Delivery details.',
     reviewTag: 'vsl',

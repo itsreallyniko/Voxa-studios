@@ -11,6 +11,23 @@ export const courseWebinar: ServicePage = {
   h1: 'A Tampa Studio for Filming Courses and Webinars',
   directAnswer:
     'Voxa Studios is a Tampa studio where coaches, consultants and business owners can film online courses and webinars on a professional set, with a teleprompter, multi-camera recording, lighting, audio and an on-site producer included. Sessions start at $300 for 90 minutes.',
+  images: [
+    {
+      src: '/horizon/Gallery Images Desk/Horizon_Desk_Horizontal.jpg',
+      alt: 'Horizon Desk Set with a studio microphone at a bright wooden desk',
+      caption: 'Horizon Desk Set',
+    },
+    {
+      src: '/executive/Gallery Images Desk/Preview_Desk.JPG',
+      alt: 'Authority Desk Set with a studio microphone in front of a bookshelf',
+      caption: 'Authority Desk Set',
+    },
+    {
+      src: '/executive/Gallery Images Desk/BTS_Desk.JPG',
+      alt: 'Studio light above the Authority Desk Set, behind the scenes',
+      caption: 'Behind the scenes on the Authority Desk Set',
+    },
+  ],
   sections: [
     {
       heading: 'Sets for teaching on camera',

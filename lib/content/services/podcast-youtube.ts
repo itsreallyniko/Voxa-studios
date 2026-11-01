@@ -11,6 +11,23 @@ export const podcastYoutube: ServicePage = {
   h1: 'A Podcast and YouTube Studio in Tampa',
   directAnswer:
     'Voxa Studios is a turnkey podcast and video studio in Tampa, FL, with multi-camera recording, studio lighting, broadcast audio and an on-site producer included in every session. Sessions start at $300 for 90 minutes, so you can try a show without buying any gear.',
+  images: [
+    {
+      src: '/executive/Gallery Images Podcast/Preview_Podcast.JPG',
+      alt: 'Executive Podcast Set with two leather chairs and studio microphones',
+      caption: 'Executive Podcast Set',
+    },
+    {
+      src: '/horizon/Gallery Images Podcast/Horizon_Podcast.jpg',
+      alt: 'Horizon Podcast Set with a light chair and studio microphone beside a fireplace',
+      caption: 'Horizon Podcast Set',
+    },
+    {
+      src: '/executive/Gallery Images Podcast/BTS_Podcast_side2.JPG',
+      alt: 'Studio lighting and microphones set up around the Executive Podcast Set',
+      caption: 'Behind the scenes on the Executive Podcast Set',
+    },
+  ],
   sections: [
     {
       heading: 'Choose the look that fits your brand',

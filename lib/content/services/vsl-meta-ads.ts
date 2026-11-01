@@ -11,6 +11,23 @@ export const vslMetaAds: ServicePage = {
   h1: 'A Tampa Studio for Filming VSLs and Meta Ads',
   directAnswer:
     'Voxa Studios is a Tampa studio where you can film your own VSL or Meta ads on a professional set, with a teleprompter, multi-camera recording, lighting, audio and an on-site producer included. You bring the script and the message, and sessions start at $300 for 90 minutes.',
+  images: [
+    {
+      src: '/creations/matt_thecloser.jpg',
+      alt: 'Matt, founder of Nova Elite, speaking to camera at the Authority Desk',
+      caption: 'Matt, Founder of Nova Elite, at the Authority Desk',
+    },
+    {
+      src: '/executive/Gallery Images Desk/Desk_Side.JPG',
+      alt: 'Authority Desk Set with a studio microphone in front of a white leather chair',
+      caption: 'Authority Desk Set',
+    },
+    {
+      src: '/executive/Gallery Images Creator/Preview_Creator3.JPG',
+      alt: 'Authority Creator Set with a studio microphone and a tufted leather chair',
+      caption: 'Authority Creator Set',
+    },
+  ],
   sections: [
     {
       heading: 'Built for direct-to-camera videos',
