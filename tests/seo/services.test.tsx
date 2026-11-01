@@ -26,7 +26,7 @@ vi.mock('next/navigation', () => ({
   notFound: () => {
     throw new Error('NEXT_NOT_FOUND')
   },
-  usePathname: () => '/',
+  usePathname: () => '/studios/live',
 }))
 
 import { getPublishedService, publishedServices } from '@/lib/content/services'

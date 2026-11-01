@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import { BookLink } from '@/components/ui/book-link'
 import { VoxaLogo } from '@/components/voxa-logo'
 
 export function Nav() {
@@ -23,12 +24,9 @@ export function Nav() {
         <Link href="/" aria-label="Voxa Studios — Home" className="text-white">
           <VoxaLogo className="h-9 w-auto md:h-10" />
         </Link>
-        <a
-          href="/#book"
-          className="text-label-caps text-heritage-gold hover:text-white transition-colors"
-        >
+        <BookLink className="text-label-caps text-heritage-gold hover:text-white transition-colors">
           BOOK A SESSION
-        </a>
+        </BookLink>
       </div>
     </nav>
   )

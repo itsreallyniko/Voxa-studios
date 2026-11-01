@@ -1,3 +1,4 @@
+import { BookLink } from '@/components/ui/book-link'
 import { Button } from '@/components/ui/button'
 import { Reveal } from '@/components/ui/reveal'
 
@@ -22,11 +23,11 @@ export function ComeVisitUs() {
               <p className="text-body-lg text-white">Tampa, FL 33607</p>
             </address>
             <div className="flex flex-col sm:flex-row gap-4">
-              <a href="#book">
+              <BookLink>
                 <Button variant="primary" size="lg">
                   Book Now
                 </Button>
-              </a>
+              </BookLink>
               <a
                 href={`https://www.google.com/maps?q=${ADDRESS_QUERY}`}
                 target="_blank"

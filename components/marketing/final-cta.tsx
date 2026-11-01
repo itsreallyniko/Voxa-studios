@@ -1,5 +1,6 @@
 'use client'
 
+import { BookLink } from '@/components/ui/book-link'
 import { Button } from '@/components/ui/button'
 import { Reveal } from '@/components/ui/reveal'
 import { useTourModal } from '@/lib/tour-modal-context'
@@ -21,9 +22,9 @@ export function FinalCTA() {
         </Reveal>
         <Reveal delay={160}>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-            <a href="/#book">
+            <BookLink>
               <Button variant="primary" size="lg">Explore Studio Sets</Button>
-            </a>
+            </BookLink>
             <Button variant="secondary" size="lg" onClick={open}>
               Book A Studio Tour
             </Button>
