@@ -45,6 +45,17 @@ describe('review quotes', () => {
     expect(screen.queryByText(/Private quote/)).toBeNull()
   })
 
+  it('shows a Google-style header with initial, name, stars and source', () => {
+    render(<ReviewQuotes />)
+    expect(screen.getByText('S')).toBeInTheDocument()
+    expect(screen.getByText('Sam')).toBeInTheDocument()
+    expect(screen.getByLabelText('Rated 5 out of 5 stars')).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Google review' })).toHaveAttribute(
+      'href',
+      'https://example.com/review',
+    )
+  })
+
   it('renders nothing with no usable reviews', () => {
     const { container } = render(<ReviewQuotes tag="course" />)
     expect(container).toBeEmptyDOMElement()
