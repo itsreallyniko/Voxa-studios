@@ -22,7 +22,7 @@ const FAQS: FAQItem[] = [
   {
     question: 'How long is a session and how much does it cost?',
     answer:
-      'Sessions start at 90 minutes for $300. You can extend in 30-minute increments at $50 each, up to a 5-hour cap.',
+      'Sessions start at 90 minutes for $300. You can extend in 30-minute increments at $100 each, up to a 5-hour cap.',
   },
   {
     question: 'Can I tour the studio before booking?',
