@@ -20,7 +20,6 @@ export const onsiteHub = {
     secondaryCta: { label: 'See the work', href: '/onsite/work' },
   },
   proof: [
-    { kind: 'logo', name: 'Byron Donalds' },
     { kind: 'logo', name: 'Florida Education News' },
     { kind: 'logo', name: 'Nothing\'s Off The Table' },
     { kind: 'logo', name: 'Friendship Cars' },

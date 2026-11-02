@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect, useRef } from 'react'
 import { Button } from '@/components/ui/button'
 import { calOnsiteLink } from '@/lib/content/onsite-form'
 
@@ -21,12 +22,26 @@ export function OnsiteHero({
   formAnchor?: string
 }) {
   const calLink = calOnsiteLink()
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  // React leaves the muted attribute out of server HTML, and iOS Safari won't
+  // autoplay without it, so mute and start the loop once the page hydrates.
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+    video.muted = true
+    video.setAttribute('muted', '')
+    // iOS refuses in Low Power Mode, which leaves the poster showing.
+    video.play().catch(() => {})
+  }, [])
+
   return (
     <section className="relative min-h-[88vh] md:min-h-screen flex items-center justify-center pt-28 pb-24 overflow-hidden">
       <div className="absolute inset-0 z-0 overflow-hidden">
         {muteLoopVideo ? (
           <video
-            className="absolute inset-0 h-full w-full object-cover opacity-50"
+            ref={videoRef}
+            className="hero-loop absolute inset-0 h-full w-full object-cover opacity-50"
             src={muteLoopVideo}
             poster={muteLoopPoster}
             autoPlay

@@ -13,7 +13,7 @@ export function ProofStrip({
   const anyPlaceholder = slots.some((s) => s.placeholder === true)
   const anyPreview = slots.some((s) => s.placeholder !== true && s.preview === true)
   return (
-    <section aria-label="Trusted by" className="py-16 bg-obsidian border-y border-white/5">
+    <section aria-label="Trusted by" className="py-10 md:py-16 bg-obsidian border-y border-white/5">
       <div className="max-w-container-max mx-auto px-6 md:px-margin-edge">
         <Reveal>
           {anyPlaceholder ? (
@@ -21,7 +21,7 @@ export function ProofStrip({
               PLACEHOLDER — AWAITING ASSETS
             </p>
           ) : (
-            <p className="text-label-caps text-ivory/50 mb-8 text-center">
+            <p className="text-[10px] md:text-label-caps tracking-[0.3em] text-ivory/50 mb-5 md:mb-8 text-center">
               WHO OUR TEAM HAS WORKED WITH
               {anyPreview && (
                 <span className="block mt-2 text-heritage-gold">
@@ -34,7 +34,7 @@ export function ProofStrip({
             className={
               anyPlaceholder
                 ? 'grid grid-cols-2 sm:grid-cols-4 gap-6 items-center'
-                : 'flex flex-wrap items-center justify-center gap-x-12 gap-y-4'
+                : 'flex flex-wrap items-center justify-center gap-x-5 md:gap-x-12 gap-y-3 md:gap-y-4'
             }
           >
             {slots.map((s, i) =>
@@ -46,7 +46,7 @@ export function ProofStrip({
                   {s.label ?? s.kind}
                 </li>
               ) : (
-                <li key={s.name} className="h-16 flex items-center justify-center">
+                <li key={s.name} className={`flex items-center justify-center ${s.logo ? 'h-16' : 'md:h-16'}`}>
                   {s.logo ? (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
@@ -56,7 +56,7 @@ export function ProofStrip({
                       loading="lazy"
                     />
                   ) : (
-                    <span className="text-metadata uppercase tracking-[0.2em] text-ivory/60 text-center">
+                    <span className="text-[10px] md:text-metadata uppercase tracking-[0.15em] md:tracking-[0.2em] text-ivory/60 text-center">
                       {s.name}
                     </span>
                   )}
@@ -65,7 +65,7 @@ export function ProofStrip({
             )}
           </ul>
           {studioNote && (
-            <p className="mt-8 text-sm text-ivory/60 text-center">
+            <p className="mt-5 md:mt-8 text-xs md:text-sm text-ivory/60 text-center">
               {studioNote.text}{' '}
               <Link
                 href={studioNote.href}

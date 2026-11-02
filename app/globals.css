@@ -153,3 +153,10 @@ body {
     transition-duration: 0.001ms !important;
   }
 }
+
+/* Hide Safari's play overlay on the decorative hero loop when it can't autoplay. */
+.hero-loop::-webkit-media-controls-start-playback-button,
+.hero-loop::-webkit-media-controls {
+  display: none !important;
+  -webkit-appearance: none;
+}
