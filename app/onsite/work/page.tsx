@@ -108,7 +108,7 @@ function ProjectRow({ project, index }: { project: WorkProject; index: number })
 }
 
 export default function OnsiteWorkPage() {
-  const { header, featured, videos, range, projects, cta } = onsiteWork
+  const { header, featured, videos, range, projects, credit, cta } = onsiteWork
   return (
     <>
       <section className="pt-32 md:pt-40 pb-10 md:pb-14 bg-obsidian">
@@ -174,6 +174,9 @@ export default function OnsiteWorkPage() {
           {projects.map((project, i) => (
             <ProjectRow key={project.type} project={project} index={i} />
           ))}
+          <p className="pt-8 border-t border-white/10 text-xs text-ivory/40 leading-relaxed max-w-2xl">
+            {credit}
+          </p>
         </div>
       </section>
 

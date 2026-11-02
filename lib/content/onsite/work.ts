@@ -125,6 +125,8 @@ export const onsiteWork = {
       },
     },
   ] satisfies WorkProject[],
+  credit:
+    'Selected work by members of the Voxa team, including projects produced with other companies. All footage and trademarks belong to their respective owners.',
   cta: {
     heading: 'Seen enough? Tell us what you need filmed.',
     body: 'A short brief gets you a tailored quote.',
