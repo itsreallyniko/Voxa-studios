@@ -40,7 +40,7 @@ export function OnsiteFaq({
       <div className="max-w-container-max mx-auto px-6 md:px-margin-edge">
         <Reveal className="max-w-3xl mx-auto mb-16 text-center">
           <span className="text-label-caps text-heritage-gold mb-4 block">FAQ</span>
-          <h2 className="text-headline-xl text-white">Common Questions</h2>
+          <h2 className="text-headline-xl text-white">On-site video production questions, answered.</h2>
         </Reveal>
 
         <Reveal className="max-w-3xl mx-auto">

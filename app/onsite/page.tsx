@@ -1,13 +1,12 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
 import { OnsiteHero } from '@/components/onsite/onsite-hero'
 import { HowItWorks } from '@/components/onsite/how-it-works'
-import { PackagesRow } from '@/components/onsite/packages-row'
+import { FilmTypes } from '@/components/onsite/film-types'
+import { ProofStrip } from '@/components/onsite/proof-strip'
+import { CrewBlock } from '@/components/onsite/crew-block'
 import { OnsiteFaq } from '@/components/onsite/onsite-faq'
 import { QuoteForm } from '@/components/onsite/quote-form'
-import { OnsiteSection } from '@/components/onsite/onsite-section'
-import { Reveal } from '@/components/ui/reveal'
-import { publishedPages } from '@/lib/content/onsite'
+import { StickyQuoteCta } from '@/components/onsite/sticky-quote-cta'
 import { onsiteHub } from '@/lib/content/onsite/hub'
 
 export const metadata: Metadata = {
@@ -28,8 +27,25 @@ export const metadata: Metadata = {
   },
 }
 
+const SITE_URL = 'https://voxastudios.com'
+
+const serviceJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: onsiteHub.seo.title,
+  description: onsiteHub.seo.description,
+  serviceType: 'Video production',
+  provider: { '@id': `${SITE_URL}/#localbusiness` },
+  areaServed: [
+    ...['Tampa', 'St. Petersburg', 'Clearwater', 'Brandon', 'Wesley Chapel', 'Sarasota'].map(
+      (name) => ({ '@type': 'City', name })
+    ),
+    { '@type': 'Place', name: 'Tampa Bay area' },
+  ],
+  url: `${SITE_URL}/onsite`,
+}
+
 export default function OnsiteHubPage() {
-  const pages = publishedPages()
   return (
     <>
       <OnsiteHero
@@ -37,52 +53,30 @@ export default function OnsiteHubPage() {
         headline={onsiteHub.hero.headline}
         subline={onsiteHub.hero.subline}
         muteLoopVideo={onsiteHub.hero.muteLoopVideo}
+        muteLoopPoster={onsiteHub.hero.muteLoopPoster}
+        secondaryCta={onsiteHub.hero.secondaryCta}
       />
+
+      <ProofStrip slots={onsiteHub.proof} studioNote={onsiteHub.studioNote} />
+
+      <FilmTypes {...onsiteHub.films} />
 
       <HowItWorks
         heading={onsiteHub.howItWorks.heading}
         steps={onsiteHub.howItWorks.steps}
       />
 
-      <PackagesRow
-        packageIds={['interview-session', 'content-day', 'commercial']}
-      />
-
-      <OnsiteSection
-        id="niches"
-        eyebrow="BUILT FOR"
-        heading="Pages tailored to the shoot you have in mind."
-        tone="surface"
-      >
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {pages.map((p, i) => (
-            <Reveal key={p.slug} delay={i * 60}>
-              <Link
-                href={`/onsite/${p.slug}`}
-                className="group block h-full p-8 border border-white/10 bg-surface-container-low hover:border-heritage-gold/60 transition-colors"
-              >
-                <h3 className="text-headline-md text-white mb-4 leading-tight group-hover:text-heritage-gold transition-colors">
-                  {p.hero.headline}
-                </h3>
-                <p className="text-sm text-ivory/60 leading-relaxed mb-5">
-                  {p.hero.subline}
-                </p>
-                <p className="text-metadata uppercase tracking-[0.2em] text-heritage-gold/80">
-                  {p.buyerLabel}
-                </p>
-                <span className="text-label-caps text-ivory/50 mt-6 inline-flex items-center gap-2 group-hover:text-heritage-gold transition-colors">
-                  SEE THE PAGE
-                  <span aria-hidden="true">→</span>
-                </span>
-              </Link>
-            </Reveal>
-          ))}
-        </div>
-      </OnsiteSection>
+      <CrewBlock crew={onsiteHub.crew} />
 
       <OnsiteFaq items={onsiteHub.faq} />
 
       <QuoteForm pageSlug="hub" preselect="not-sure" />
+
+      <StickyQuoteCta />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
+      />
     </>
   )
 }

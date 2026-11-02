@@ -2,21 +2,19 @@
 import type { ProjectType } from './onsite/types'
 
 export const PROJECT_TYPE_OPTIONS: { value: ProjectType; label: string }[] = [
-  { value: 'interview', label: 'Interview or testimonial' },
-  { value: 'content-day', label: 'Content day' },
-  { value: 'event', label: 'Event' },
   { value: 'commercial', label: 'Commercial' },
+  { value: 'event', label: 'Event film' },
+  { value: 'interview', label: 'Interview or testimonial' },
+  { value: 'brand', label: 'Brand or founder film' },
+  { value: 'presentation', label: 'On-camera presentation' },
   { value: 'not-sure', label: 'Not sure yet' },
 ]
 
-// Placeholder bands — Niko to confirm final labels before launch.
-// Kept non-numeric on purpose so the page respects the "no dollar amounts"
-// rule until real bands are chosen.
 export const BUDGET_RANGE_OPTIONS: { value: string; label: string }[] = [
-  { value: 'band-1', label: 'Just getting started' },
-  { value: 'band-2', label: 'Established budget' },
-  { value: 'band-3', label: 'Significant initiative' },
-  { value: 'band-4', label: 'Flagship project' },
+  { value: 'band-1', label: 'Under $1k' },
+  { value: 'band-2', label: '$1k to $3k' },
+  { value: 'band-3', label: '$3k to $5k' },
+  { value: 'band-4', label: '$5k and up' },
   { value: 'not-sure', label: 'Not sure yet' },
 ]
 

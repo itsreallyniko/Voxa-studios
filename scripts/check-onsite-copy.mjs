@@ -28,6 +28,8 @@ const RULES = [
     name: 'price',
     regex: /\$\s?\d/,
     message: 'Prices are not allowed in /onsite content.',
+    // Budget ranges a visitor picks from are not published prices.
+    exemptFiles: ['lib/content/onsite-form.ts'],
   },
   {
     name: 'starting-at',
@@ -72,6 +74,7 @@ async function main() {
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i]
       for (const rule of RULES) {
+        if (rule.exemptFiles?.includes(relative(ROOT, file))) continue
         const m = line.match(rule.regex)
         if (!m) continue
         const isAllowlisted = ALLOWLIST_PHRASES.some((p) => line.includes(p))

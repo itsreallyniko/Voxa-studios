@@ -8,12 +8,16 @@ export function OnsiteHero({
   headline,
   subline,
   muteLoopVideo,
+  muteLoopPoster,
+  secondaryCta,
   formAnchor = '#quote',
 }: {
   eyebrow: string
   headline: string
   subline: string
   muteLoopVideo: string | null
+  muteLoopPoster?: string
+  secondaryCta?: { label: string; href: string }
   formAnchor?: string
 }) {
   const calLink = calOnsiteLink()
@@ -24,6 +28,7 @@ export function OnsiteHero({
           <video
             className="absolute inset-0 h-full w-full object-cover opacity-50"
             src={muteLoopVideo}
+            poster={muteLoopPoster}
             autoPlay
             muted
             loop
@@ -74,7 +79,13 @@ export function OnsiteHero({
                 Get a quote
               </Button>
             </a>
-            {calLink ? (
+            {secondaryCta ? (
+              <a href={secondaryCta.href} className="flex">
+                <Button variant="ghost" size="lg" className="w-full sm:w-auto">
+                  {secondaryCta.label}
+                </Button>
+              </a>
+            ) : calLink ? (
               <a
                 href={calLink}
                 target="_blank"

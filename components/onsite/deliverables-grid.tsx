@@ -10,7 +10,7 @@ export function DeliverablesGrid({
 }) {
   return (
     <OnsiteSection eyebrow="WHAT WE FILM FOR YOU" heading={heading}>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-white/5 border border-white/5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-white/5 border border-white/5">
         {cards.map((c, i) => (
           <Reveal key={c.title} delay={i * 60}>
             <div className="h-full p-6 sm:p-8 bg-obsidian hover:bg-white/[0.02] transition-[background-color] duration-200">

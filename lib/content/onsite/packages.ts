@@ -5,14 +5,14 @@ export const ONSITE_PACKAGES: Record<string, OnsitePackage> = {
   'interview-session': {
     id: 'interview-session',
     name: 'On-Site Interview Session',
-    shape: 'Half day at your location',
+    shape: 'Scoped to your people and your location',
     includes: [
-      'Producer-led session for one to three people on camera',
-      'Two-camera coverage with broadcast audio and lighting',
+      'Producer-led session for the people you want on camera',
+      'Multi-camera coverage with broadcast audio and lighting',
       'Teleprompter available on request',
     ],
     deliverables: [
-      'One edited interview or testimonial film',
+      'An edited interview or testimonial film',
       'A set of short clips cut for vertical and horizontal',
     ],
   },
@@ -41,7 +41,7 @@ export const ONSITE_PACKAGES: Record<string, OnsitePackage> = {
       'Direction on camera and off',
     ],
     deliverables: [
-      'A 30- or 60-second spot',
+      'A finished spot, in the length your campaign needs',
       'Cutdowns sized for each platform',
     ],
   },

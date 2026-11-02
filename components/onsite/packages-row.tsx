@@ -41,7 +41,7 @@ export function PackagesRow({
       body="Every project is scoped to fit — these are a few of the shapes we build from most often. The final mix of crew, cameras, and deliverables is agreed in your proposal."
       tone="surface"
     >
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+      <div className={`grid grid-cols-1 gap-6 lg:gap-8 ${packages.length === 2 ? 'md:grid-cols-2' : 'md:grid-cols-3'}`}>
         {packages.map((pkg, i) => (
           <Reveal key={pkg.id} delay={i * 80}>
             <article className="h-full flex flex-col bg-surface-container-low liquid-glass p-8">

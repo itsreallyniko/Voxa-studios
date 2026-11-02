@@ -1,11 +1,13 @@
 'use client'
 
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { VoxaLogo } from '@/components/voxa-logo'
 
 export function Nav() {
   const [scrolled, setScrolled] = useState(false)
+  const onOnsite = usePathname()?.startsWith('/onsite') ?? false
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50)
@@ -26,15 +28,23 @@ export function Nav() {
         <div className="flex items-center gap-5 sm:gap-7">
           <Link
             href="/onsite"
-            className="text-label-caps text-ivory/60 hover:text-white transition-colors whitespace-nowrap"
+            className={`${onOnsite ? 'hidden sm:inline ' : ''}text-label-caps text-ivory/60 hover:text-white transition-colors whitespace-nowrap`}
           >
             ON-SITE
           </Link>
+          {onOnsite && (
+            <Link
+              href="/onsite/work"
+              className="hidden sm:inline text-label-caps text-ivory/60 hover:text-white transition-colors whitespace-nowrap"
+            >
+              OUR WORK
+            </Link>
+          )}
           <a
-            href="/#book"
+            href={onOnsite ? '#quote' : '/#book'}
             className="text-label-caps text-heritage-gold hover:text-white transition-colors whitespace-nowrap"
           >
-            BOOK A SESSION
+            {onOnsite ? 'GET A QUOTE' : 'BOOK A SESSION'}
           </a>
         </div>
       </div>

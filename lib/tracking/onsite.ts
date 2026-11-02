@@ -4,14 +4,8 @@ export function trackOnsiteQuoteSubmit(opts: {
   pageSlug: string
   projectType: string
 }) {
-  // Also fire generate_lead so existing Google Ads conversion wiring continues
-  // to work for the on-site funnel. See handoff notes.
-  pushDataLayer({
-    event: 'generate_lead',
-    lead_source: 'onsite_quote',
-    page_slug: opts.pageSlug,
-    project_type: opts.projectType,
-  })
+  // Deliberately not generate_lead: that event feeds the studio's Google Ads
+  // conversions, and On-Site quotes would skew its bidding.
   pushDataLayer({
     event: 'onsite_quote_submit',
     page_slug: opts.pageSlug,

@@ -1,6 +1,79 @@
 import type { CaseSlot } from '@/lib/content/onsite/types'
+import { parseVideoUrl, videoThumbnail } from '@/lib/content/onsite/video'
 import { OnsiteSection } from './onsite-section'
+import { VideoPlayer } from './video-player'
 import { Reveal } from '@/components/ui/reveal'
+
+type FilledCase = Extract<CaseSlot, { client: string }>
+
+async function FilledCaseCard({ filled }: { filled: FilledCase }) {
+  const label = `${filled.client} — ${filled.title}`
+  const video = parseVideoUrl(filled.href)
+  const thumbnail =
+    filled.thumbnail ?? (video ? await videoThumbnail(video, filled.href) : null)
+
+  return (
+    <article className="h-full bg-surface-container-low border border-white/10 hover:border-heritage-gold/60 transition-colors overflow-hidden">
+      <div className="relative aspect-[16/9] bg-black overflow-hidden">
+        {video ? (
+          <VideoPlayer video={video} title={label} thumbnail={thumbnail} />
+        ) : (
+          <a
+            href={filled.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Watch: ${label}`}
+            className="block h-full w-full"
+          >
+            {thumbnail && (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={thumbnail}
+                alt=""
+                className="h-full w-full object-cover opacity-80 hover:opacity-100 transition-opacity"
+                loading="lazy"
+              />
+            )}
+          </a>
+        )}
+        {filled.preview && (
+          <span className="pointer-events-none absolute top-3 left-3 text-[10px] tracking-[0.3em] uppercase bg-obsidian/80 text-heritage-gold px-2 py-1 border border-heritage-gold/40">
+            PREVIEW
+          </span>
+        )}
+      </div>
+      {filled.stills && filled.stills.length > 0 && (
+        <ul className={`grid gap-px bg-black ${filled.stills.length === 1 ? 'grid-cols-1' : 'grid-cols-3'}`}>
+          {filled.stills.map((still) => (
+            <li key={still.src} className="aspect-[16/9] overflow-hidden">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={still.src}
+                alt={still.alt}
+                className="h-full w-full object-cover"
+                loading="lazy"
+              />
+            </li>
+          ))}
+        </ul>
+      )}
+      <div className="p-6">
+        <span className="text-label-caps text-heritage-gold mb-3 block">
+          {filled.type.toUpperCase()}
+        </span>
+        <p className="text-metadata uppercase tracking-[0.2em] text-ivory/50 mb-2">
+          {filled.client}
+        </p>
+        <h3 className="text-body-lg text-white mb-3 leading-snug">
+          {filled.title}
+        </h3>
+        <p className="text-sm text-ivory/60 leading-relaxed">
+          {filled.description}
+        </p>
+      </div>
+    </article>
+  )
+}
 
 export function CaseStudies({ cases }: { cases: CaseSlot[] }) {
   const anyFilled = cases.some((c) => !('placeholder' in c) || c.placeholder !== true)
@@ -24,7 +97,7 @@ export function CaseStudies({ cases }: { cases: CaseSlot[] }) {
           PREVIEW · OUR TEAM&apos;S PAST WORK · PENDING APPROVAL BEFORE LAUNCH
         </p>
       )}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className={`grid grid-cols-1 gap-6 ${cases.length === 2 ? 'md:grid-cols-2' : 'md:grid-cols-3'}`}>
         {cases.map((c, i) => {
           const isPlaceholder = 'placeholder' in c && c.placeholder === true
           if (isPlaceholder) {
@@ -39,47 +112,10 @@ export function CaseStudies({ cases }: { cases: CaseSlot[] }) {
               </Reveal>
             )
           }
-          const filled = c as Extract<CaseSlot, { client: string }>
+          const filled = c as FilledCase
           return (
             <Reveal key={`${filled.client}-${i}`} delay={i * 60}>
-              <a
-                href={filled.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group block h-full bg-surface-container-low border border-white/10 hover:border-heritage-gold/60 transition-colors overflow-hidden"
-              >
-                <div className="relative aspect-[16/9] bg-black overflow-hidden">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={filled.thumbnail}
-                    alt={`${filled.client} — ${filled.title}`}
-                    className="h-full w-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
-                    loading="lazy"
-                  />
-                  {filled.preview && (
-                    <span className="absolute top-3 left-3 text-[10px] tracking-[0.3em] uppercase bg-obsidian/80 text-heritage-gold px-2 py-1 border border-heritage-gold/40">
-                      PREVIEW
-                    </span>
-                  )}
-                </div>
-                <div className="p-6">
-                  <span className="text-label-caps text-heritage-gold mb-3 block">
-                    {filled.type.toUpperCase()}
-                  </span>
-                  <p className="text-metadata uppercase tracking-[0.2em] text-ivory/50 mb-2">
-                    {filled.client}
-                  </p>
-                  <h3 className="text-body-lg text-white mb-3 leading-snug group-hover:text-heritage-gold transition-colors">
-                    {filled.title}
-                  </h3>
-                  <p className="text-sm text-ivory/60 leading-relaxed">
-                    {filled.description}
-                  </p>
-                  <span className="text-label-caps text-ivory/40 mt-6 inline-flex items-center gap-2 group-hover:text-heritage-gold transition-colors">
-                    WATCH <span aria-hidden="true">→</span>
-                  </span>
-                </div>
-              </a>
+              <FilledCaseCard filled={filled} />
             </Reveal>
           )
         })}

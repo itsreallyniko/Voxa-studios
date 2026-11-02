@@ -11,6 +11,7 @@ import { ServiceArea } from './service-area'
 import { OnsiteFaq } from './onsite-faq'
 import { OnsiteFinalCta } from './final-cta'
 import { QuoteForm } from './quote-form'
+import { StickyQuoteCta } from './sticky-quote-cta'
 
 const SITE_URL = 'https://voxastudios.com'
 
@@ -40,6 +41,7 @@ export function NichePage({ page }: { page: OnsitePage }) {
         headline={page.hero.headline}
         subline={page.hero.subline}
         muteLoopVideo={page.hero.muteLoopVideo}
+        muteLoopPoster={page.hero.muteLoopPoster}
       />
       <ProofStrip slots={page.proof} />
       <ProblemBlock
@@ -64,6 +66,7 @@ export function NichePage({ page }: { page: OnsitePage }) {
         body="A short brief gets you a tailored quote. Prefer to talk? Book a fifteen-minute call."
       />
       <QuoteForm pageSlug={page.slug} preselect={page.form.preselect} />
+      <StickyQuoteCta />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd(page)) }}

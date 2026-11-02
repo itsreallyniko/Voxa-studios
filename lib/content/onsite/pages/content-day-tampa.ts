@@ -12,7 +12,7 @@ const SERVICE_CITIES = [
 
 export const contentDayTampa: OnsitePage = {
   slug: 'content-day-tampa',
-  draft: false,
+  draft: true,
   buyerLabel: 'For brands that need to post every week',
   seo: {
     title: 'Content Day in Tampa — Social Video — Voxa On-Site',
@@ -92,8 +92,9 @@ export const contentDayTampa: OnsitePage = {
   crew: [
     { role: 'Producer', placeholder: true },
     {
-      role: 'Director of photography',
-      name: 'Tim Butt',
+      role: 'Creative Director',
+      name: 'Tim Buttner',
+      subtitle: 'Cinematographer',
       bio:
         'Drexel Cinema & Television grad. Tampa-based cinematographer, director, and colorist with a decade-plus of interview, event, and brand work across Florida.',
       photo:

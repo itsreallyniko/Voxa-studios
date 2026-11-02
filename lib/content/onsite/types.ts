@@ -14,12 +14,14 @@ export type ProofSlot =
   | { kind: 'logo'; placeholder: true; label?: string }
   | { kind: 'stat'; placeholder: true; label?: string }
   | { kind: 'quote'; placeholder: true; label?: string }
+  | { kind: 'logo'; name: string; logo?: string; preview?: boolean; placeholder?: false }
 
 export type CrewSlot =
   | { role: string; placeholder: true }
   | {
       role: string
       name: string
+      subtitle?: string
       bio: string
       photo: string
       preview?: boolean
@@ -33,8 +35,11 @@ export type CaseSlot =
       title: string
       type: string
       description: string
-      thumbnail: string
+      /** Optional override. YouTube and Vimeo thumbnails are looked up from href. */
+      thumbnail?: string
+      /** A YouTube or Vimeo link plays on the page; anything else links out. */
       href: string
+      stills?: { src: string; alt: string }[]
       preview?: boolean
       placeholder?: false
     }
@@ -44,6 +49,8 @@ export type ProjectType =
   | 'content-day'
   | 'event'
   | 'commercial'
+  | 'brand'
+  | 'presentation'
   | 'not-sure'
 
 export type HowItWorksStep = { title: string; body: string }
@@ -63,6 +70,7 @@ export type OnsitePage = {
     headline: string
     subline: string
     muteLoopVideo: string | null
+    muteLoopPoster?: string
   }
   proof: ProofSlot[]
   problem: { heading: string; paragraphs: string[] }

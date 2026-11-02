@@ -1,4 +1,6 @@
 // DRAFT COPY — awaiting Niko's review. See handoff list at end of session.
+import { FILM_TYPES } from '../film-types'
+import { onsiteHub } from '../hub'
 import type { OnsitePage } from '../types'
 
 const SERVICE_CITIES = [
@@ -10,59 +12,38 @@ const SERVICE_CITIES = [
   'Sarasota',
 ]
 
-export const testimonialVideosTampa: OnsitePage = {
-  slug: 'testimonial-videos-tampa',
-  draft: false,
+export const videoProductionTampa: OnsitePage = {
+  slug: 'video-production-tampa',
+  draft: true,
   buyerLabel: 'For businesses buying one polished piece that lasts',
   seo: {
-    title: 'Testimonial, Brand & Commercial Video in Tampa — Voxa On-Site',
+    title: 'Commercial, Event & Brand Video in Tampa — Voxa On-Site',
     description:
-      'Polished testimonial, brand, and commercial films shot on-site across Tampa Bay. One cornerstone piece per project, cut to carry your brand.',
-    ogImage: '/og/onsite/testimonial-videos-tampa.jpg',
+      'Polished commercials, event films, testimonials, and brand films shot on-site across Tampa Bay. One cornerstone piece, scoped to fit the job it has to do.',
+    ogImage: '/og/onsite/video-production-tampa.jpg',
   },
   hero: {
     eyebrow: 'VOXA ON-SITE · TAMPA',
-    headline: 'Polished films that carry your brand.',
+    headline: 'One polished film, built for the job it has to do.',
     subline:
-      'Testimonials, brand films, and commercial spots — one cornerstone piece per project, filmed at your location and cut to do real work on your site and in your ads.',
-    muteLoopVideo: null,
+      'Commercials, event films, interviews, brand films, and on-camera presentations, filmed at your location and cut to do real work on your site, in your sales, and in your ads.',
+    muteLoopVideo: onsiteHub.hero.muteLoopVideo,
+    muteLoopPoster: onsiteHub.hero.muteLoopPoster,
   },
-  proof: [
-    { kind: 'logo', placeholder: true, label: 'Client logo' },
-    { kind: 'logo', placeholder: true, label: 'Client logo' },
-    { kind: 'logo', placeholder: true, label: 'Client logo' },
-    { kind: 'stat', placeholder: true, label: 'Headline stat' },
-  ],
+  proof: onsiteHub.proof,
   problem: {
     heading: 'The one piece that actually moves prospects.',
     paragraphs: [
-      'Most buying decisions come down to a single piece of video — a client story, a founder on camera, a commercial that stops the scroll. The one you send when someone asks who you are.',
+      'Most buying decisions come down to a single piece of video — a client story, a founder on camera, an event worth remembering, a commercial that holds attention. The one you send when someone asks who you are.',
       'Making that piece well is a different job from making a lot of pieces. It needs a plan, a crew that can direct nervous people, lighting that does not look like a webcam, and an edit that respects the viewer.',
-      'Voxa On-Site handles the whole day. A producer runs the shoot at your location, and you leave with one cornerstone piece — testimonial, brand film, or commercial — that earns its spot on your home page and in your paid ads.',
+      'Voxa On-Site handles the whole day. A producer runs the shoot at your location, and you leave with one cornerstone film that earns its spot on your home page, in your sales conversations, and in your paid ads.',
     ],
   },
   deliverables: {
-    heading: 'What we film for you',
-    cards: [
-      {
-        title: 'Patient and client testimonials',
-        body: 'Real stories told on camera, cut as polished films you can send to prospects.',
-      },
-      {
-        title: 'Brand films',
-        body: 'A founder, a team, a mission — captured as a short film that explains who you are and who you serve.',
-      },
-      {
-        title: 'Commercial spots',
-        body: 'Scripted and produced from concept — a 30- or 60-second spot built for paid campaigns.',
-      },
-      {
-        title: 'Vertical and horizontal cutdowns',
-        body: 'Short cuts from any of the above, sized for your site, ads, and social.',
-      },
-    ],
+    heading: 'The films businesses ask for most.',
+    cards: FILM_TYPES,
   },
-  packages: ['interview-session', 'commercial', 'content-day'],
+  packages: ['interview-session', 'commercial'],
   howItWorks: {
     heading: 'How it works',
     steps: [
@@ -86,46 +67,50 @@ export const testimonialVideosTampa: OnsitePage = {
   },
   cases: [
     {
-      client: 'TrueLimb',
-      title: 'Meet Jessica — a patient story',
-      type: 'Patient testimonial',
+      client: 'Grillsmith Sarasota',
+      title: 'A restaurant commercial, told by the chef',
+      type: 'Commercial',
       description:
-        'A patient tells her prosthetic journey on camera, cut as a short film for the brand site and clinics.',
-      thumbnail: 'https://i.ytimg.com/vi/p681WHF3s1I/hqdefault.jpg',
-      href: 'https://www.youtube.com/watch?v=p681WHF3s1I',
-      preview: true,
+        'A commercial filmed on location at the restaurant, with the chef on camera in the space.',
+      thumbnail: '/onsite/cases/grillsmith-sarasota.webp',
+      href: 'https://player.vimeo.com/video/706391172?h=74135374a5',
     },
     {
-      client: 'Piper Family Dentistry',
-      title: 'Welcome to Piper Family Dentistry',
-      type: 'Small-practice intro',
+      client: 'Weylman',
+      title: 'Speaking straight to the viewer',
+      type: 'Presenter video',
       description:
-        'A dentist and team on camera for a prospective-patient welcome film shot inside the practice.',
-      thumbnail: 'https://i.ytimg.com/vi/8bBxKGRrmTM/hqdefault.jpg',
-      href: 'https://www.youtube.com/watch?v=8bBxKGRrmTM',
-      preview: true,
+        'A presenter delivering a message directly to camera against a clean studio backdrop.',
+      thumbnail: '/onsite/cases/weylman.webp',
+      href: 'https://player.vimeo.com/video/782731293?h=f0ac75ccd4',
     },
     {
-      client: 'Instant Leverage',
-      title: '"I thought I could build a sales team myself." — JR Rivas',
-      type: 'Business owner testimonial',
+      client: 'Common Spirit',
+      title: 'A leadership address, filmed on two cameras',
+      type: 'Leadership message',
       description:
-        'A client testimonial about outsourcing growth — captured on-site in a single morning.',
-      thumbnail: 'https://i.ytimg.com/vi/fUjoVG7xoFA/hqdefault.jpg',
-      href: 'https://www.youtube.com/watch?v=fUjoVG7xoFA',
-      preview: true,
+        'A scripted address read from teleprompter, with a wide and a close angle cut together.',
+      thumbnail: '/onsite/cases/common-spirit-wide.webp',
+      href: 'https://player.vimeo.com/video/823915261?h=18e7682e90',
     },
   ],
   crew: [
-    { role: 'Producer', placeholder: true },
     {
-      role: 'Director of photography',
-      name: 'Tim Butt',
+      role: 'Founder',
+      name: 'Niko Torres',
+      subtitle: 'Producer',
+      bio:
+        'Niko founded Voxa Studios after several years producing video independently, and is your direct point of contact from the first call through final delivery.',
+      photo: '/onsite/crew-niko.jpg',
+    },
+    {
+      role: 'Creative Director',
+      name: 'Tim Buttner',
+      subtitle: 'Cinematographer',
       bio:
         'Drexel Cinema & Television grad. Tampa-based cinematographer, director, and colorist with a decade-plus of interview, event, and brand work across Florida.',
       photo:
         'https://images.squarespace-cdn.com/content/v1/66289645e0a89b5429d7c0b9/b73b694c-2ab1-44ef-8223-405cb69bc098/20240825_IMG02437_2024-selfportrait-digital-1x1.jpg',
-      preview: true,
     },
   ],
   serviceArea: {
@@ -170,5 +155,5 @@ export const testimonialVideosTampa: OnsitePage = {
       a: 'Revisions are agreed in the proposal, with a clear scope so everyone knows what is in play.',
     },
   ],
-  form: { preselect: 'interview' },
+  form: { preselect: 'not-sure' },
 }

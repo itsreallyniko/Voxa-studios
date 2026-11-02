@@ -69,10 +69,7 @@ export function QuoteForm({
     if (!state.name.trim()) e.name = 'Please add your name.'
     if (!EMAIL.test(state.email.trim())) e.email = 'That email looks off.'
     if (state.phone.trim().length < 7) e.phone = 'Add a phone we can reach you on.'
-    if (!state.company.trim()) e.company = 'Who are you working with?'
     if (!state.budgetRange) e.budgetRange = 'Pick a range (or Not sure).'
-    if (!state.locationCity.trim()) e.locationCity = 'What city or venue?'
-    if (!state.referralSource) e.referralSource = 'How did you hear about us?'
     return e
   }
 
@@ -192,12 +189,11 @@ export function QuoteForm({
               </div>
               <div>
                 <Input
-                  label="Company"
+                  label="Company (optional)"
                   type="text"
                   autoComplete="organization"
                   value={state.company}
                   onChange={set('company')}
-                  required
                 />
                 <FieldError>{errors.company}</FieldError>
               </div>
@@ -233,17 +229,16 @@ export function QuoteForm({
               </div>
               <div>
                 <Input
-                  label="Location (city or venue)"
+                  label="Location (optional)"
                   type="text"
                   value={state.locationCity}
                   onChange={set('locationCity')}
-                  required
                 />
                 <FieldError>{errors.locationCity}</FieldError>
               </div>
               <div className="md:col-span-2">
                 <Select
-                  label="How did you hear about us?"
+                  label="How did you hear about us? (optional)"
                   options={REFERRAL_SOURCE_OPTIONS}
                   placeholder="Pick one"
                   value={state.referralSource}

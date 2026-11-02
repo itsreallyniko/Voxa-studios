@@ -1,9 +1,6 @@
-// TODO(onsite): backend delivery not yet wired. Pick webhook / Resend / Formspree /
-// Google Sheets; see /Users/nikotorres/.claude/plans/eventual-tumbling-dijkstra.md.
-// Until wired, this route validates + rate-limits and logs the payload server-side
-// so the UI works end-to-end but leads do not actually ship anywhere.
 import { NextResponse } from 'next/server'
 import { check, ipFromRequest } from '@/lib/server/rate-limit'
+import { leadEmailConfigured, sendOnsiteLeadEmail } from '@/lib/server/onsite-lead-email'
 
 export const runtime = 'nodejs'
 
@@ -20,6 +17,8 @@ const PROJECT_TYPES = new Set([
   'content-day',
   'event',
   'commercial',
+  'brand',
+  'presentation',
   'not-sure',
 ])
 const BUDGET_VALUES = new Set(['band-1', 'band-2', 'band-3', 'band-4', 'not-sure'])
@@ -75,15 +74,15 @@ export async function POST(req: Request) {
   if (!EMAIL.test(email)) return json({ error: 'invalid email' }, 400)
   if (phone.length < MIN_PHONE || phone.length > MAX_PHONE)
     return json({ error: 'invalid phone' }, 400)
-  if (!company || company.length > MAX_COMPANY)
+  if (company.length > MAX_COMPANY)
     return json({ error: 'invalid company' }, 400)
   if (!PROJECT_TYPES.has(projectType))
     return json({ error: 'invalid projectType' }, 400)
   if (!BUDGET_VALUES.has(budgetRange))
     return json({ error: 'invalid budgetRange' }, 400)
-  if (!locationCity || locationCity.length > MAX_CITY)
+  if (locationCity.length > MAX_CITY)
     return json({ error: 'invalid locationCity' }, 400)
-  if (!REFERRAL_VALUES.has(referralSource))
+  if (referralSource && !REFERRAL_VALUES.has(referralSource))
     return json({ error: 'invalid referralSource' }, 400)
   if (message.length > MAX_MESSAGE)
     return json({ error: 'invalid message' }, 400)
@@ -103,8 +102,24 @@ export async function POST(req: Request) {
     receivedAt: new Date().toISOString(),
   }
 
-  // eslint-disable-next-line no-console
-  console.info('[onsite-quote] lead received (delivery backend not yet wired):', payload)
+  if (!leadEmailConfigured()) {
+    // eslint-disable-next-line no-console
+    console.info('[onsite-quote] RESEND_API_KEY not set, lead not emailed:', payload)
+    // Never tell a real visitor their request went through when it did not.
+    if (process.env.NODE_ENV === 'production') {
+      return json({ error: 'delivery unavailable' }, 503)
+    }
+    return json({ ok: true }, 200)
+  }
+
+  try {
+    await sendOnsiteLeadEmail(payload)
+  } catch (err) {
+    // Log the lead so it can be recovered if the email provider is down.
+    // eslint-disable-next-line no-console
+    console.error('[onsite-quote] lead email failed:', err, payload)
+    return json({ error: 'delivery failed' }, 502)
+  }
 
   return json({ ok: true }, 200)
 }
