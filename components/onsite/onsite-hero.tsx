@@ -31,8 +31,14 @@ export function OnsiteHero({
     if (!video) return
     video.muted = true
     video.setAttribute('muted', '')
-    // iOS refuses in Low Power Mode, which leaves the poster showing.
     video.play().catch(() => {})
+
+    // iOS refuses autoplay in Low Power Mode but allows play from a touch.
+    const playOnTouch = () => {
+      video.play().catch(() => {})
+    }
+    document.addEventListener('touchend', playOnTouch, { once: true, passive: true })
+    return () => document.removeEventListener('touchend', playOnTouch)
   }, [])
 
   return (

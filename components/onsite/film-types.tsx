@@ -77,6 +77,9 @@ export function FilmTypes({
           <p className="md:hidden mt-4 min-h-[4.5rem] text-sm text-ivory/70 leading-relaxed">
             {items[active].body}
           </p>
+          <p className="md:hidden mt-2 text-xs text-heritage-gold/80">
+            Tap a category below to see an example.
+          </p>
         </div>
 
         <ul className="md:col-span-5 md:order-1 flex flex-col justify-between border-t border-white/10">
@@ -114,7 +117,8 @@ export function FilmTypes({
 
       <Reveal>
         <div className="mt-10 flex flex-col sm:flex-row sm:items-center gap-6 sm:gap-10">
-          <a href={formAnchor} className="flex">
+          {/* Phones already have the sticky quote button at this point. */}
+          <a href={formAnchor} className="hidden md:flex">
             <Button variant="gold" size="md" className="w-full sm:w-auto">
               Get a quote
             </Button>
