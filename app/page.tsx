@@ -1,5 +1,6 @@
 import { Hero } from '@/components/marketing/hero'
 import { BookSection } from '@/components/marketing/book-section'
+import { ReviewQuotes } from '@/components/marketing/review-quotes'
 import { CreationsMarquee } from '@/components/marketing/creations-marquee'
 import { WhyVoxa } from '@/components/marketing/why-voxa'
 import { WhatYouGet } from '@/components/marketing/what-you-get'
@@ -15,6 +16,7 @@ export default function Home() {
       <CreationsMarquee />
       <WhyVoxa />
       <WhatYouGet />
+      <ReviewQuotes limit={4} />
       <BookSection />
       <FAQ />
       <ComeVisitUs />

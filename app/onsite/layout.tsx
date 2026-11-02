@@ -4,7 +4,7 @@ export default function OnsiteLayout({ children }: { children: React.ReactNode }
   return (
     <>
       {children}
-      <Footer />
+      <Footer showOnsiteLink />
     </>
   )
 }

@@ -7,6 +7,7 @@ import {
   GoogleTagManagerNoScript,
 } from '@/components/google-tag-manager'
 import { TourModalProvider } from '@/lib/tour-modal-context'
+import { SITE_URL, LOCAL_BUSINESS_ID, SAME_AS, jsonLd } from '@/lib/seo/site'
 import './globals.css'
 
 const dmSans = DM_Sans({
@@ -16,7 +17,6 @@ const dmSans = DM_Sans({
   display: 'swap',
 })
 
-const SITE_URL = 'https://voxastudios.com'
 const TITLE = 'Voxa Studios — Podcast & Content Studio in Tampa, FL'
 const DESCRIPTION =
   "Tampa's turnkey podcast and content studio. Multi-cam recording, studio lighting, audio, and on-site producer included — from $300 / 90 min."
@@ -24,7 +24,7 @@ const DESCRIPTION =
 const LOCAL_BUSINESS_JSONLD = {
   '@context': 'https://schema.org',
   '@type': 'LocalBusiness',
-  '@id': `${SITE_URL}/#localbusiness`,
+  '@id': LOCAL_BUSINESS_ID,
   name: 'Voxa Studios',
   description:
     'Turnkey podcast, VSL, and content production studio in Tampa, FL. Multi-cam recording, studio lighting, audio, and on-site producer included.',
@@ -41,10 +41,7 @@ const LOCAL_BUSINESS_JSONLD = {
     postalCode: '33607',
     addressCountry: 'US',
   },
-  sameAs: [
-    'https://instagram.com/voxastudios.fl/',
-    'https://www.linkedin.com/company/voxa-studios/',
-  ],
+  sameAs: SAME_AS,
 }
 
 export const metadata: Metadata = {
@@ -91,7 +88,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <GoogleTagManagerNoScript />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(LOCAL_BUSINESS_JSONLD) }}
+          dangerouslySetInnerHTML={{ __html: jsonLd(LOCAL_BUSINESS_JSONLD) }}
         />
         <MetaPixel />
         <TourModalProvider>

@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import { BookLink } from '@/components/ui/book-link'
 import { VoxaLogo } from '@/components/voxa-logo'
 
 export function Nav() {
@@ -25,28 +26,32 @@ export function Nav() {
         <Link href="/" aria-label="Voxa Studios — Home" className="text-white shrink-0">
           <VoxaLogo className="h-9 w-auto md:h-10" />
         </Link>
-        <div className="flex items-center gap-5 sm:gap-7">
-          <Link
-            href="/onsite"
-            className={`${onOnsite ? 'hidden sm:inline ' : ''}text-label-caps text-ivory/60 hover:text-white transition-colors whitespace-nowrap`}
-          >
-            ON-SITE
-          </Link>
-          {onOnsite && (
+        {onOnsite ? (
+          <div className="flex items-center gap-5 sm:gap-7">
+            <Link
+              href="/onsite"
+              className="hidden sm:inline text-label-caps text-ivory/60 hover:text-white transition-colors whitespace-nowrap"
+            >
+              ON-SITE
+            </Link>
             <Link
               href="/onsite/work"
               className="hidden sm:inline text-label-caps text-ivory/60 hover:text-white transition-colors whitespace-nowrap"
             >
               OUR WORK
             </Link>
-          )}
-          <a
-            href={onOnsite ? '#quote' : '/#book'}
-            className="text-label-caps text-heritage-gold hover:text-white transition-colors whitespace-nowrap"
-          >
-            {onOnsite ? 'GET A QUOTE' : 'BOOK A SESSION'}
-          </a>
-        </div>
+            <a
+              href="#quote"
+              className="text-label-caps text-heritage-gold hover:text-white transition-colors whitespace-nowrap"
+            >
+              GET A QUOTE
+            </a>
+          </div>
+        ) : (
+          <BookLink className="text-label-caps text-heritage-gold hover:text-white transition-colors">
+            BOOK A SESSION
+          </BookLink>
+        )}
       </div>
     </nav>
   )
