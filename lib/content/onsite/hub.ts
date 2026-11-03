@@ -31,7 +31,7 @@ export const onsiteHub = {
     { kind: 'logo', name: 'JKA Maine' },
   ] satisfies ProofSlot[],
   studioNote: {
-    text: 'Voxa\'s Tampa studio has also hosted Rep. Anna Paulina Luna and Ross Douthat of The New York Times.',
+    text: 'Separately, Voxa\'s Tampa studio has hosted Rep. Anna Paulina Luna and Ross Douthat of The New York Times.',
     cta: 'See the studio',
     href: '/',
   },

@@ -13,7 +13,7 @@ export function ProofStrip({
   const anyPlaceholder = slots.some((s) => s.placeholder === true)
   const anyPreview = slots.some((s) => s.placeholder !== true && s.preview === true)
   return (
-    <section aria-label="Trusted by" className="py-10 md:py-16 bg-obsidian border-y border-white/5">
+    <section aria-label="Team credits" className="py-10 md:py-16 bg-obsidian border-y border-white/5">
       <div className="max-w-container-max mx-auto px-6 md:px-margin-edge">
         <Reveal>
           {anyPlaceholder ? (
@@ -22,7 +22,7 @@ export function ProofStrip({
             </p>
           ) : (
             <p className="text-[10px] md:text-label-caps tracking-[0.3em] text-ivory/50 mb-5 md:mb-8 text-center">
-              WHO OUR TEAM HAS WORKED WITH
+              PAST WORK BY MEMBERS OF OUR TEAM
               {anyPreview && (
                 <span className="block mt-2 text-heritage-gold">
                   PREVIEW · PENDING APPROVAL BEFORE LAUNCH
@@ -64,6 +64,11 @@ export function ProofStrip({
               )
             )}
           </ul>
+          {!anyPlaceholder && (
+            <p className="mt-4 md:mt-6 text-[11px] md:text-xs text-ivory/40 text-center">
+              Credits from our team members&apos; individual careers, including projects produced with other companies.
+            </p>
+          )}
           {studioNote && (
             <p className="mt-5 md:mt-8 text-xs md:text-sm text-ivory/60 text-center">
               {studioNote.text}{' '}
