@@ -21,13 +21,13 @@ export const onsiteWork = {
   seo: {
     title: 'Our Work: Video Production in Tampa — Voxa On-Site',
     description:
-      'Watch commercials, event films, interviews, and on-camera presentations from the Voxa On-Site team, shot on location across Florida and beyond.',
+      'Watch commercials, event films, interviews, and on-camera presentations by members of the Voxa On-Site team, shot on location across Florida and beyond.',
     ogImage: '/og/onsite/work.jpg',
   },
   header: {
     eyebrow: 'THE WORK',
     headline: 'Judge us by the footage.',
-    body: 'Real shoots from the Voxa team, in kitchens, on rooftops, and in front of people with a lot riding on how they come across.',
+    body: 'Real shoots by members of our team, in kitchens, on rooftops, and in front of people with a lot riding on how they come across.',
   },
   featured: {
     client: 'Grillsmith Sarasota',
