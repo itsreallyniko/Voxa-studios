@@ -35,7 +35,8 @@ export function QuoteFormSuccess({
     if (!calSlug) return
     let mounted = true
     ;(async () => {
-      const cal = await getCalApi()
+      // Must match the <Cal namespace> below, or booking events never arrive.
+      const cal = await getCalApi({ namespace: 'onsite' })
       if (!mounted) return
       cal('on', {
         action: 'bookingSuccessful',
@@ -59,7 +60,9 @@ export function QuoteFormSuccess({
           Request received. Want to talk sooner?
         </h3>
         <p className="text-body-md text-ivory/70 max-w-xl">
-          Grab a fifteen-minute slot below, or send a quick DM. Either works.
+          {calSlug
+            ? 'Grab a fifteen-minute slot below, or send a quick DM. Either works.'
+            : 'Send a quick DM and we can pick it up from there.'}
         </p>
       </div>
 
@@ -72,7 +75,8 @@ export function QuoteFormSuccess({
             config={{ layout: 'month_view', theme: 'dark' }}
           />
         </div>
-      ) : (
+      ) : process.env.NODE_ENV === 'production' ? null : (
+        // Dev-only reminder; visitors never see a placeholder.
         <div className="border border-dashed border-white/10 p-6 text-ivory/60 text-sm">
           <p className="mb-2 text-label-caps text-ivory/40">PLACEHOLDER</p>
           Cal.com embed appears here once <code className="text-ivory/70">NEXT_PUBLIC_CAL_ONSITE_LINK</code> is set.
