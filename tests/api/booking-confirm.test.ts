@@ -101,7 +101,7 @@ describe('POST /api/booking/confirm', () => {
     expect(createBooking).not.toHaveBeenCalled()
   })
 
-  it('passes phone to Cal via bookingFieldsResponses and metadata', async () => {
+  it('passes phone to Cal via attendeePhoneNumber, notes and metadata', async () => {
     piRetrieve.mockResolvedValue({ id: 'pi_1', status: 'requires_capture', amount: 30000 })
     vi.mocked(createBooking).mockResolvedValue({ uid: 'cal_abc', id: 5 })
     piCapture.mockResolvedValue({ id: 'pi_1', status: 'succeeded' })
@@ -109,7 +109,8 @@ describe('POST /api/booking/confirm', () => {
     await post(validBody)
 
     const callArgs = vi.mocked(createBooking).mock.calls[0][0]
-    expect(callArgs.bookingFieldsResponses?.phone).toBe('+15555555555')
+    expect(callArgs.bookingFieldsResponses?.attendeePhoneNumber).toBe('+15555555555')
+    expect(callArgs.bookingFieldsResponses?.notes).toContain('Phone: +15555555555')
     expect(callArgs.metadata?.phone).toBe('+15555555555')
   })
 

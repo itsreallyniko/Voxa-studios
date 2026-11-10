@@ -6,6 +6,13 @@ import { useTourModal } from '@/lib/tour-modal-context'
 import { Input } from '@/components/ui/input'
 import { track } from '@/lib/meta-pixel'
 import { pushDataLayer, sha256Hex } from '@/lib/data-layer'
+import { collections } from '@/lib/content/collections'
+
+const NOT_SURE = 'not-sure'
+const SET_OPTIONS: { id: string; label: string }[] = [
+  ...collections.filter((c) => !c.comingSoon).flatMap((c) => c.sets.map((s) => ({ id: s.id, label: s.name }))),
+  { id: NOT_SURE, label: 'Not sure yet' },
+]
 
 type Step = 'details' | 'schedule' | 'success'
 type Status = 'idle' | 'loading-slots' | 'submitting' | 'error'
@@ -97,6 +104,7 @@ export function TourModal() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
+  const [interestedSets, setInterestedSets] = useState<string[]>([])
   const [date, setDate] = useState<string | null>(null)
   const [time, setTime] = useState<string | null>(null)
   const [slotsByDate, setSlotsByDate] = useState<Record<string, string[]> | null>(null)
@@ -115,6 +123,7 @@ export function TourModal() {
     setName('')
     setEmail('')
     setPhone('')
+    setInterestedSets([])
     setDate(null)
     setTime(null)
     setSlotsByDate(null)
@@ -176,7 +185,14 @@ export function TourModal() {
       const res = await fetch('/api/tour/book', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ name: name.trim(), email: email.trim(), phone: phone.trim(), date, time }),
+        body: JSON.stringify({
+          name: name.trim(),
+          email: email.trim(),
+          phone: phone.trim(),
+          interestedSets,
+          date,
+          time,
+        }),
       })
       const body = await res.json()
       if (res.status === 409) {
@@ -206,13 +222,14 @@ export function TourModal() {
         transaction_id: result.uid,
         tour_date: date,
         tour_time: time,
+        interested_sets: interestedSets.join(','),
         user_data: emailHash ? { sha256_email_address: emailHash } : undefined,
       })
     } catch {
       setStatus('error')
       setErrorMsg("Couldn't reach our calendar — try again in a moment.")
     }
-  }, [date, time, name, email, phone, days])
+  }, [date, time, name, email, phone, interestedSets, days])
 
   if (!mounted || !isOpen) return null
 
@@ -279,6 +296,38 @@ export function TourModal() {
                 inputMode="tel"
                 placeholder="+1 555 555 5555"
               />
+              <fieldset>
+                <legend className="text-label-caps text-ivory/60 mb-4 block">
+                  WHICH SET ARE YOU INTERESTED IN? <span className="text-ivory/30">(OPTIONAL)</span>
+                </legend>
+                <div className="flex flex-wrap gap-2">
+                  {SET_OPTIONS.map((opt) => {
+                    const active = interestedSets.includes(opt.id)
+                    return (
+                      <button
+                        key={opt.id}
+                        type="button"
+                        aria-pressed={active}
+                        onClick={() =>
+                          setInterestedSets((prev) => {
+                            if (prev.includes(opt.id)) return prev.filter((id) => id !== opt.id)
+                            // "Not sure yet" and specific sets are mutually exclusive.
+                            if (opt.id === NOT_SURE) return [NOT_SURE]
+                            return [...prev.filter((id) => id !== NOT_SURE), opt.id]
+                          })
+                        }
+                        className={`px-3 py-2 border text-metadata transition-colors ${
+                          active
+                            ? 'border-heritage-gold bg-heritage-gold/10 text-heritage-gold'
+                            : 'border-slate-gray text-ivory/70 hover:border-white/30 hover:text-white'
+                        }`}
+                      >
+                        {opt.label}
+                      </button>
+                    )
+                  })}
+                </div>
+              </fieldset>
             </div>
 
             <button

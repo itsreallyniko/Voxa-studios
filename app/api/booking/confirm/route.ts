@@ -3,6 +3,7 @@ import { createBooking, localISO } from '@/lib/server/cal'
 import { recomputeTotalCents } from '@/lib/server/pricing'
 import { setIdToEventTypeId } from '@/lib/server/set-event-types'
 import { getStripe } from '@/lib/server/stripe'
+import { toE164 } from '@/lib/server/phone'
 
 export const runtime = 'nodejs'
 
@@ -77,6 +78,7 @@ export async function POST(req: Request) {
   if (addonIds.length) metadata.addonIds = addonIds.join(',')
 
   const summaryLines = [
+    `Phone: ${phone}`,
     recordingType && `Recording: ${recordingType}`,
     guests && `Guests: ${guests}`,
     socials && `Socials: ${socials}`,
@@ -85,25 +87,30 @@ export async function POST(req: Request) {
   ].filter(Boolean) as string[]
   const summary = summaryLines.join('\n')
 
-  const attempt = async () =>
+  // Cal.com's built-in phone field is `attendeePhoneNumber` and must be E.164.
+  // The raw number also goes into notes so it's visible even if Cal rejects it.
+  const e164 = toE164(phone)
+  const attempt = async (withPhoneField = true) =>
     createBooking({
       eventTypeId,
       startISO,
       durationMinutes,
       attendee: { name, email, timeZone: tz },
       metadata,
-      // Cal.com event types include a default 'notes' booking field; phone is
-      // the custom field configured on each session event type.
       bookingFieldsResponses: {
-        phone,
-        ...(summary ? { notes: summary } : {}),
+        ...(withPhoneField && e164 ? { attendeePhoneNumber: e164 } : {}),
+        notes: summary,
       },
       idempotencyKey: paymentIntentId,
     })
 
   let booking: { uid: string; id: number } | undefined
   try {
-    booking = await attempt()
+    booking = await attempt().catch((e: any) => {
+      // Never lose a paid booking over phone formatting: retry without it.
+      if (e?.status === 400 && e164) return attempt(false)
+      throw e
+    })
   } catch (e: any) {
     const status: number | undefined = e?.status
     if (status === 409) {

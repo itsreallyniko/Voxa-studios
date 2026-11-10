@@ -13,11 +13,14 @@ beforeEach(() => {
   process.env.STUDIO_TIMEZONE = 'America/New_York'
 })
 
+let ipCounter = 0
 async function call(body: unknown) {
   const { POST } = await import('@/app/api/tour/book/route')
+  // Unique IP per request so the route's in-memory rate limiter stays out of the way.
+  ipCounter += 1
   return POST(new Request('http://localhost/api/tour/book', {
     method: 'POST',
-    headers: { 'content-type': 'application/json' },
+    headers: { 'content-type': 'application/json', 'x-forwarded-for': `10.0.0.${ipCounter}` },
     body: JSON.stringify(body),
   }))
 }
@@ -64,7 +67,7 @@ describe('POST /api/tour/book', () => {
     expect(body.error).toBe('tour_not_configured')
   })
 
-  it('200 with booking on success and passes phone via bookingFieldsResponses', async () => {
+  it('200 with booking on success and passes phone via Cal attendeePhoneNumber field', async () => {
     vi.mocked(createBooking).mockResolvedValue({ uid: 'cal-uid-1', id: 999 })
     const res = await call(valid)
     expect(res.status).toBe(200)
@@ -79,7 +82,9 @@ describe('POST /api/tour/book', () => {
     expect(callArgs.durationMinutes).toBeUndefined()
     expect(callArgs.attendee.name).toBe('Jane Founder')
     expect(callArgs.attendee.email).toBe('jane@example.com')
-    expect(callArgs.bookingFieldsResponses?.phone).toBe('+15555555555')
+    expect(callArgs.bookingFieldsResponses?.attendeePhoneNumber).toBe('+15555555555')
+    expect(callArgs.bookingFieldsResponses?.notes).toContain('Phone: +15555555555')
+    expect(callArgs.bookingFieldsResponses?.notes).toContain('Interested in: Not specified')
     expect(callArgs.idempotencyKey).toBe('tour:jane@example.com:2026-07-08:14:00')
   })
 
@@ -110,5 +115,36 @@ describe('POST /api/tour/book', () => {
     vi.mocked(createBooking).mockRejectedValue(err)
     const res = await call(valid)
     expect(res.status).toBe(502)
+  })
+
+  it('normalises US phone formats to E.164', async () => {
+    vi.mocked(createBooking).mockResolvedValue({ uid: 'u', id: 1 })
+    await call({ ...valid, phone: '813-419-0128' })
+    const callArgs = vi.mocked(createBooking).mock.calls[0][0]
+    expect(callArgs.bookingFieldsResponses?.attendeePhoneNumber).toBe('+18134190128')
+    expect(callArgs.bookingFieldsResponses?.notes).toContain('Phone: 813-419-0128')
+  })
+
+  it('puts interested sets in notes and drops unknown ids', async () => {
+    vi.mocked(createBooking).mockResolvedValue({ uid: 'u', id: 1 })
+    await call({ ...valid, interestedSets: ['executive-podcast', 'horizon-desk', 'bogus'] })
+    const callArgs = vi.mocked(createBooking).mock.calls[0][0]
+    expect(callArgs.bookingFieldsResponses?.notes).toContain(
+      'Interested in: Executive Podcast Set, Horizon Desk Set'
+    )
+    expect(callArgs.metadata?.interestedSets).toBe('executive-podcast,horizon-desk')
+  })
+
+  it('retries without the phone field when Cal rejects it with 400', async () => {
+    const err = new Error('bad phone') as Error & { status: number }
+    err.status = 400
+    vi.mocked(createBooking)
+      .mockRejectedValueOnce(err)
+      .mockResolvedValueOnce({ uid: 'u2', id: 2 })
+    const res = await call(valid)
+    expect(res.status).toBe(200)
+    const second = vi.mocked(createBooking).mock.calls[1][0]
+    expect(second.bookingFieldsResponses?.attendeePhoneNumber).toBeUndefined()
+    expect(second.bookingFieldsResponses?.notes).toContain('Phone: +15555555555')
   })
 })
