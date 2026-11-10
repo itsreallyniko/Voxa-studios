@@ -48,9 +48,18 @@ export function Nav() {
             </a>
           </div>
         ) : (
-          <BookLink className="text-label-caps text-heritage-gold hover:text-white transition-colors">
-            BOOK A SESSION
-          </BookLink>
+          <div className="flex items-center gap-5 sm:gap-7">
+            {/* Phones only have room for the booking link; On-Site is in the footer there. */}
+            <Link
+              href="/onsite"
+              className="hidden sm:inline text-label-caps text-ivory/60 hover:text-white transition-colors whitespace-nowrap"
+            >
+              ON-SITE
+            </Link>
+            <BookLink className="text-label-caps text-heritage-gold hover:text-white transition-colors whitespace-nowrap">
+              BOOK A SESSION
+            </BookLink>
+          </div>
         )}
       </div>
     </nav>
