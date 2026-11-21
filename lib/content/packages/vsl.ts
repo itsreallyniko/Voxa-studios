@@ -5,21 +5,21 @@ export const vslPackage: PackagePage = {
   slug: 'vsl',
   title: 'Video Sales Letter Production in Tampa | Voxa Studios',
   description:
-    'Plan your video sales letter package: scripted on a teleprompter, filmed in a Tampa studio with two cameras, and edited with motion design that holds attention.',
+    'Plan your video sales letter package: bring your script, read it from a teleprompter in a Tampa studio with two cameras, and get an edit with motion design that holds attention.',
   eyebrow: 'VSL package',
   headline: 'A sales video that makes the offer clear',
   story: {
     anonymous: [
       'A founder had a good offer and a long page that explained it. What was missing was the video that said it plainly, in his own voice, on a set that looked as serious as the business.',
-      'He wrote the script with us, read it from the teleprompter and filmed in a single session, with two cameras and a producer keeping the delivery natural.',
-      'The finished video came back with motion design, captions and a clean colour grade, ready to sit at the top of his sales page and in his ads.',
+      'He recorded his VSL in a studio session, reading the script he had written from the teleprompter, with two cameras and a producer helping keep the delivery natural.',
+      'The finished video came back edited with motion design and a clean color grade, ready for his sales page.',
     ],
     useNamed: false,
   },
   whatYouGet: [
     {
-      heading: 'A script that reads well out loud',
-      body: 'Bring a draft or an outline. The teleprompter keeps you on message while you look straight into the lens.',
+      heading: 'Your script, delivered well',
+      body: 'You bring the script, or an outline you have written. Voxa does not write it for you, but the teleprompter and a producer on-site help you deliver it well while you look straight into the lens.',
     },
     {
       heading: 'Filmed to look credible',
@@ -27,11 +27,11 @@ export const vslPackage: PackagePage = {
     },
     {
       heading: 'Motion design that serves the message',
-      body: 'On-screen text, graphics and pacing that keep the argument moving, with colour grading and 2 rounds of revisions.',
+      body: 'On-screen text, graphics and pacing that keep the argument moving, with color grading and 2 rounds of revisions.',
     },
     {
       heading: 'Cut-downs for ads and social',
-      body: 'Short clips can be cut from the main video for social and paid placements.',
+      body: 'Short clips can be cut from the main video for social.',
     },
   ],
   videoNoun: { one: 'video', many: 'videos' },
@@ -43,7 +43,7 @@ export const vslPackage: PackagePage = {
     {
       question: 'How long does a VSL take?',
       answer:
-        'Most of the time goes into the script and the motion design. We give you a timeline on the vision call, once we know how much you have prepared and how the video should look.',
+        'Most of the time goes into the motion design and revisions. We give you a timeline on the vision call, once we know your scope and how the video should look.',
     },
     {
       question: 'How many revisions are included?',

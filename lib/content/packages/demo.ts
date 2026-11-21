@@ -10,9 +10,9 @@ export const demoPackage: PackagePage = {
   headline: 'Show your product the way you would in person',
   story: {
     anonymous: [
-      'A software team could explain their product well in a meeting, but their website demos were screen recordings with no face and no pace.',
-      'They came to the studio, walked through the product with screen recording running and a presenter on camera, and recorded a couple of demos in one session.',
-      'Each demo was edited with on-screen text pointing at what mattered, so a visitor could follow the product without a call.',
+      'A product founder could explain the product well in a meeting, but the demos on the website were screen recordings with no face and no pace.',
+      'He came to the studio and walked through the product on camera with screen recording running.',
+      'The demos were edited with on-screen text pointing at what mattered, so a visitor could follow the product without a call.',
     ],
     useNamed: false,
   },
@@ -23,7 +23,7 @@ export const demoPackage: PackagePage = {
     },
     {
       heading: 'Easy to follow',
-      body: 'On-screen text and callouts guide the eye to what matters, with audio and colour taken care of.',
+      body: 'On-screen text and callouts guide the eye to what matters, with audio and color taken care of.',
     },
     {
       heading: 'Teleprompter and a producer',

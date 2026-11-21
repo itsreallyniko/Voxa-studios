@@ -12,7 +12,7 @@ export const coursePackage: PackagePage = {
     anonymous: [
       'A Tampa coach had a course outline, a folder of slides and no good way to teach from them on camera. Recording at home meant echo, uneven light and a lot of starting over.',
       'She came into the studio with her slides loaded, read from the teleprompter and recorded her lessons across a few sessions. A producer handled the cameras and sound, so she only had to teach.',
-      'The lessons came back edited, colour graded and paired with her slides, ready to upload to her course platform.',
+      'The lessons came back edited, color graded and paired with her slides, ready to upload to her course platform.',
     ],
     useNamed: false,
   },
@@ -27,7 +27,7 @@ export const coursePackage: PackagePage = {
     },
     {
       heading: 'Edited and graded',
-      body: 'Each lesson is cut, colour graded and delivered with 2 rounds of revisions. Add on-screen text or motion design where a lesson calls for it.',
+      body: 'Each lesson is cut, color graded and delivered with 2 rounds of revisions. Add on-screen text or motion design where a lesson calls for it.',
     },
     {
       heading: 'Clips for social',

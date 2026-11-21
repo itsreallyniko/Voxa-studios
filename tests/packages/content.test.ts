@@ -24,16 +24,22 @@ describe('package page content', () => {
   })
   it('FAQ covers revisions and the deposit terms', () => {
     for (const p of all) {
-      expect(text(p)).toMatch(/2 rounds of revisions/i)
+      expect(p.faqs.map((f) => f.answer).join(' ')).toMatch(/2 rounds of revisions/i)
       expect(p.faqs.some((f) => f.answer.includes(DEPOSIT_TERMS))).toBe(true)
     }
     expect(DEPOSIT_TERMS).toMatch(/credited toward/i)
     expect(DEPOSIT_TERMS).toMatch(/refundable/i)
   })
   it('calPackageLink is null when unset or blank', () => {
-    delete process.env.NEXT_PUBLIC_CAL_PACKAGE_LINK
-    expect(calPackageLink()).toBeNull()
-    process.env.NEXT_PUBLIC_CAL_PACKAGE_LINK = '  '
-    expect(calPackageLink()).toBeNull()
+    const prev = process.env.NEXT_PUBLIC_CAL_PACKAGE_LINK
+    try {
+      delete process.env.NEXT_PUBLIC_CAL_PACKAGE_LINK
+      expect(calPackageLink()).toBeNull()
+      process.env.NEXT_PUBLIC_CAL_PACKAGE_LINK = '  '
+      expect(calPackageLink()).toBeNull()
+    } finally {
+      if (prev === undefined) delete process.env.NEXT_PUBLIC_CAL_PACKAGE_LINK
+      else process.env.NEXT_PUBLIC_CAL_PACKAGE_LINK = prev
+    }
   })
 })
