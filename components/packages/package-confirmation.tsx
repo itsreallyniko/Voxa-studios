@@ -1,0 +1,32 @@
+'use client'
+
+import { PackageCall } from './package-call'
+import type { PackageType } from '@/lib/packages/pricing'
+
+export function PackageConfirmation({
+  pageType,
+  notes,
+}: {
+  pageType: PackageType
+  notes: string
+}) {
+  return (
+    <div className="flex flex-col gap-8">
+      <div>
+        <span className="text-label-caps text-heritage-gold mb-4 block">DEPOSIT RECEIVED</span>
+        <h3 className="text-headline-md text-white mb-4 leading-tight">
+          You&apos;re in. Here&apos;s what happens next.
+        </h3>
+        <ol className="text-body-md text-ivory/70 max-w-xl list-decimal pl-5 flex flex-col gap-2">
+          <li>A receipt is on its way to your inbox.</li>
+          <li>Book your vision call below so we can lock the scope and the schedule.</li>
+          <li>We confirm your final quote after that call. Nothing is locked before then.</li>
+        </ol>
+      </div>
+      <div>
+        <h4 className="text-label-caps text-white mb-4">Book your vision call</h4>
+        <PackageCall pageType={pageType} notes={notes} />
+      </div>
+    </div>
+  )
+}

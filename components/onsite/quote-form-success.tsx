@@ -7,19 +7,8 @@ import {
   INSTAGRAM_HANDLE,
   calOnsiteLink,
 } from '@/lib/content/onsite-form'
+import { toCalLinkSlug } from '@/lib/content/cal-link'
 import { trackOnsiteCallBooked } from '@/lib/tracking/onsite'
-
-function toCalLinkSlug(link: string | null): string | null {
-  if (!link) return null
-  try {
-    const u = new URL(link)
-    // Cal expects "username/event-slug"
-    return u.pathname.replace(/^\/+/, '').replace(/\/+$/, '') || null
-  } catch {
-    // Allow passing just the slug ("voxastudios/15min")
-    return link.replace(/^\/+/, '').replace(/\/+$/, '')
-  }
-}
 
 export function QuoteFormSuccess({
   pageSlug,
