@@ -45,6 +45,24 @@ describe('pricing engine', () => {
     expect(q.callFirst).toBe(false)
     expect(q.turnaroundDays).toEqual({ low: 9, high: 12 })
   })
+  it('rounds range low to $50 and derives deposit from it', () => {
+    const q = quotePackage({ type: 'course', videos: 1, length: 'short', level: 'clean', record: false, recordMinutes: null, clips: 0 })
+    expect(q.total).toBe(75)
+    expect(q.rangeLow).toBe(100)
+    expect(q.rangeHigh).toBe(100)
+    expect(q.deposit).toBe(30)
+  })
+  it('call-first follows rounded range low at the $1,500 boundary', () => {
+    const base = { type: 'course', videos: 1, length: 'short', level: 'clean', record: false, recordMinutes: null } as const
+    const above = quotePackage({ ...base, clips: 71 })
+    expect(above.total).toBe(1495)
+    expect(above.rangeLow).toBe(1500)
+    expect(above.callFirst).toBe(true)
+    const below = quotePackage({ ...base, clips: 69 })
+    expect(below.total).toBe(1455)
+    expect(below.rangeLow).toBe(1450)
+    expect(below.callFirst).toBe(false)
+  })
   it('editing-only ignores recordMinutes', () => {
     const q = quotePackage({ ...course, record: false, recordMinutes: 360 })
     expect(q.recording).toBe(0)

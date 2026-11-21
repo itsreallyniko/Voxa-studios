@@ -96,6 +96,7 @@ export function quotePackage(config: PackageConfig): PackageQuote {
   )
   const clips = config.clips * CLIP_PRICE
   const total = editing + recording + clips
+  const rangeLow = round50(total)
   const low =
     5 +
     Math.ceil((config.videos * LENGTH_MIDPOINT_MIN[config.length]) / 60) +
@@ -107,10 +108,10 @@ export function quotePackage(config: PackageConfig): PackageQuote {
     recording,
     clips,
     total,
-    rangeLow: total,
+    rangeLow,
     rangeHigh: round50(total * RANGE_HIGH_FACTOR),
-    deposit: Math.round(total * DEPOSIT_RATE),
-    callFirst: total >= CALL_FIRST_THRESHOLD,
+    deposit: Math.round(rangeLow * DEPOSIT_RATE),
+    callFirst: rangeLow >= CALL_FIRST_THRESHOLD,
     turnaroundDays: { low, high: low + 3 },
     revisionRounds: REVISION_ROUNDS,
   }
