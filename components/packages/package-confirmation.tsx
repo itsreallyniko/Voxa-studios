@@ -8,10 +8,14 @@ export function PackageConfirmation({
   pageType,
   notes,
   status = 'succeeded',
+  name,
+  email,
 }: {
   pageType: PackageType
   notes: string
   status?: 'succeeded' | 'processing'
+  name?: string
+  email?: string
 }) {
   const processing = status === 'processing'
   return (
@@ -38,7 +42,7 @@ export function PackageConfirmation({
       </div>
       <div>
         <h4 className="text-label-caps text-white mb-4">Book your vision call</h4>
-        <PackageCall pageType={pageType} notes={notes} />
+        <PackageCall pageType={pageType} notes={notes} name={name} email={email} />
       </div>
     </div>
   )

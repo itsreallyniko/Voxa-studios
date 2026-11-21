@@ -115,13 +115,26 @@ export function PackageCheckout({ page, config, quote, intent, onBack }: Props) 
     return (
       <div key="call" className="flex flex-col gap-6">
         <StepHeading>Book your free vision call</StepHeading>
-        <PackageCall pageType={page.slug} notes={summary} />
+        <PackageCall
+          pageType={page.slug}
+          notes={summary}
+          name={form.name.trim()}
+          email={form.email.trim()}
+        />
       </div>
     )
   }
 
   if (step === 'confirmed') {
-    return <PackageConfirmation pageType={page.slug} notes={summary} status={paidStatus} />
+    return (
+      <PackageConfirmation
+        pageType={page.slug}
+        notes={summary}
+        status={paidStatus}
+        name={form.name.trim()}
+        email={form.email.trim()}
+      />
+    )
   }
 
   if (step === 'deposit') {

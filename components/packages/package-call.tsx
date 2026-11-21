@@ -7,7 +7,18 @@ import { toCalLinkSlug } from '@/lib/content/cal-link'
 import { trackPackageCallBooked } from '@/lib/tracking/packages'
 import type { PackageType } from '@/lib/packages/pricing'
 
-export function PackageCall({ pageType, notes }: { pageType: PackageType; notes: string }) {
+export function PackageCall({
+  pageType,
+  notes,
+  name,
+  email,
+}: {
+  pageType: PackageType
+  notes: string
+  // Prefilled so visitors don't retype what they gave on the contact step.
+  name?: string
+  email?: string
+}) {
   const calSlug = toCalLinkSlug(calPackageLink())
 
   useEffect(() => {
@@ -45,7 +56,13 @@ export function PackageCall({ pageType, notes }: { pageType: PackageType; notes:
         namespace="package"
         calLink={calSlug}
         style={{ width: '100%', height: '100%', overflow: 'scroll' }}
-        config={{ layout: 'month_view', theme: 'dark', notes }}
+        config={{
+          layout: 'month_view',
+          theme: 'dark',
+          notes,
+          ...(name ? { name } : {}),
+          ...(email ? { email } : {}),
+        }}
       />
     </div>
   )

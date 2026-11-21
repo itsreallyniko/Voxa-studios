@@ -14,7 +14,13 @@ vi.mock('@stripe/react-stripe-js', () => ({
 }))
 vi.mock('@calcom/embed-react', () => ({
   default: (props: any) => (
-    <div data-testid="cal" data-link={props.calLink} data-notes={props.config?.notes} />
+    <div
+      data-testid="cal"
+      data-link={props.calLink}
+      data-notes={props.config?.notes}
+      data-name={props.config?.name}
+      data-email={props.config?.email}
+    />
   ),
   getCalApi: vi.fn(async () => vi.fn()),
 }))
@@ -76,6 +82,8 @@ describe('PackageCheckout', () => {
     expect(fetchMock.mock.calls[0][0]).toBe('/api/packages/lead')
     expect(cal.getAttribute('data-link')).toBe('voxa/vision-call')
     expect(cal.getAttribute('data-notes')).toBe(summarizePackage(page, config, quote))
+    expect(cal.getAttribute('data-name')).toBe('Ada Lovelace')
+    expect(cal.getAttribute('data-email')).toBe('ada@example.com')
     expect(events('package_contact_submit')).toHaveLength(1)
   })
 
