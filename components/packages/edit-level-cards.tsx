@@ -1,7 +1,7 @@
 import type { PackagePage } from '@/lib/content/packages'
 import { LEVEL_LABEL, type EditLevel } from '@/lib/packages/pricing'
 
-const ONE_LINER: Record<EditLevel, string> = {
+export const ONE_LINER: Record<EditLevel, string> = {
   clean: 'Cuts, pacing, audio cleanup and color. Clean and ready to publish.',
   text: 'Everything in a clean edit, plus titles, lower thirds and on-screen text.',
   motion: 'Animated graphics, transitions and motion design throughout.',

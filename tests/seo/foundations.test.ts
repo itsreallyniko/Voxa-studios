@@ -10,6 +10,10 @@ describe('crawl foundations', () => {
     expect(urls.some((u) => /\/(book|booking|onsite)(\/|$)/.test(u))).toBe(false)
   })
 
+  it('sitemap never lists package pages', () => {
+    expect(sitemap().some((e) => e.url.includes('/packages'))).toBe(false)
+  })
+
   it('robots allows crawling, blocks /api/, links the sitemap', () => {
     const r = robots()
     const rule = Array.isArray(r.rules) ? r.rules[0] : r.rules
