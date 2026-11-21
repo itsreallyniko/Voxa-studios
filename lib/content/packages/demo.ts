@@ -1,5 +1,5 @@
 import type { PackagePage } from './types'
-import { DEPOSIT_TERMS, EDITING_ONLY_NOTE, levelPreviewsEmpty } from './shared'
+import { AFTER_CALL_ANSWER, EDITING_ONLY_NOTE, levelPreviewsEmpty } from './shared'
 
 export const demoPackage: PackagePage = {
   slug: 'demo',
@@ -53,11 +53,11 @@ export const demoPackage: PackagePage = {
     {
       question: 'Can you edit a demo I already recorded?',
       answer:
-        'Yes. Send your recording as a shared Google Drive or Dropbox link after your deposit. Home recordings with weak audio or lighting can be improved, but not fully rescued, and we will be straightforward about what we can do.',
+        'Yes. Send your recording as a shared Google Drive or Dropbox link after your vision call. Home recordings with weak audio or lighting can be improved, but not fully rescued, and we will be straightforward about what we can do.',
     },
     {
-      question: 'How does the deposit work?',
-      answer: DEPOSIT_TERMS,
+      question: 'What happens after the call?',
+      answer: AFTER_CALL_ANSWER,
     },
   ],
 }

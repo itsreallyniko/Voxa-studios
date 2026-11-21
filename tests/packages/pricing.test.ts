@@ -31,37 +31,27 @@ describe('pricing engine', () => {
     expect(q.total).toBe(4700)
     expect(q.rangeLow).toBe(4700)
     expect(q.rangeHigh).toBe(5150)
-    expect(q.deposit).toBe(1410)
-    expect(q.callFirst).toBe(true)
     expect(q.turnaroundDays).toEqual({ low: 9, high: 12 })
     expect(q.revisionRounds).toBe(2)
   })
   it('10 hours of recording costs $2,000', () => {
     expect(quotePackage({ ...course, recordMinutes: 600 }).recording).toBe(2000)
   })
-  it('a single short motion VSL is deposit-first', () => {
+  it('a single short motion VSL totals $500', () => {
     const q = quotePackage({ type: 'vsl', videos: 1, length: 'short', level: 'motion', record: true, recordMinutes: null, clips: 0 })
     expect(q.total).toBe(500)
-    expect(q.callFirst).toBe(false)
     expect(q.turnaroundDays).toEqual({ low: 9, high: 12 })
   })
-  it('rounds range low to $50 and derives deposit from it', () => {
+  it('rounds range low to $50', () => {
     const q = quotePackage({ type: 'course', videos: 1, length: 'short', level: 'clean', record: false, recordMinutes: null, clips: 0 })
     expect(q.total).toBe(75)
     expect(q.rangeLow).toBe(100)
     expect(q.rangeHigh).toBe(100)
-    expect(q.deposit).toBe(30)
   })
-  it('call-first follows rounded range low at the $1,500 boundary', () => {
+  it('rounds range low at the $50 boundary', () => {
     const base = { type: 'course', videos: 1, length: 'short', level: 'clean', record: false, recordMinutes: null } as const
-    const above = quotePackage({ ...base, clips: 71 })
-    expect(above.total).toBe(1495)
-    expect(above.rangeLow).toBe(1500)
-    expect(above.callFirst).toBe(true)
-    const below = quotePackage({ ...base, clips: 69 })
-    expect(below.total).toBe(1455)
-    expect(below.rangeLow).toBe(1450)
-    expect(below.callFirst).toBe(false)
+    expect(quotePackage({ ...base, clips: 71 }).rangeLow).toBe(1500)
+    expect(quotePackage({ ...base, clips: 69 }).rangeLow).toBe(1450)
   })
   it('editing-only ignores recordMinutes', () => {
     const q = quotePackage({ ...course, record: false, recordMinutes: 360 })

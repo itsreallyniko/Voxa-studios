@@ -1,5 +1,5 @@
 import type { PackagePage } from './types'
-import { DEPOSIT_TERMS, EDITING_ONLY_NOTE, levelPreviewsEmpty } from './shared'
+import { AFTER_CALL_ANSWER, EDITING_ONLY_NOTE, levelPreviewsEmpty } from './shared'
 
 export const vslPackage: PackagePage = {
   slug: 'vsl',
@@ -53,11 +53,11 @@ export const vslPackage: PackagePage = {
     {
       question: 'Can you edit a VSL I already filmed?',
       answer:
-        'Yes. Send your footage as a shared Google Drive or Dropbox link after your deposit. Home recordings with weak audio or lighting can be improved, but not fully rescued, and we will say plainly what is realistic.',
+        'Yes. Send your footage as a shared Google Drive or Dropbox link after your vision call. Home recordings with weak audio or lighting can be improved, but not fully rescued, and we will say plainly what is realistic.',
     },
     {
-      question: 'How does the deposit work?',
-      answer: DEPOSIT_TERMS,
+      question: 'What happens after the call?',
+      answer: AFTER_CALL_ANSWER,
     },
   ],
 }

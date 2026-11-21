@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { PACKAGE_PAGES, getPackagePage, calPackageLink, DEPOSIT_TERMS } from '@/lib/content/packages'
+import { PACKAGE_PAGES, SEND_FILES_NOTE, getPackagePage, calPackageLink } from '@/lib/content/packages'
 import { parsePackageConfig } from '@/lib/packages/pricing'
 
 const all = Object.values(PACKAGE_PAGES)
@@ -22,13 +22,19 @@ describe('package page content', () => {
   it('stories launch anonymous', () => {
     for (const p of all) expect(p.story.useNamed).toBe(false)
   })
-  it('FAQ covers revisions and the deposit terms', () => {
+  it('FAQ covers revisions and what happens after the call', () => {
     for (const p of all) {
       expect(p.faqs.map((f) => f.answer).join(' ')).toMatch(/2 rounds of revisions/i)
-      expect(p.faqs.some((f) => f.answer.includes(DEPOSIT_TERMS))).toBe(true)
+      const after = p.faqs.find((f) => f.question === 'What happens after the call?')
+      expect(after?.answer).toBe(
+        'We send your final quote and a schedule for recording and delivery. Nothing is due until you approve it.'
+      )
     }
-    expect(DEPOSIT_TERMS).toMatch(/credited toward/i)
-    expect(DEPOSIT_TERMS).toMatch(/refundable/i)
+  })
+  it('copy never mentions a deposit', () => {
+    for (const p of all) expect(text(p)).not.toMatch(/deposit/i)
+    expect(SEND_FILES_NOTE).not.toMatch(/deposit/i)
+    expect(SEND_FILES_NOTE).toMatch(/after your vision call/i)
   })
   it('calPackageLink is null when unset or blank', () => {
     const prev = process.env.NEXT_PUBLIC_CAL_PACKAGE_LINK

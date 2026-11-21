@@ -1,5 +1,5 @@
 import type { PackagePage } from './types'
-import { DEPOSIT_TERMS, EDITING_ONLY_NOTE, levelPreviewsEmpty } from './shared'
+import { AFTER_CALL_ANSWER, EDITING_ONLY_NOTE, levelPreviewsEmpty } from './shared'
 
 export const coursePackage: PackagePage = {
   slug: 'course',
@@ -53,11 +53,11 @@ export const coursePackage: PackagePage = {
     {
       question: 'Can you edit lessons I already recorded?',
       answer:
-        'Yes. Send your files as a shared Google Drive or Dropbox link after your deposit. Home recordings with weak audio or lighting can be improved, but not fully rescued, so we will tell you honestly what to expect before we start.',
+        'Yes. Send your files as a shared Google Drive or Dropbox link after your vision call. Home recordings with weak audio or lighting can be improved, but not fully rescued, so we will tell you honestly what to expect before we start.',
     },
     {
-      question: 'How does the deposit work?',
-      answer: DEPOSIT_TERMS,
+      question: 'What happens after the call?',
+      answer: AFTER_CALL_ANSWER,
     },
   ],
 }

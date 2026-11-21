@@ -25,12 +25,12 @@ async function post(body: unknown) {
 }
 
 describe('POST /api/packages/lead', () => {
-  it('quotes server-side and sends the started email', async () => {
+  it('quotes server-side and sends the lead email', async () => {
     const res = await post({ config: course, contact })
     expect(res.status).toBe(200)
     expect((await res.json()).quote.total).toBe(4700)
     expect(fetchMock).toHaveBeenCalledTimes(1)
-    expect(fetchMock.mock.calls[0][1].body).toContain('Package lead (started)')
+    expect(fetchMock.mock.calls[0][1].body).toContain('Package lead:')
   })
 
   it.each([

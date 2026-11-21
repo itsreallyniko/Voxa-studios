@@ -36,26 +36,6 @@ export function trackPackageCallBooked(pageType: PackageType) {
   pushDataLayer({ event: 'package_call_booked', page_type: pageType })
 }
 
-export function trackPackageDepositPaid(
-  pageType: PackageType,
-  opts: {
-    value: number
-    rangeLow: number
-    rangeHigh: number
-    paymentIntentId: string
-  }
-) {
-  pushDataLayer({
-    event: 'package_deposit_paid',
-    page_type: pageType,
-    value: opts.value,
-    currency: 'USD',
-    range_low: opts.rangeLow,
-    range_high: opts.rangeHigh,
-    transaction_id: opts.paymentIntentId,
-  })
-}
-
 export function trackPackageDeepRead(pageType: PackageType) {
   pushDataLayer({ event: 'package_deep_read', page_type: pageType })
 }

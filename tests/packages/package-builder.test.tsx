@@ -63,22 +63,23 @@ describe('PackageBuilder', () => {
     expect(screen.getByText(SEND_FILES_NOTE)).toBeTruthy()
   })
 
-  it('picks the primary button by callFirst', () => {
+  it('always offers Book a vision call as the primary button, never a deposit', () => {
     const first = setup(vsl)
-    expect(screen.getAllByRole('button', { name: 'Reserve with deposit' }).length).toBeGreaterThan(0)
-    expect(screen.queryByRole('button', { name: 'Book a vision call' })).toBeNull()
+    expect(screen.getAllByRole('button', { name: 'Book a vision call' }).length).toBeGreaterThan(0)
+    expect(screen.queryByText(/deposit/i)).toBeNull()
     first.unmount()
     setup()
     fireEvent.click(screen.getByRole('button', { name: /Increase lessons/i }))
-    fireEvent.click(screen.getByRole('button', { name: /Increase lessons/i }))
     expect(screen.getAllByRole('button', { name: 'Book a vision call' }).length).toBeGreaterThan(0)
+    expect(screen.queryByText(/deposit/i)).toBeNull()
   })
 
-  it('calls onContinue with the intent', () => {
+  it('calls onContinue with config and quote only', () => {
     const { onContinue } = setup(vsl)
-    fireEvent.click(screen.getAllByRole('button', { name: 'Reserve with deposit' })[0])
-    expect(onContinue.mock.calls[0][0].intent).toBe('deposit')
-    expect(onContinue.mock.calls[0][0].quote.rangeLow).toBe(quotePackage(vsl.defaults).rangeLow)
+    fireEvent.click(screen.getAllByRole('button', { name: 'Book a vision call' })[0])
+    const arg = onContinue.mock.calls[0][0]
+    expect(Object.keys(arg).sort()).toEqual(['config', 'quote'])
+    expect(arg.quote.rangeLow).toBe(quotePackage(vsl.defaults).rangeLow)
   })
 
   it('pushes package_builder_start once', () => {

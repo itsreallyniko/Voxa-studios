@@ -6,7 +6,7 @@ import { demoPackage } from './demo'
 
 export type { PackagePage } from './types'
 export { calPackageLink } from './cal'
-export { SCOPE_NOTE, SEND_FILES_NOTE, DEPOSIT_TERMS } from './shared'
+export { SCOPE_NOTE, SEND_FILES_NOTE, AFTER_CALL_ANSWER } from './shared'
 
 export const PACKAGE_PAGES: Record<PackageType, PackagePage> = {
   course: coursePackage,

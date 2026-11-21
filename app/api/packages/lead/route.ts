@@ -39,7 +39,7 @@ export async function POST(req: Request) {
 
   if (leadEmailConfigured()) {
     try {
-      await sendPackageLeadEmail({ stage: 'started', contact, config, quote })
+      await sendPackageLeadEmail({ contact, config, quote })
     } catch (err) {
       console.error('[packages-lead] lead email failed:', err instanceof Error ? err.message : err)
     }

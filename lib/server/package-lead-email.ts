@@ -7,12 +7,6 @@ const RESEND_ENDPOINT = 'https://api.resend.com/emails'
 const DEFAULT_TO = 'voxastudiosfl@gmail.com'
 const DEFAULT_FROM = 'Voxa Package Leads <onboarding@resend.dev>'
 
-export type PackageLeadStage = 'started' | 'deposit_paid'
-
-const STAGE_LABEL: Record<PackageLeadStage, string> = {
-  started: 'started',
-  deposit_paid: 'deposit paid',
-}
 const TYPE_LABEL = { course: 'Course', vsl: 'VSL', demo: 'Demo' } as const
 
 const usd = (n: number) => `$${n.toLocaleString('en-US')}`
@@ -22,16 +16,13 @@ export function leadEmailConfigured(): boolean {
 }
 
 export async function sendPackageLeadEmail(args: {
-  stage: PackageLeadStage
   contact: PackageContact
   config: PackageConfig
   quote: PackageQuote
-  paymentIntentId?: string
 }): Promise<void> {
-  const { stage, contact, config, quote, paymentIntentId } = args
+  const { contact, config, quote } = args
   const type = TYPE_LABEL[config.type]
   const lines = [
-    `Stage: ${STAGE_LABEL[stage]}`,
     `Name: ${contact.name}`,
     `Email: ${contact.email}`,
     `Phone: ${contact.phone}`,
@@ -48,11 +39,8 @@ export async function sendPackageLeadEmail(args: {
     `Clips: ${usd(quote.clips)}`,
     `Total: ${usd(quote.total)}`,
     `Range: ${usd(quote.rangeLow)}–${usd(quote.rangeHigh)}`,
-    `Deposit (30%): ${usd(quote.deposit)}`,
-    `Call first: ${quote.callFirst ? 'yes' : 'no'}`,
     `Turnaround: ${quote.turnaroundDays.low}–${quote.turnaroundDays.high} days`,
     `Revision rounds: ${quote.revisionRounds}`,
-    `Payment intent: ${paymentIntentId ?? '-'}`,
     '',
     contact.notes || '(no notes)',
   ]
@@ -66,7 +54,7 @@ export async function sendPackageLeadEmail(args: {
       from: process.env.ONSITE_LEAD_FROM?.trim() || DEFAULT_FROM,
       to: process.env.ONSITE_LEAD_EMAIL?.trim() || DEFAULT_TO,
       reply_to: contact.email,
-      subject: `Package lead (${STAGE_LABEL[stage]}): ${contact.name} — ${type} ~${usd(quote.rangeLow)}–${usd(quote.rangeHigh)}`,
+      subject: `Package lead: ${contact.name} — ${type} ~${usd(quote.rangeLow)}–${usd(quote.rangeHigh)}`,
       text: lines.join('\n'),
     }),
   })

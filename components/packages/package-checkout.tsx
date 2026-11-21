@@ -1,92 +1,35 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
-import { Elements } from '@stripe/react-stripe-js'
-import { loadStripe } from '@stripe/stripe-js'
+import { useState } from 'react'
 import { Input, Textarea } from '@/components/ui/input'
 import { FieldError } from '@/components/ui/field-error'
 import { Button } from '@/components/ui/button'
 import type { PackagePage } from '@/lib/content/packages'
 import type { PackageConfig, PackageQuote } from '@/lib/packages/pricing'
 import { parsePackageContact } from '@/lib/packages/contact'
-import { trackPackageContactSubmit, trackPackageDepositPaid } from '@/lib/tracking/packages'
-import { claimPaidTracking, rememberDeposit } from '@/lib/packages/deposit-session'
+import { trackPackageContactSubmit } from '@/lib/tracking/packages'
 import { summarizePackage } from './package-summary'
 import { StepHeading } from './step-heading'
 import { PackageCall } from './package-call'
-import { DepositForm } from './deposit-form'
-import { PackageConfirmation } from './package-confirmation'
 
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY ?? '')
-
-type Step = 'contact' | 'call' | 'deposit' | 'confirmed'
-
-export function depositStatusFromSearchParams(
-  params: Record<string, string | string[] | undefined>
-): 'succeeded' | 'processing' | null {
-  const s = params.redirect_status
-  return s === 'succeeded' || s === 'processing' ? s : null
-}
+type Step = 'contact' | 'call'
 
 type Props = {
   page: PackagePage
   config: PackageConfig
   quote: PackageQuote
-  intent: 'call' | 'deposit'
   onBack: () => void
 }
 
-export function PackageCheckout({ page, config, quote, intent, onBack }: Props) {
+export function PackageCheckout({ page, config, quote, onBack }: Props) {
   const [step, setStep] = useState<Step>('contact')
-  const [paidStatus, setPaidStatus] = useState<'succeeded' | 'processing'>('succeeded')
   const [form, setForm] = useState({ name: '', email: '', phone: '', notes: '', website: '' })
   const [error, setError] = useState<string | null>(null)
   const [submitting, setSubmitting] = useState(false)
-  const [clientSecret, setClientSecret] = useState<string | null>(null)
-  const [paymentIntentId, setPaymentIntentId] = useState<string | null>(null)
-  const [deposit, setDeposit] = useState(quote.deposit)
-  const [depositError, setDepositError] = useState<{ message: string; unavailable: boolean } | null>(null)
-  // One id per checkout: Stripe rejects reusing an idempotency key with different params.
-  const sessionId = useRef<string>('')
-  if (!sessionId.current) sessionId.current = crypto.randomUUID()
 
   const summary = summarizePackage(page, config, quote)
   const set = (k: keyof typeof form) => (e: { target: { value: string } }) =>
     setForm((f) => ({ ...f, [k]: e.target.value }))
-
-  useEffect(() => {
-    if (step === 'deposit' && !clientSecret) void startDeposit()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [step])
-
-  async function startDeposit() {
-    setDepositError(null)
-    const contact = parsePackageContact(form)
-    try {
-      const res = await fetch('/api/packages/deposit', {
-        method: 'POST',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ config, contact, sessionId: sessionId.current }),
-      })
-      if (res.status === 503) {
-        setDepositError({
-          message: "Online deposits aren't available right now — book a vision call instead.",
-          unavailable: true,
-        })
-        return
-      }
-      if (!res.ok) throw new Error(String(res.status))
-      const d = (await res.json()) as { clientSecret: string; paymentIntentId: string; deposit: number }
-      setClientSecret(d.clientSecret)
-      setPaymentIntentId(d.paymentIntentId)
-      setDeposit(d.deposit)
-    } catch {
-      setDepositError({
-        message: "We couldn't start the deposit. Please try again in a moment.",
-        unavailable: false,
-      })
-    }
-  }
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -108,7 +51,7 @@ export function PackageCheckout({ page, config, quote, intent, onBack }: Props) 
     }
     trackPackageContactSubmit(page.slug, quote.rangeLow)
     setSubmitting(false)
-    setStep(intent === 'deposit' ? 'deposit' : 'call')
+    setStep('call')
   }
 
   if (step === 'call') {
@@ -121,84 +64,6 @@ export function PackageCheckout({ page, config, quote, intent, onBack }: Props) 
           name={form.name.trim()}
           email={form.email.trim()}
         />
-      </div>
-    )
-  }
-
-  if (step === 'confirmed') {
-    return (
-      <PackageConfirmation
-        pageType={page.slug}
-        notes={summary}
-        status={paidStatus}
-        name={form.name.trim()}
-        email={form.email.trim()}
-      />
-    )
-  }
-
-  if (step === 'deposit') {
-    return (
-      <div key="deposit" className="flex flex-col gap-6">
-        <StepHeading>Reserve with a deposit</StepHeading>
-        {depositError && (
-          <div className="flex flex-col gap-4">
-            <p role="alert" className="text-body-md text-red-400">
-              {depositError.message}
-            </p>
-            {depositError.unavailable ? (
-              <Button variant="gold" size="lg" onClick={() => setStep('call')}>
-                Book a vision call
-              </Button>
-            ) : (
-              <Button variant="gold" size="lg" onClick={() => void startDeposit()}>
-                Try again
-              </Button>
-            )}
-          </div>
-        )}
-        {clientSecret && paymentIntentId && (
-          <Elements
-            stripe={stripePromise}
-            options={{
-              clientSecret,
-              appearance: {
-                theme: 'night',
-                variables: {
-                  colorPrimary: '#C9A96E',
-                  colorBackground: '#0D0D0D',
-                  colorText: '#F5F0E8',
-                  colorTextSecondary: '#888888',
-                  borderRadius: '6px',
-                  fontFamily: 'DM Sans, system-ui, sans-serif',
-                },
-              },
-            }}
-          >
-            <DepositForm
-              deposit={deposit}
-              onBeforeConfirm={() =>
-                rememberDeposit(paymentIntentId, {
-                  value: deposit,
-                  rangeLow: quote.rangeLow,
-                  rangeHigh: quote.rangeHigh,
-                })
-              }
-              onPaid={(status) => {
-                if (status === 'succeeded' && claimPaidTracking(paymentIntentId)) {
-                  trackPackageDepositPaid(page.slug, {
-                    value: deposit,
-                    rangeLow: quote.rangeLow,
-                    rangeHigh: quote.rangeHigh,
-                    paymentIntentId,
-                  })
-                }
-                setPaidStatus(status)
-                setStep('confirmed')
-              }}
-            />
-          </Elements>
-        )}
       </div>
     )
   }

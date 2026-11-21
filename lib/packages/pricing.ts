@@ -23,8 +23,6 @@ export type PackageQuote = {
   total: number
   rangeLow: number
   rangeHigh: number
-  deposit: number
-  callFirst: boolean
   turnaroundDays: { low: number; high: number }
   revisionRounds: number
 }
@@ -49,8 +47,6 @@ export const LEVEL_LABEL: Record<EditLevel, string> = {
 
 export const CLIP_PRICE = 20
 export const RANGE_HIGH_FACTOR = 1.1
-export const DEPOSIT_RATE = 0.3
-export const CALL_FIRST_THRESHOLD = 1500
 export const REVISION_ROUNDS = 2
 export const RECORD_FACTOR = 1.5
 export const MAX_SESSION_MINUTES = 300
@@ -110,8 +106,6 @@ export function quotePackage(config: PackageConfig): PackageQuote {
     total,
     rangeLow,
     rangeHigh: round50(total * RANGE_HIGH_FACTOR),
-    deposit: Math.round(rangeLow * DEPOSIT_RATE),
-    callFirst: rangeLow >= CALL_FIRST_THRESHOLD,
     turnaroundDays: { low, high: low + 3 },
     revisionRounds: REVISION_ROUNDS,
   }

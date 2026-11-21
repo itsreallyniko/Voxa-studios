@@ -23,15 +23,13 @@ import { EditLevelCards } from './edit-level-cards'
 import {
   PackageLineItems,
   formatHours,
-  formatMoney,
   formatRange,
   summarizePackage,
 } from './package-summary'
 
-type Intent = 'call' | 'deposit'
 type Props = {
   page: PackagePage
-  onContinue: (args: { config: PackageConfig; quote: PackageQuote; intent: Intent }) => void
+  onContinue: (args: { config: PackageConfig; quote: PackageQuote }) => void
 }
 
 const LENGTHS: LengthTier[] = ['short', 'medium', 'long']
@@ -161,36 +159,16 @@ export function PackageBuilder({ page, onContinue }: Props) {
       packageSummary: summarizePackage(page, config, quote),
     })
   }
-  const go = (intent: Intent) => onContinue({ config, quote, intent })
+  const go = () => onContinue({ config, quote })
 
-  const callPrimary = quote.callFirst
   const buttons = (
     <div className="space-y-3">
-      <Button
-        className="w-full"
-        variant="primary"
-        onClick={() => go(callPrimary ? 'call' : 'deposit')}
-      >
-        {callPrimary ? 'Book a vision call' : 'Reserve with deposit'}
+      <Button className="w-full" variant="primary" onClick={go}>
+        Book a vision call
       </Button>
-      {callPrimary ? (
-        <Button className="w-full" variant="secondary" onClick={() => go('deposit')}>
-          Reserve with deposit
-        </Button>
-      ) : (
-        <Button className="w-full" variant="secondary" onClick={handleTour}>
-          Book a free tour
-        </Button>
-      )}
-      {callPrimary && (
-        <button
-          type="button"
-          onClick={handleTour}
-          className="block w-full text-center text-sm text-ivory/60 underline underline-offset-4 hover:text-heritage-gold"
-        >
-          Book a free tour
-        </button>
-      )}
+      <Button className="w-full" variant="secondary" onClick={handleTour}>
+        Book a free tour
+      </Button>
     </div>
   )
 
@@ -203,7 +181,6 @@ export function PackageBuilder({ page, onContinue }: Props) {
       <p className="text-sm text-ivory/70">
         {REVISION_ROUNDS} rounds of revisions included
       </p>
-      <p className="text-xs text-ivory/50">Deposit to reserve: {formatMoney(quote.deposit)}</p>
       <p className="text-xs text-ivory/50">{SCOPE_NOTE}</p>
     </div>
   )
@@ -336,12 +313,8 @@ export function PackageBuilder({ page, onContinue }: Props) {
             </div>
           )}
           {!barOpen && (
-            <Button
-              className="mt-3 w-full"
-              size="sm"
-              onClick={() => go(callPrimary ? 'call' : 'deposit')}
-            >
-              {callPrimary ? 'Book a vision call' : 'Reserve with deposit'}
+            <Button className="mt-3 w-full" size="sm" onClick={go}>
+              Book a vision call
             </Button>
           )}
         </div>

@@ -218,3 +218,17 @@ Package pages are **left out of the sitemap at launch** (ads first, the same cho
 - Unnamed stories at launch (my call; Niko indifferent).
 - New Cal event for the vision call (Niko).
 - Tour modal made source-aware, and "started, not paid" lead email (my calls after the reviewer check).
+
+## Update 2026-11-21: no online deposit
+
+Decision: the website takes no deposit. The only next step from the builder is booking the free vision call on Cal.com (a Google Meet video call); the studio tour stays as the secondary option. Any deposit is handled after the call, outside the site. This supersedes the Deposit and payment section above.
+
+Removed:
+- Builder: the deposit button, "Deposit to reserve" line and call-first branching. One primary button, "Book a vision call", plus "Book a free tour". `onContinue` now receives `{ config, quote }`.
+- Checkout: the deposit and confirmation steps, Stripe Elements and the `intent` prop. The flow is contact, then call.
+- Package page: Stripe redirect-return handling (confirmation, failed-payment message, URL cleanup).
+- Deleted files: `components/packages/deposit-form.tsx`, `components/packages/package-confirmation.tsx`, `lib/packages/deposit-session.ts`, `app/api/packages/deposit/route.ts`, and the deposit API test.
+- Pricing: `deposit`, `callFirst`, `DEPOSIT_RATE` and `CALL_FIRST_THRESHOLD`.
+- Server: `createDepositIntent`, the package-deposit branch of the Stripe webhook, and the email stage concept. One lead email remains (contact submitted).
+- Tracking: `package_deposit_paid`.
+- Copy: `DEPOSIT_TERMS` and the deposit FAQ, replaced by "What happens after the call?".
