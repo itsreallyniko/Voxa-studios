@@ -58,6 +58,7 @@ export const courseWebinar: ServicePage = {
   ],
   delivery:
     'Sessions include same-day delivery of multi-cam files, with each camera angle as its own file, color-corrected and audio-synced, ready for your editor.',
+  packageLink: { href: '/packages/course', label: 'Build your package' },
   reviewTag: 'course',
   faqs: [
     {
