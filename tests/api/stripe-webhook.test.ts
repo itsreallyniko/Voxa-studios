@@ -95,6 +95,16 @@ describe('POST /api/stripe/webhook', () => {
       expect(fetchMock).not.toHaveBeenCalled()
     })
 
+    it('warns with the intent id when Resend is not configured', async () => {
+      delete process.env.RESEND_API_KEY
+      const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
+      constructEvent.mockReturnValue(evt(meta))
+      const res = await post('{}')
+      expect(res.status).toBe(200)
+      expect(fetchMock).not.toHaveBeenCalled()
+      expect(warn).toHaveBeenCalledWith(expect.any(String), 'pi_pkg_1')
+    })
+
     it('still 200s when Resend throws', async () => {
       fetchMock.mockRejectedValue(new Error('boom'))
       constructEvent.mockReturnValue(evt(meta))

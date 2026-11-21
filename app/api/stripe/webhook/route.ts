@@ -61,6 +61,8 @@ export async function POST(req: Request) {
                 quote: quotePackage(config),
                 paymentIntentId: pi.id,
               })
+            } else {
+              console.warn('package deposit paid but RESEND_API_KEY unset', pi.id)
             }
           } catch (e) {
             console.error('package deposit email failed', pi?.id, e instanceof Error ? e.message : e)
