@@ -88,6 +88,23 @@ describe('POST /api/tour/book', () => {
     expect(callArgs.idempotencyKey).toBe('tour:jane@example.com:2026-07-08:14:00')
   })
 
+  it('appends a trimmed packageSummary capped at 1000 chars as its own notes line', async () => {
+    vi.mocked(createBooking).mockResolvedValue({ uid: 'cal-uid-pkg', id: 1 })
+    const res = await call({ ...valid, packageSummary: '  ' + 'x'.repeat(1200) })
+    expect(res.status).toBe(200)
+    const notes = vi.mocked(createBooking).mock.calls[0][0].bookingFieldsResponses?.notes as string
+    const lines = notes.split('\n')
+    expect(lines).toContain('Package: ' + 'x'.repeat(1000))
+    expect(notes).not.toContain('x'.repeat(1001))
+  })
+
+  it('leaves notes without a Package line when packageSummary is absent', async () => {
+    vi.mocked(createBooking).mockResolvedValue({ uid: 'cal-uid-nopkg', id: 2 })
+    await call(valid)
+    const notes = vi.mocked(createBooking).mock.calls[0][0].bookingFieldsResponses?.notes as string
+    expect(notes).not.toContain('Package:')
+  })
+
   it('409 when slot is taken', async () => {
     const err = new Error('boom') as Error & { status: number }
     err.status = 409

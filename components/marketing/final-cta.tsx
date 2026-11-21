@@ -25,7 +25,7 @@ export function FinalCTA() {
             <BookLink>
               <Button variant="primary" size="lg">Explore Studio Sets</Button>
             </BookLink>
-            <Button variant="secondary" size="lg" onClick={open}>
+            <Button variant="secondary" size="lg" onClick={() => open()}>
               Book A Studio Tour
             </Button>
           </div>
