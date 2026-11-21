@@ -9,8 +9,10 @@ import { formatMoney } from './package-summary'
 export function DepositForm({
   deposit,
   onPaid,
+  onBeforeConfirm,
 }: {
   deposit: number
+  onBeforeConfirm?: () => void
   onPaid: (status: 'succeeded' | 'processing') => void
 }) {
   const stripe = useStripe()
@@ -25,6 +27,7 @@ export function DepositForm({
     }
     setError(null)
     setBusy(true)
+    onBeforeConfirm?.()
     const { error: err, paymentIntent } = await stripe.confirmPayment({
       elements,
       confirmParams: { return_url: window.location.href },

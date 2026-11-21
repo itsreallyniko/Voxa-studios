@@ -30,7 +30,11 @@ export function PackageCall({ pageType, notes }: { pageType: PackageType; notes:
   if (!calSlug) {
     return (
       <p className="text-body-md text-ivory/70">
-        Email us at voxastudiosfl@gmail.com and we&apos;ll set up your call.
+        Email us at voxastudiosfl@gmail.com or call{' '}
+        <a href="tel:+18137317075" className="underline underline-offset-4 hover:text-heritage-gold">
+          (813) 731-7075
+        </a>{' '}
+        and we&apos;ll set up your call.
       </p>
     )
   }

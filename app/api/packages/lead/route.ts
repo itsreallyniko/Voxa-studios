@@ -11,7 +11,7 @@ function json(payload: unknown, status: number) {
 }
 
 export async function POST(req: Request) {
-  const rl = check(ipFromRequest(req), 'packages/lead')
+  const rl = check(ipFromRequest(req), 'packages/lead', { limit: 5, windowMs: 60_000 })
   if (!rl.ok) {
     return NextResponse.json(
       { error: 'rate limited' },

@@ -12,7 +12,7 @@ function json(payload: unknown, status: number) {
 }
 
 export async function POST(req: Request) {
-  const rl = check(ipFromRequest(req), 'packages/deposit')
+  const rl = check(ipFromRequest(req), 'packages/deposit', { limit: 5, windowMs: 60_000 })
   if (!rl.ok) {
     return NextResponse.json(
       { error: 'rate limited' },
@@ -55,6 +55,8 @@ export async function POST(req: Request) {
         rangeHigh: String(quote.rangeHigh),
       },
       idempotencyKey: `package-deposit:${sessionId}`,
+      receiptEmail: contact.email,
+      description: `Voxa package deposit (${config.type})`,
     })
     return json(
       { clientSecret: intent.clientSecret, paymentIntentId: intent.id, deposit: quote.deposit },

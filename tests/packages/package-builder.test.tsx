@@ -97,6 +97,49 @@ describe('PackageBuilder', () => {
   })
 })
 
+describe('builder layout and copy', () => {
+  it('shows exactly one tour action in each primary mode', () => {
+    const first = setup(vsl)
+    expect(screen.getAllByRole('button', { name: 'Book a free tour' })).toHaveLength(1)
+    first.unmount()
+    setup()
+    fireEvent.click(screen.getByRole('button', { name: /Increase lessons/i }))
+    fireEvent.click(screen.getByRole('button', { name: /Increase lessons/i }))
+    expect(screen.getAllByRole('button', { name: 'Book a free tour' })).toHaveLength(1)
+  })
+
+  it('switches aside and mobile bar at the same breakpoint', () => {
+    const { container } = setup()
+    const aside = container.querySelector('aside')!
+    expect(aside.className).toContain('lg:block')
+    expect(aside.className).not.toContain('md:')
+    const bar = container.querySelector('.fixed')!
+    expect(bar.className).toContain('lg:hidden')
+    expect(bar.className).not.toContain('md:hidden')
+  })
+
+  it('shows billed session time on the recording line', () => {
+    const config: PackageConfig = { ...course.defaults, record: true, recordMinutes: 390 }
+    const { container } = setup(
+      { ...course, defaults: config } as typeof course
+    )
+    expect(container.querySelector('aside')!.textContent).toContain('Recording · 2 sessions (5 + 1.5 hrs)')
+  })
+
+  it('shows a single session as plain hours', () => {
+    const config: PackageConfig = { ...course.defaults, record: true, recordMinutes: 90 }
+    const { container } = setup({ ...course, defaults: config } as typeof course)
+    expect(container.querySelector('aside')!.textContent).toContain('Recording · 1.5 hrs')
+  })
+
+  it('edit level one-liners name what each level adds', () => {
+    setup()
+    expect(screen.getByText(/cuts, color, audio, slides or screen recording placed in/i)).toBeTruthy()
+    expect(screen.getByText(/titles, lower thirds, text callouts, captions, intro\/outro/i)).toBeTruthy()
+    expect(screen.getByText(/animated graphics, b-roll, zooms, music and sound design/i)).toBeTruthy()
+  })
+})
+
 describe('summarizePackage', () => {
   it('formats the one-line summary', () => {
     const config: PackageConfig = {
@@ -109,7 +152,7 @@ describe('summarizePackage', () => {
       clips: 20,
     }
     expect(summarizePackage(course, config, quotePackage(config))).toBe(
-      'Course · 12 lessons · 10–30 min · Edit + on-screen text · record ~6 hrs · 20 clips · ~$4,700–$5,150'
+      'Course · 12 lessons · 10–30 min · Edit + on-screen text · record ~6.5 hrs · 20 clips · ~$4,700–$5,150'
     )
   })
 })

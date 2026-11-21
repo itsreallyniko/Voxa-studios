@@ -182,13 +182,15 @@ export function PackageBuilder({ page, onContinue }: Props) {
           Book a free tour
         </Button>
       )}
-      <button
-        type="button"
-        onClick={handleTour}
-        className="block w-full text-center text-sm text-ivory/60 underline underline-offset-4 hover:text-heritage-gold"
-      >
-        Book a free tour
-      </button>
+      {callPrimary && (
+        <button
+          type="button"
+          onClick={handleTour}
+          className="block w-full text-center text-sm text-ivory/60 underline underline-offset-4 hover:text-heritage-gold"
+        >
+          Book a free tour
+        </button>
+      )}
     </div>
   )
 
@@ -207,8 +209,8 @@ export function PackageBuilder({ page, onContinue }: Props) {
   )
 
   return (
-    <div className="pb-28 md:pb-0">
-      <div className="grid gap-10 md:grid-cols-[minmax(0,1fr)_22rem] md:items-start">
+    <div className="pb-28 lg:pb-0">
+      <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_24rem] lg:items-start">
         <div className="min-w-0 space-y-10">
           <Section title="What do you need?">
             <div className="grid gap-3 sm:grid-cols-2">
@@ -301,7 +303,7 @@ export function PackageBuilder({ page, onContinue }: Props) {
         {/* Desktop output panel */}
         <aside
           aria-label="Your custom package"
-          className="hidden md:sticky md:top-24 md:block liquid-glass space-y-5 border border-white/10 p-6"
+          className="hidden lg:sticky lg:top-24 lg:block liquid-glass space-y-5 border border-white/10 p-6"
         >
           <h3 className="text-label-caps text-heritage-gold">Your custom package</h3>
           <p className="font-serif text-3xl text-ivory" aria-live="polite">
@@ -313,7 +315,7 @@ export function PackageBuilder({ page, onContinue }: Props) {
       </div>
 
       {/* Mobile bottom bar */}
-      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-obsidian/95 backdrop-blur md:hidden">
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-obsidian/95 backdrop-blur lg:hidden">
         <div className="mx-auto max-w-lg px-4 py-3">
           <button
             type="button"

@@ -40,5 +40,29 @@ describe('createManualCaptureIntent', () => {
 
     expect(r.clientSecret).toBe('pi_abc_secret')
     expect(r.id).toBe('pi_abc')
+    expect(args.automatic_payment_methods).toEqual({ enabled: true })
+    expect(args.payment_method_types).toBeUndefined()
+  })
+})
+
+describe('createDepositIntent', () => {
+  it('is card only, sends a receipt and a description', async () => {
+    piCreate.mockResolvedValue({ id: 'pi_dep', client_secret: 'pi_dep_secret' })
+    const { createDepositIntent } = await import('@/lib/server/stripe')
+    const r = await createDepositIntent({
+      amountCents: 141000,
+      metadata: { kind: 'package_deposit' },
+      idempotencyKey: 'package-deposit:s1',
+      receiptEmail: 'jane@example.com',
+      description: 'Voxa package deposit (course)',
+    })
+    const [args, opts] = piCreate.mock.calls[0]
+    expect(args.payment_method_types).toEqual(['card'])
+    expect(args.automatic_payment_methods).toBeUndefined()
+    expect(args.receipt_email).toBe('jane@example.com')
+    expect(args.description).toBe('Voxa package deposit (course)')
+    expect(args.capture_method).toBeUndefined()
+    expect(opts.idempotencyKey).toBe('package-deposit:s1')
+    expect(r).toEqual({ id: 'pi_dep', clientSecret: 'pi_dep_secret' })
   })
 })

@@ -5,7 +5,7 @@ import type { PackageContact } from '@/lib/packages/contact'
 
 const RESEND_ENDPOINT = 'https://api.resend.com/emails'
 const DEFAULT_TO = 'voxastudiosfl@gmail.com'
-const DEFAULT_FROM = 'Voxa On-Site Leads <onboarding@resend.dev>'
+const DEFAULT_FROM = 'Voxa Package Leads <onboarding@resend.dev>'
 
 export type PackageLeadStage = 'started' | 'deposit_paid'
 

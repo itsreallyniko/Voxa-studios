@@ -44,6 +44,28 @@ describe('POST /api/packages/lead', () => {
     expect(fetchMock).not.toHaveBeenCalled()
   })
 
+  it('is limited to 5 requests per minute per IP', async () => {
+    const { POST } = await import('@/app/api/packages/lead/route')
+    const send = () =>
+      POST(
+        new Request('http://localhost/api/packages/lead', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json', 'x-forwarded-for': '10.8.8.8' },
+          body: JSON.stringify({ config: course, contact }),
+        })
+      )
+    for (let i = 0; i < 5; i++) expect((await send()).status).toBe(200)
+    expect((await send()).status).toBe(429)
+  })
+
+  it('uses the package leads sender by default', async () => {
+    delete process.env.ONSITE_LEAD_FROM
+    await post({ config: course, contact })
+    expect(JSON.parse(fetchMock.mock.calls[0][1].body).from).toBe(
+      'Voxa Package Leads <onboarding@resend.dev>'
+    )
+  })
+
   it('400s on bad contact', async () => {
     const res = await post({ config: course, contact: { ...contact, email: 'nope' } })
     expect(res.status).toBe(400)

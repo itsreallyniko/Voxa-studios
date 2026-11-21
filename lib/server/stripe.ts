@@ -35,13 +35,18 @@ export async function createDepositIntent(args: {
   amountCents: number
   metadata: Record<string, string>
   idempotencyKey: string
+  receiptEmail: string
+  description: string
 }): Promise<{ id: string; clientSecret: string }> {
   const stripe = getStripe()
   const pi = await stripe.paymentIntents.create(
     {
       amount: args.amountCents,
       currency: 'usd',
-      automatic_payment_methods: { enabled: true },
+      // Card only: Apple Pay and Google Pay come with it.
+      payment_method_types: ['card'],
+      receipt_email: args.receiptEmail,
+      description: args.description,
       metadata: args.metadata,
     },
     { idempotencyKey: args.idempotencyKey }

@@ -58,5 +58,6 @@ describe('package tracking', () => {
     expect(dep.range_low).toBe(3000)
     expect(dep.range_high).toBe(4500)
     expect(dep.transaction_id).toBe('pi_123')
+    expect(dep.currency).toBe('USD')
   })
 })

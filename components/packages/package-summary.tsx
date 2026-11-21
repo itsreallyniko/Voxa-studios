@@ -19,6 +19,20 @@ export function formatHours(minutes: number): string {
   return `${Number.isInteger(hrs) ? hrs : hrs.toFixed(1)} hrs`
 }
 
+function hoursNumber(minutes: number): string {
+  return formatHours(minutes).replace(' hrs', '')
+}
+
+/** Billed studio time, e.g. "2 sessions (5 + 1.5 hrs)" or "1.5 hrs". */
+export function formatSessions(sessions: number[]): string {
+  if (sessions.length <= 1) return formatHours(sessions[0] ?? 0)
+  return `${sessions.length} sessions (${sessions.map(hoursNumber).join(' + ')} hrs)`
+}
+
+function billedMinutes(quote: PackageQuote): number {
+  return quote.sessions.reduce((a, b) => a + b, 0)
+}
+
 function noun(page: PackagePage, n: number): string {
   return n === 1 ? page.videoNoun.one : page.videoNoun.many
 }
@@ -33,7 +47,7 @@ export function summarizePackage(
     `${config.videos} ${noun(page, config.videos)}`,
     LENGTH_LABEL[config.length],
     LEVEL_LABEL[config.level],
-    config.record ? `record ~${formatHours(quote.recordMinutes)}` : 'own footage',
+    config.record ? `record ~${formatHours(billedMinutes(quote))}` : 'own footage',
   ]
   if (config.clips > 0) parts.push(`${config.clips} ${config.clips === 1 ? 'clip' : 'clips'}`)
   parts.push(`~${formatRange(quote)}`)
@@ -56,7 +70,7 @@ export function PackageLineItems({
     },
   ]
   if (config.record) {
-    rows.push({ label: `Recording · ${formatHours(quote.recordMinutes)}`, amount: quote.recording })
+    rows.push({ label: `Recording · ${formatSessions(quote.sessions)}`, amount: quote.recording })
   }
   if (config.clips > 0) {
     rows.push({ label: `Social clips · ${config.clips}`, amount: quote.clips })

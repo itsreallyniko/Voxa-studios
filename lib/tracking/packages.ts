@@ -49,6 +49,7 @@ export function trackPackageDepositPaid(
     event: 'package_deposit_paid',
     page_type: pageType,
     value: opts.value,
+    currency: 'USD',
     range_low: opts.rangeLow,
     range_high: opts.rangeHigh,
     transaction_id: opts.paymentIntentId,

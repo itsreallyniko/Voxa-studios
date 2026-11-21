@@ -10,7 +10,9 @@ import type { PackagePage } from '@/lib/content/packages'
 import type { PackageConfig, PackageQuote } from '@/lib/packages/pricing'
 import { parsePackageContact } from '@/lib/packages/contact'
 import { trackPackageContactSubmit, trackPackageDepositPaid } from '@/lib/tracking/packages'
+import { claimPaidTracking, rememberDeposit } from '@/lib/packages/deposit-session'
 import { summarizePackage } from './package-summary'
+import { StepHeading } from './step-heading'
 import { PackageCall } from './package-call'
 import { DepositForm } from './deposit-form'
 import { PackageConfirmation } from './package-confirmation'
@@ -18,13 +20,6 @@ import { PackageConfirmation } from './package-confirmation'
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY ?? '')
 
 type Step = 'contact' | 'call' | 'deposit' | 'confirmed'
-
-/** Page helper: true when Stripe redirected back after a successful payment. */
-export function confirmationFromSearchParams(
-  params: Record<string, string | string[] | undefined>
-): boolean {
-  return params.redirect_status === 'succeeded'
-}
 
 export function depositStatusFromSearchParams(
   params: Record<string, string | string[] | undefined>
@@ -118,8 +113,8 @@ export function PackageCheckout({ page, config, quote, intent, onBack }: Props) 
 
   if (step === 'call') {
     return (
-      <div className="flex flex-col gap-6">
-        <h3 className="text-headline-md text-white">Book your free vision call</h3>
+      <div key="call" className="flex flex-col gap-6">
+        <StepHeading>Book your free vision call</StepHeading>
         <PackageCall pageType={page.slug} notes={summary} />
       </div>
     )
@@ -131,8 +126,8 @@ export function PackageCheckout({ page, config, quote, intent, onBack }: Props) 
 
   if (step === 'deposit') {
     return (
-      <div className="flex flex-col gap-6">
-        <h3 className="text-headline-md text-white">Reserve with a deposit</h3>
+      <div key="deposit" className="flex flex-col gap-6">
+        <StepHeading>Reserve with a deposit</StepHeading>
         {depositError && (
           <div className="flex flex-col gap-4">
             <p role="alert" className="text-body-md text-red-400">
@@ -169,8 +164,15 @@ export function PackageCheckout({ page, config, quote, intent, onBack }: Props) 
           >
             <DepositForm
               deposit={deposit}
+              onBeforeConfirm={() =>
+                rememberDeposit(paymentIntentId, {
+                  value: deposit,
+                  rangeLow: quote.rangeLow,
+                  rangeHigh: quote.rangeHigh,
+                })
+              }
               onPaid={(status) => {
-                if (status === 'succeeded') {
+                if (status === 'succeeded' && claimPaidTracking(paymentIntentId)) {
                   trackPackageDepositPaid(page.slug, {
                     value: deposit,
                     rangeLow: quote.rangeLow,
@@ -189,7 +191,7 @@ export function PackageCheckout({ page, config, quote, intent, onBack }: Props) 
   }
 
   return (
-    <form onSubmit={onSubmit} noValidate className="flex flex-col gap-6">
+    <form key="contact" onSubmit={onSubmit} noValidate className="flex flex-col gap-6">
       {/* Honeypot — hidden from humans; filled only by bots */}
       <div className="absolute left-[-9999px]" aria-hidden="true">
         <label>
@@ -203,7 +205,7 @@ export function PackageCheckout({ page, config, quote, intent, onBack }: Props) 
           />
         </label>
       </div>
-      <h3 className="text-headline-md text-white">Where should we reach you?</h3>
+      <StepHeading>Where should we reach you?</StepHeading>
       <p className="text-metadata text-ivory/60">{summary}</p>
       <Input label="Name" type="text" autoComplete="name" value={form.name} onChange={set('name')} required />
       <Input label="Email" type="email" autoComplete="email" value={form.email} onChange={set('email')} required />
