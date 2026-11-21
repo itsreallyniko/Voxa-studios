@@ -37,7 +37,10 @@ describe('package pages', () => {
     render(<PackagePageView page={page} />)
     expect(screen.getByRole('heading', { level: 1, name: page.headline })).toBeTruthy()
     expect(document.getElementById('build')).toBeTruthy()
-    expect(screen.getAllByRole('button', { name: /build your package/i }).length).toBeGreaterThan(0)
+    expect(screen.getAllByText('Your custom package').length).toBeGreaterThan(0)
+    expect(screen.getAllByRole('button', { name: /clean/i }).length).toBeGreaterThan(0)
+    // only the final CTA; no page-level sticky button over the builder's own bar
+    expect(screen.getAllByRole('button', { name: /^build your package$/i })).toHaveLength(1)
   })
 
   it('renders confirmation instead of the builder on a redirect return', () => {

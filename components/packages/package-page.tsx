@@ -102,12 +102,6 @@ export function PackagePageView({ page }: { page: PackagePage }) {
           </div>
         </section>
       </main>
-
-      <div className="md:hidden sticky bottom-0 z-40 bg-obsidian/90 backdrop-blur-md border-t border-white/10 px-6 py-3">
-        <Button variant="gold" size="md" className="w-full" onClick={scrollToBuild}>
-          Build your package
-        </Button>
-      </div>
     </>
   )
 }
