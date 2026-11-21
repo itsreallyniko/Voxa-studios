@@ -22,6 +22,7 @@ vi.mock('@calcom/embed-react', () => ({
 import {
   PackageCheckout,
   confirmationFromSearchParams,
+  depositStatusFromSearchParams,
 } from '@/components/packages/package-checkout'
 
 const page = PACKAGE_PAGES.course
@@ -119,6 +120,20 @@ describe('PackageCheckout', () => {
     expect(await screen.findByRole('heading', { name: 'Book your vision call' })).toBeTruthy()
   })
 
+  it('treats a processing payment as pending, not failed', async () => {
+    confirmPayment.mockResolvedValue({ paymentIntent: { status: 'processing' } })
+    setup('deposit')
+    fill()
+    submit()
+    await screen.findByTestId('payment-element')
+    fireEvent.click(screen.getByRole('button', { name: /pay/i }))
+    expect(await screen.findByText('PAYMENT PROCESSING')).toBeTruthy()
+    expect(screen.getByText(/Your deposit is processing/)).toBeTruthy()
+    expect(screen.getByTestId('cal')).toBeTruthy()
+    expect(events('package_deposit_paid')).toHaveLength(0)
+    expect(screen.queryByRole('button', { name: /pay/i })).toBeNull()
+  })
+
   it('offers the call when deposits are unavailable (503)', async () => {
     fetchMock.mockImplementation(async (url: string) =>
       url.includes('deposit')
@@ -138,5 +153,13 @@ describe('confirmationFromSearchParams', () => {
     expect(confirmationFromSearchParams({ redirect_status: 'succeeded' })).toBe(true)
     expect(confirmationFromSearchParams({ redirect_status: 'failed' })).toBe(false)
     expect(confirmationFromSearchParams({})).toBe(false)
+  })
+})
+
+describe('depositStatusFromSearchParams', () => {
+  it('maps redirect_status', () => {
+    expect(depositStatusFromSearchParams({ redirect_status: 'succeeded' })).toBe('succeeded')
+    expect(depositStatusFromSearchParams({ redirect_status: 'processing' })).toBe('processing')
+    expect(depositStatusFromSearchParams({ redirect_status: 'failed' })).toBeNull()
   })
 })

@@ -6,17 +6,25 @@ import type { PackageType } from '@/lib/packages/pricing'
 export function PackageConfirmation({
   pageType,
   notes,
+  status = 'succeeded',
 }: {
   pageType: PackageType
   notes: string
+  status?: 'succeeded' | 'processing'
 }) {
+  const processing = status === 'processing'
   return (
     <div className="flex flex-col gap-8">
       <div>
-        <span className="text-label-caps text-heritage-gold mb-4 block">DEPOSIT RECEIVED</span>
+        <span className="text-label-caps text-heritage-gold mb-4 block">{processing ? 'PAYMENT PROCESSING' : 'DEPOSIT RECEIVED'}</span>
         <h3 className="text-headline-md text-white mb-4 leading-tight">
-          You&apos;re in. Here&apos;s what happens next.
+          {processing ? 'Almost there.' : "You're in. Here's what happens next."}
         </h3>
+        {processing && (
+          <p className="text-body-md text-ivory/70 max-w-xl mb-4">
+            Your deposit is processing. We&apos;ll email you once it clears — you can book your vision call now.
+          </p>
+        )}
         <ol className="text-body-md text-ivory/70 max-w-xl list-decimal pl-5 flex flex-col gap-2">
           <li>A receipt is on its way to your inbox.</li>
           <li>Book your vision call below so we can lock the scope and the schedule.</li>

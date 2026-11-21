@@ -26,6 +26,13 @@ export function confirmationFromSearchParams(
   return params.redirect_status === 'succeeded'
 }
 
+export function depositStatusFromSearchParams(
+  params: Record<string, string | string[] | undefined>
+): 'succeeded' | 'processing' | null {
+  const s = params.redirect_status
+  return s === 'succeeded' || s === 'processing' ? s : null
+}
+
 type Props = {
   page: PackagePage
   config: PackageConfig
@@ -36,6 +43,7 @@ type Props = {
 
 export function PackageCheckout({ page, config, quote, intent, onBack }: Props) {
   const [step, setStep] = useState<Step>('contact')
+  const [paidStatus, setPaidStatus] = useState<'succeeded' | 'processing'>('succeeded')
   const [form, setForm] = useState({ name: '', email: '', phone: '', notes: '', website: '' })
   const [error, setError] = useState<string | null>(null)
   const [submitting, setSubmitting] = useState(false)
@@ -118,7 +126,7 @@ export function PackageCheckout({ page, config, quote, intent, onBack }: Props) 
   }
 
   if (step === 'confirmed') {
-    return <PackageConfirmation pageType={page.slug} notes={summary} />
+    return <PackageConfirmation pageType={page.slug} notes={summary} status={paidStatus} />
   }
 
   if (step === 'deposit') {
@@ -161,13 +169,16 @@ export function PackageCheckout({ page, config, quote, intent, onBack }: Props) 
           >
             <DepositForm
               deposit={deposit}
-              onPaid={() => {
-                trackPackageDepositPaid(page.slug, {
-                  value: deposit,
-                  rangeLow: quote.rangeLow,
-                  rangeHigh: quote.rangeHigh,
-                  paymentIntentId,
-                })
+              onPaid={(status) => {
+                if (status === 'succeeded') {
+                  trackPackageDepositPaid(page.slug, {
+                    value: deposit,
+                    rangeLow: quote.rangeLow,
+                    rangeHigh: quote.rangeHigh,
+                    paymentIntentId,
+                  })
+                }
+                setPaidStatus(status)
                 setStep('confirmed')
               }}
             />

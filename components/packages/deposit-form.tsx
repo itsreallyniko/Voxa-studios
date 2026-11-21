@@ -11,7 +11,7 @@ export function DepositForm({
   onPaid,
 }: {
   deposit: number
-  onPaid: () => void
+  onPaid: (status: 'succeeded' | 'processing') => void
 }) {
   const stripe = useStripe()
   const elements = useElements()
@@ -30,12 +30,16 @@ export function DepositForm({
       confirmParams: { return_url: window.location.href },
       redirect: 'if_required',
     })
+    if (!err && paymentIntent?.status === 'processing') {
+      onPaid('processing')
+      return
+    }
     if (err || paymentIntent?.status !== 'succeeded') {
       setError(err?.message ?? 'Payment could not be completed.')
       setBusy(false)
       return
     }
-    onPaid()
+    onPaid('succeeded')
   }
 
   return (
