@@ -55,4 +55,51 @@ describe('POST /api/stripe/webhook', () => {
     expect(res.status).toBe(200)
     expect(cancelBooking).not.toHaveBeenCalled()
   })
+
+  describe('package deposits', () => {
+    const fetchMock = vi.fn()
+    const meta = {
+      kind: 'package_deposit',
+      config: JSON.stringify({ type: 'course', videos: 12, length: 'medium', level: 'text', record: true, recordMinutes: null, clips: 20 }),
+      name: 'Jane Doe',
+      email: 'jane@example.com',
+      phone: '813-555-0100',
+      notes: '',
+    }
+    const evt = (metadata: Record<string, string>) => ({
+      type: 'payment_intent.succeeded',
+      data: { object: { id: 'pi_pkg_1', metadata } },
+    })
+    beforeEach(() => {
+      vi.stubGlobal('fetch', fetchMock)
+      fetchMock.mockResolvedValue({ ok: true, status: 200 })
+      process.env.RESEND_API_KEY = 're_test'
+      vi.spyOn(console, 'error').mockImplementation(() => {})
+    })
+
+    it('emails deposit_paid with the intent id', async () => {
+      constructEvent.mockReturnValue(evt(meta))
+      const res = await post('{}')
+      expect(res.status).toBe(200)
+      expect(fetchMock).toHaveBeenCalledTimes(1)
+      const body = fetchMock.mock.calls[0][1].body as string
+      expect(body).toContain('Package lead (deposit paid)')
+      expect(body).toContain('pi_pkg_1')
+    })
+
+    it('sends nothing without kind', async () => {
+      const { kind, ...rest } = meta
+      constructEvent.mockReturnValue(evt(rest))
+      const res = await post('{}')
+      expect(res.status).toBe(200)
+      expect(fetchMock).not.toHaveBeenCalled()
+    })
+
+    it('still 200s when Resend throws', async () => {
+      fetchMock.mockRejectedValue(new Error('boom'))
+      constructEvent.mockReturnValue(evt(meta))
+      const res = await post('{}')
+      expect(res.status).toBe(200)
+    })
+  })
 })

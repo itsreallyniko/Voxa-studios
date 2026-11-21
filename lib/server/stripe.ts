@@ -30,3 +30,22 @@ export async function createManualCaptureIntent(args: {
   if (!pi.client_secret) throw new Error('Stripe returned no client_secret')
   return { id: pi.id, clientSecret: pi.client_secret, amount: pi.amount, status: pi.status }
 }
+
+export async function createDepositIntent(args: {
+  amountCents: number
+  metadata: Record<string, string>
+  idempotencyKey: string
+}): Promise<{ id: string; clientSecret: string }> {
+  const stripe = getStripe()
+  const pi = await stripe.paymentIntents.create(
+    {
+      amount: args.amountCents,
+      currency: 'usd',
+      automatic_payment_methods: { enabled: true },
+      metadata: args.metadata,
+    },
+    { idempotencyKey: args.idempotencyKey }
+  )
+  if (!pi.client_secret) throw new Error('Stripe returned no client_secret')
+  return { id: pi.id, clientSecret: pi.client_secret }
+}
