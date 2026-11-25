@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react'
 import { useBooking } from '@/lib/booking-context'
+import { useOptionalTourModal } from '@/lib/tour-modal-context'
 
 const WEEKDAY_LABELS = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
 const MONTH_LABELS = [
@@ -61,6 +62,7 @@ function monthGrid(year: number, monthIndex: number): Cell[] {
 
 export function ScheduleStep() {
   const { booking, setBooking } = useBooking()
+  const tour = useOptionalTourModal()
   const now = useMemo(() => new Date(), [])
   const [viewYear, setViewYear] = useState(now.getFullYear())
   const [viewMonth, setViewMonth] = useState(now.getMonth())
@@ -127,7 +129,7 @@ export function ScheduleStep() {
   return (
     <div>
       <header className="mb-12 max-w-3xl">
-        <span className="text-label-caps text-heritage-gold mb-4 block">STEP 06 — SCHEDULE</span>
+        <span className="text-label-caps text-heritage-gold mb-4 block">STEP 05 — SCHEDULE</span>
         <h2 className="text-headline-xl text-white">Pick a date &amp; time</h2>
         <p className="text-body-lg text-ivory/60 mt-6">
           Showing slots that fit your {Math.floor(booking.durationMinutes / 60)}h{' '}
@@ -235,6 +237,19 @@ export function ScheduleStep() {
                 )
               })}
             </div>
+          )}
+          {tour && (
+            <p className="text-body-md text-ivory/60 mt-8">
+              Don&apos;t see a time that works?{' '}
+              <button
+                type="button"
+                onClick={tour.open}
+                className="text-heritage-gold underline underline-offset-4 hover:text-white transition-colors"
+              >
+                Book a free studio tour
+              </button>{' '}
+              and we&apos;ll find one together.
+            </p>
           )}
         </div>
       </div>

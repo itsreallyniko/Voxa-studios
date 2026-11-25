@@ -30,7 +30,7 @@ export function DetailsStep() {
       )}
 
       <header className="mb-12 max-w-3xl">
-        <span className="text-label-caps text-heritage-gold mb-4 block">STEP 04 — DETAILS</span>
+        <span className="text-label-caps text-heritage-gold mb-4 block">STEP 06 — DETAILS</span>
         <h2 className="text-headline-xl text-white">Tell Us About Your Session</h2>
         <p className="text-body-lg text-ivory/60 mt-6">
           The more we know, the smoother your session runs. We&apos;ll prep accordingly.

@@ -39,7 +39,7 @@ export function LengthStep() {
   return (
     <div>
       <header className="mb-12 max-w-3xl mx-auto text-center">
-        <span className="text-label-caps text-heritage-gold mb-4 block">STEP 05 — SESSION LENGTH</span>
+        <span className="text-label-caps text-heritage-gold mb-4 block">STEP 04 — SESSION LENGTH</span>
         <h2 className="text-headline-xl text-white">How long do you need?</h2>
         <p className="text-body-lg text-ivory/60 mt-6">Sessions start at 90 minutes. Add time as needed.</p>
       </header>

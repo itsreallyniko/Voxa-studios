@@ -77,3 +77,17 @@ describe('addonsRelevantFor / applicableSteps', () => {
     expect(applicableSteps('authority-desk').map((s) => s.key)).not.toContain('addons')
   })
 })
+
+describe('step order', () => {
+  it('asks for length and a time before contact details', () => {
+    expect(STEPS.map((s) => s.key)).toEqual([
+      'collection',
+      'set',
+      'addons',
+      'length',
+      'schedule',
+      'details',
+      'checkout',
+    ])
+  })
+})

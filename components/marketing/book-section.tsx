@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { BookingProvider, useBooking } from '@/lib/booking-context'
 import { Wizard } from '@/components/book/wizard'
+import { BASE_MINUTES, BASE_PRICE_USD } from '@/lib/pricing'
 import { collections, type Collection } from '@/lib/content/collections'
 import { Reveal } from '@/components/ui/reveal'
 import { useTourModal } from '@/lib/tour-modal-context'
@@ -226,6 +227,10 @@ export function BookSection() {
               Choose the Environment <br />
               That Fits Your Brand
             </h2>
+            <p className="text-body-lg text-ivory/70 mt-6">
+              Sessions start at ${BASE_PRICE_USD} for {BASE_MINUTES} minutes. Pick your set, length and a time first;
+              we only ask for your details at the end.
+            </p>
           </Reveal>
         </div>
         <SectionContent inView={inView} />
