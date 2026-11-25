@@ -1,6 +1,8 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
+import { pushDataLayer } from '@/lib/data-layer'
+import { applicableSteps } from '@/lib/steps'
 import { useBooking } from '@/lib/booking-context'
 import { StepRail } from '@/components/book/step-rail'
 import { BookingSummaryPanel, BookingSummaryBar } from '@/components/book/booking-summary'
@@ -14,8 +16,28 @@ import { LengthStep } from '@/components/book/steps/length-step'
 import { ScheduleStep } from '@/components/book/steps/schedule-step'
 import { CheckoutStep } from '@/components/book/steps/checkout-step'
 
+export function useStepTracking() {
+  const { currentStep, booking } = useBooking()
+  const lastTracked = useRef<string | null>(null)
+  useEffect(() => {
+    if (lastTracked.current === currentStep) return
+    lastTracked.current = currentStep
+    const steps = applicableSteps(booking.setId)
+    const idx = steps.findIndex((s) => s.key === currentStep)
+    pushDataLayer({
+      event: 'booking_step',
+      step_name: currentStep,
+      step_number: idx + 1,
+      step_count: steps.length,
+    })
+    // Only a step change should fire; set changes alone don't count as a new step view.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentStep])
+}
+
 function CurrentStep() {
   const { currentStep } = useBooking()
+  useStepTracking()
   return (
     <StepFrame stepKey={currentStep}>
       {currentStep === 'collection' && <CollectionStep />}

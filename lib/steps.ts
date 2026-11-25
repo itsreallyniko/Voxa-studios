@@ -4,9 +4,9 @@ export type StepKey =
   | 'collection'
   | 'set'
   | 'addons'
-  | 'details'
   | 'length'
   | 'schedule'
+  | 'details'
   | 'checkout'
 
 export function addonsRelevantFor(setId: string | null): boolean {
@@ -23,9 +23,9 @@ export const STEPS: { key: StepKey; number: string; label: string }[] = [
   { key: 'collection', number: '01', label: 'Collection' },
   { key: 'set', number: '02', label: 'Set' },
   { key: 'addons', number: '03', label: 'Add-Ons' },
-  { key: 'details', number: '04', label: 'Details' },
-  { key: 'length', number: '05', label: 'Length' },
-  { key: 'schedule', number: '06', label: 'Schedule' },
+  { key: 'length', number: '04', label: 'Length' },
+  { key: 'schedule', number: '05', label: 'Schedule' },
+  { key: 'details', number: '06', label: 'Details' },
   { key: 'checkout', number: '07', label: 'Checkout' },
 ]
 

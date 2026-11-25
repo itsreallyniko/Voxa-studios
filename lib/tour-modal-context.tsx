@@ -23,6 +23,11 @@ export function TourModalProvider({ children }: { children: ReactNode }) {
   )
 }
 
+/** Same as useTourModal, but returns null outside a TourModalProvider (e.g. in isolated tests). */
+export function useOptionalTourModal(): Ctx | null {
+  return useContext(TourModalContext)
+}
+
 export function useTourModal(): Ctx {
   const ctx = useContext(TourModalContext)
   if (!ctx) throw new Error('useTourModal must be used within TourModalProvider')
