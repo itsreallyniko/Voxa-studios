@@ -40,5 +40,7 @@ describe('createManualCaptureIntent', () => {
 
     expect(r.clientSecret).toBe('pi_abc_secret')
     expect(r.id).toBe('pi_abc')
+    expect(args.automatic_payment_methods).toEqual({ enabled: true })
+    expect(args.payment_method_types).toBeUndefined()
   })
 })

@@ -58,6 +58,7 @@ export const vslMetaAds: ServicePage = {
   ],
   delivery:
     'Sessions include same-day delivery of broadcast-quality multi-cam files, with each camera angle as its own file, color-corrected and audio-synced, ready for your editor. These are not finished, edited ads.',
+  packageLink: { href: '/packages/vsl', label: 'Build your package' },
   reviewTag: 'vsl',
   faqs: [
     {

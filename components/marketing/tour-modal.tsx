@@ -6,6 +6,7 @@ import { useTourModal } from '@/lib/tour-modal-context'
 import { Input } from '@/components/ui/input'
 import { track } from '@/lib/meta-pixel'
 import { pushDataLayer, sha256Hex } from '@/lib/data-layer'
+import { trackPackageTourBooked } from '@/lib/tracking/packages'
 import { collections } from '@/lib/content/collections'
 
 const NOT_SURE = 'not-sure'
@@ -98,7 +99,7 @@ function nextNDays(n: number): { iso: string; weekday: string; day: number; mont
 }
 
 export function TourModal() {
-  const { isOpen, close } = useTourModal()
+  const { isOpen, close, options } = useTourModal()
   const [mounted, setMounted] = useState(false)
   const [step, setStep] = useState<Step>('details')
   const [name, setName] = useState('')
@@ -192,6 +193,7 @@ export function TourModal() {
           interestedSets,
           date,
           time,
+          ...(options?.source === 'package' ? { packageSummary: options.packageSummary } : {}),
         }),
       })
       const body = await res.json()
@@ -216,6 +218,10 @@ export function TourModal() {
       setStep('success')
       setStatus('idle')
       track('Schedule', { content_name: 'Studio Tour' })
+      if (options?.source === 'package') {
+        trackPackageTourBooked(options.pageType, result.uid)
+        return
+      }
       const emailHash = await sha256Hex(email.trim())
       pushDataLayer({
         event: 'tour_booked',
@@ -229,7 +235,7 @@ export function TourModal() {
       setStatus('error')
       setErrorMsg("Couldn't reach our calendar — try again in a moment.")
     }
-  }, [date, time, name, email, phone, interestedSets, days])
+  }, [date, time, name, email, phone, interestedSets, days, options])
 
   if (!mounted || !isOpen) return null
 
@@ -335,6 +341,7 @@ export function TourModal() {
               disabled={!detailsValid}
               onClick={async () => {
                 setStep('schedule')
+                if (options?.source === 'package') return
                 const emailHash = await sha256Hex(email.trim())
                 pushDataLayer({
                   event: 'generate_lead',

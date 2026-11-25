@@ -32,7 +32,6 @@ export async function POST(req: Request) {
         }
         break
       }
-      case 'payment_intent.succeeded':
       case 'payment_intent.canceled':
       case 'payment_intent.amount_capturable_updated':
         break

@@ -140,7 +140,7 @@ function PreviewCard({
         {!locked && (
           <button
             type="button"
-            onClick={openTour}
+            onClick={() => openTour()}
             className="group/tour mt-3 w-full py-4 px-4 border border-heritage-gold/30 bg-heritage-gold/[0.04] hover:bg-heritage-gold/10 hover:border-heritage-gold/70 text-label-caps text-ivory hover:text-heritage-gold text-center inline-flex items-center justify-center gap-2.5 transition-[background-color,color,border-color] duration-200 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.995]"
           >
             <svg

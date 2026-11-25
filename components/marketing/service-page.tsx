@@ -87,6 +87,18 @@ export function ServicePageView({ page }: { page: ServicePage }) {
             <p className="text-body-md text-ivory/85 leading-relaxed">{page.delivery}</p>
           </section>
 
+          {page.packageLink && (
+            <section className="bg-surface-container-low liquid-glass p-6 mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <h2 className="text-label-caps text-heritage-gold">Need it edited too?</h2>
+              <Link
+                href={page.packageLink.href}
+                className="text-body-md text-heritage-gold hover:text-white transition-colors"
+              >
+                {page.packageLink.label}
+              </Link>
+            </section>
+          )}
+
           {page.related && (
             <Link
               href={page.related.href}

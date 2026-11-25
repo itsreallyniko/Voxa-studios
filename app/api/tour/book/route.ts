@@ -15,6 +15,7 @@ const MIN_PHONE = 7
 const MAX_PHONE = 30
 const MAX_NAME = 120
 const NOT_SURE = 'not-sure'
+const MAX_PACKAGE_SUMMARY = 1000
 
 const SET_NAMES: Record<string, string> = Object.fromEntries(
   collections.flatMap((c) => c.sets.map((s) => [s.id, s.name] as const))
@@ -66,7 +67,13 @@ export async function POST(req: Request) {
   const interestLabel = interestedSets.length
     ? interestedSets.map((id) => (id === NOT_SURE ? 'Not sure yet' : SET_NAMES[id])).join(', ')
     : 'Not specified'
-  const notes = [`Interested in: ${interestLabel}`, `Phone: ${phone}`].join('\n')
+  const packageSummary =
+    typeof body?.packageSummary === 'string' ? body.packageSummary.trim().slice(0, MAX_PACKAGE_SUMMARY) : ''
+  const notes = [
+    `Interested in: ${interestLabel}`,
+    `Phone: ${phone}`,
+    ...(packageSummary ? [`Package: ${packageSummary}`] : []),
+  ].join('\n')
 
   // Cal.com's built-in phone field is `attendeePhoneNumber` and must be E.164.
   // The raw number also goes into notes so it's visible even if Cal rejects it.

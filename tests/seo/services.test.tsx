@@ -39,6 +39,9 @@ import { Footer } from '@/components/marketing/footer'
 import { FinalCTA } from '@/components/marketing/final-cta'
 import { TourModalProvider } from '@/lib/tour-modal-context'
 import { LOCAL_BUSINESS_ID, SITE_URL } from '@/lib/seo/site'
+import { courseWebinar } from '@/lib/content/services/course-webinar'
+import { vslMetaAds } from '@/lib/content/services/vsl-meta-ads'
+import { podcastStudio } from '@/lib/content/services/podcast-studio'
 
 const live = page('live', true, 'Live')
 
@@ -96,5 +99,28 @@ describe('service pages', () => {
     expect(screen.getByText('A direct answer.')).toBeInTheDocument()
     expect(container.innerHTML).toContain(LOCAL_BUSINESS_ID)
     expect(container.innerHTML).not.toMatch(/aggregateRating/)
+  })
+
+  it.each([
+    ['course', courseWebinar, '/packages/course'],
+    ['VSL', vslMetaAds, '/packages/vsl'],
+  ])('%s page links to its package builder', (_n, p, href) => {
+    render(
+      <TourModalProvider>
+        <ServicePageView page={p} />
+      </TourModalProvider>,
+    )
+    expect(screen.getByText('Need it edited too?')).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Build your package' })).toHaveAttribute('href', href)
+  })
+
+  it('podcast page has no package link', () => {
+    const { container } = render(
+      <TourModalProvider>
+        <ServicePageView page={podcastStudio} />
+      </TourModalProvider>,
+    )
+    expect(container.querySelector('a[href^="/packages"]')).toBeNull()
+    expect(screen.queryByText('Need it edited too?')).toBeNull()
   })
 })

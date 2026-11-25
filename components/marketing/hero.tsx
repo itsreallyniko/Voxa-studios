@@ -76,7 +76,7 @@ export function Hero() {
             <Button
               variant="ghost"
               size="lg"
-              onClick={openTour}
+              onClick={() => openTour()}
               className="w-full sm:w-auto gap-2.5"
             >
               <svg
